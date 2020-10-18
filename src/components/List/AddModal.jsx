@@ -37,7 +37,7 @@ function AddModal({ type, list, setList, setModalClicked }) {
                 </div>
                 <input
                     type="text"
-                    placeholder="Workout name..."
+                    placeholder={type==="workouts" ? "Workout name..." : "Exercise name..."}
                     name='name'
                     value={newName}
                     className="input-field"

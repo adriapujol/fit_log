@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
-import Workouts from './components/WorkoutList/Workouts';
 import ListView from './components/List/ListView';
 
 
@@ -61,7 +60,7 @@ function App() {
   ];
 
   //to control workout or exercise view before setting routing
-  const [viewWorkouts, setViewWorkouts] = useState(false);
+  const [viewWorkouts, setViewWorkouts] = useState(true);
 
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
