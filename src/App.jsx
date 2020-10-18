@@ -10,18 +10,11 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      {/* <Navbar className="color-nav" expand="lg">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav.Link href="/">Workouts</Nav.Link>
-          <Nav.Link href="/">Exercises</Nav.Link>
-        </Navbar.Collapse>
-      </Navbar> */}
       <main className="container d-flex flex-column justify-content-center">
         <div className="title text-center h3">
           Workouts
         </div>
-        <ListGroup>
+        {/* <ListGroup>
           <ListGroup.Item>
             <a href="/">Push</a>
           </ListGroup.Item>
@@ -37,7 +30,7 @@ function App() {
           <ListGroup.Item>
             <a href="/">Lower</a>
           </ListGroup.Item>
-        </ListGroup>
+        </ListGroup> */}
         <Button className="color-nav align-self-center w-50" onClick={() => alert("hi")}>Hello World</Button>
       </main>
     </div>
