@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddWorkout({ workout_list, setWorkouts, modalClicked, setModalClicked }) {
+function AddWorkout({ workout_list, setWorkouts, setModalClicked }) {
 
     const [workoutName, setWorkoutName] = useState('');
 
@@ -8,6 +8,7 @@ function AddWorkout({ workout_list, setWorkouts, modalClicked, setModalClicked }
         e.preventDefault();
         setWorkouts([...workout_list, { name: workoutName, last_day: "25/12/2020" }]);
         setWorkoutName("");
+        setModalClicked(false);
     }
 
     const handleInput = e => setWorkoutName(e.target.value);
