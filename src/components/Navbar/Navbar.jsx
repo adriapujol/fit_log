@@ -9,9 +9,9 @@ function Navbar() {
     return (
         <nav className="navbar">
             <div className="menu-icon" onClick={() => setIsClicked(!isClicked)}>
-                <i className={ isClicked ? 'fas fa-times' : 'fas fa-bars' }></i>
+                <i className={ isClicked ? "fas fa-times" : "fas fa-bars" }></i>
             </div>
-            <ul className={ isClicked ? 'nav-menu active' : 'nav-menu'}>
+            <ul className={ isClicked ? "nav-menu active" : "nav-menu"}>
                 {navbarItems.map((item, index)=> {
                     return <li key={index}><a className={item.cName} href={item.url}>{item.title}</a></li>
                 })}

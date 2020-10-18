@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Workouts from './components/WorkoutList/Workouts';
+
 
 
 function App() {
@@ -30,12 +31,14 @@ function App() {
     
   ];
 
+  const [ workouts, setWorkouts] = useState(workout_list);
+
 
   return (
     <div className="App">
       <Navbar />
       <main className="content-wrapper">
-        <Workouts workout_list={workout_list} />
+        <Workouts workout_list={workouts} setWorkouts={setWorkouts} />
       </main>
     </div>
   );

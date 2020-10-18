@@ -13,13 +13,54 @@ $links-height: calc(100vh - #{$navbar-height});
     display: flex;
     flex-direction: column;
     align-items: center;
-    // justify-content: center;
 
     min-height: $links-height;
 
     .list-title {
         margin: 0.5em 0;
         font-size: 1.5em;
+    }
+}
+
+.modal {
+
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .modal-form {
+        position: relative;
+
+        .close-modal {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 1.5em;
+            color: #575757;
+        }
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2.5em 2em;
+        background-color: white;
+        // box-shadow: 1px 5px 10px 10px rgba(0, 0, 0, 0.4);
+    
+        input {
+            padding: 0.5em;
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+        
+        button {
+            width: 100px;
+        }
     }
 }
 
@@ -31,14 +72,18 @@ $links-height: calc(100vh - #{$navbar-height});
     font-size: 1.1em;
     border: none;
     cursor: pointer;
-    margin-top: auto;
-    margin-bottom: 2em;
 
     &:hover {
         background-color: #900000;
     }
 }
 
+.btn-list-view {
+    margin-top: auto;
+    margin-bottom: 2em;
+}
+
 ul {
     list-style-type: none;
 }
+
