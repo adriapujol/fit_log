@@ -7,7 +7,7 @@ function Workouts({ workout_list}) {
         <div className="content">
             <div className="list-title">Workouts</div>
             <WorkoutList workout_list={ workout_list} />
-            <button>+ add workout</button>
+            <button className="btn" onClick={() => alert('btn clicked')}>+ add workout</button>
         </div>
     )
 }
