@@ -10,7 +10,7 @@ function App() {
   const workout_list = [
     {
       name: "Push",
-      last_day: "30/12/2020"
+      last_day: "30/12/2020",
     },
     {
       name: "Pull",
@@ -28,17 +28,55 @@ function App() {
       name: "Lower",
       last_day: ""
     },
-    
+
+  ];
+  const exercise_list = [
+    {
+      name: "Push ups",
+      sets: 5,
+      reps: 5
+    },
+    {
+      name: "Flat bench press",
+      sets: 5,
+      reps: 5
+    },
+    {
+      name: "Military press",
+      sets: 5,
+      reps: 5
+    },
+    {
+      name: "Incline dumbbell press",
+      sets: 5,
+      reps: 5
+    },
+    {
+      name: "Bicep curls",
+      sets: 5,
+      reps: 5
+    },
+
   ];
 
-  const [ workouts, setWorkouts] = useState(workout_list);
+  //to control workout or exercise view before setting routing
+  const [viewWorkouts, setViewWorkouts] = useState(true);
+  
+  const [exercises, setExercises] = useState(exercise_list);
+  const [workouts, setWorkouts] = useState(workout_list);
 
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar setViewWorkouts={setViewWorkouts} />
       <main className="content-wrapper">
-        <Workouts workout_list={workouts} setWorkouts={setWorkouts} />
+        {
+          viewWorkouts ?
+            <Workouts workout_list={workouts} setWorkouts={setWorkouts} />
+
+            : "Exercises coming soon"
+        
+        }
       </main>
     </div>
   );
