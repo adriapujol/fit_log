@@ -4,6 +4,8 @@ $links-height: calc(100vh - #{$navbar-height});
 .navbar {
     background-color: #db0000;
     height: $navbar-height;
+    display: flex;
+    align-items: center;
     padding: 0;
 
     .fas {

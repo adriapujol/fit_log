@@ -1,37 +1,40 @@
 import React from 'react';
 import './App.scss';
-import Button from 'react-bootstrap/Button';
-// import { Nav, Navbar } from 'react-bootstrap';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Navbar from './components/Navbar/Navbar.jsx';
+import Workouts from './components/WorkoutList/Workouts';
 
 
 function App() {
+
+  const workout_list = [
+    {
+      name: "Push",
+      last_day: "30/12/2020"
+    },
+    {
+      name: "Pull",
+      last_day: "1/1/2020"
+    },
+    {
+      name: "Legs",
+      last_day: "13/10/2020"
+    },
+    {
+      name: "Upper",
+      last_day: "13/10/2020"
+    },
+    {
+      name: "Lower",
+      last_day: ""
+    }
+  ];
+
+
   return (
     <div className="App">
       <Navbar />
-      <main className="container d-flex flex-column justify-content-center">
-        <div className="title text-center h3">
-          Workouts
-        </div>
-        {/* <ListGroup>
-          <ListGroup.Item>
-            <a href="/">Push</a>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <a href="/">Pull</a>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <a href="/">Legs</a>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <a href="/">Upper</a>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <a href="/">Lower</a>
-          </ListGroup.Item>
-        </ListGroup> */}
-        <Button className="color-nav align-self-center w-50" onClick={() => alert("hi")}>Hello World</Button>
+      <main className="content-wrapper">
+        <Workouts workout_list={workout_list} />
       </main>
     </div>
   );
