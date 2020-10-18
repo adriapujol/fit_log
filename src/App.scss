@@ -19,6 +19,7 @@ $links-height: calc(100vh - #{$navbar-height});
     .list-title {
         margin: 0.5em 0;
         font-size: 1.5em;
+        text-transform: capitalize;
     }
 }
 
@@ -56,6 +57,22 @@ $links-height: calc(100vh - #{$navbar-height});
             padding: 0.5em;
             font-size: 1.2em;
             margin-bottom: 1em;
+        }
+
+        .sets-reps-inputs {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            .number-input-box {
+
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    width: 110px;
+                }
+            }
+
         }
         
         button {
