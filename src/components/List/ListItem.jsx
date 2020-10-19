@@ -8,10 +8,13 @@ function ListItem({ type, listItem }) {
                 </div>
                 <small className="list-extra-info">
                     {
-                        type === "exercises" ?
+                        type === "workout" ?
                             `SETS: ${listItem.sets} / REPS: ${listItem.reps}`
                             :
+                            type === "wrokouts" ?
                             `Last: ${listItem.last_day}`
+                            :
+                            ""
 
                     }
                 </small>

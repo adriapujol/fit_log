@@ -53,7 +53,7 @@ $links-height: calc(100vh - #{$navbar-height});
         background-color: white;
         // box-shadow: 1px 5px 10px 10px rgba(0, 0, 0, 0.4);
     
-        input {
+        input, select {
             padding: 0.5em;
             font-size: 1.2em;
             margin-bottom: 1em;
