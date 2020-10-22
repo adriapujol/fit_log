@@ -11,7 +11,49 @@ function App() {
     {
       name: "Push",
       last_day: "30/12/2020",
-      exercises: []
+      exercises: [
+        {
+          name: "Push ups",
+          sets: 5,
+          reps: 5,
+          history: [
+            {
+              date: "30/10/2020",
+              sets: [
+                {
+                  reps: 5,
+                  weight: 50
+                },
+                {
+                  reps: 5,
+                  weight: 50
+                },
+                {
+                  reps: 3,
+                  weight: 50
+                }
+              ]
+            },
+            {
+              date: "03/11/2020",
+              sets: [
+                {
+                  reps: 5,
+                  weight: 60
+                },
+                {
+                  reps: 5,
+                  weight: 60
+                },
+                {
+                  reps: 5,
+                  weight: 60
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       name: "Pull",
@@ -38,19 +80,59 @@ function App() {
 
   const exercise_list = [
     {
-      name: "Push ups"
+      name: "Push ups",
+      history: [
+        {
+          date: "30/10/2020",
+          sets: [
+            {
+              reps: 5,
+              weight: 50
+            },
+            {
+              reps: 5,
+              weight: 50
+            },
+            {
+              reps: 3,
+              weight: 50
+            }
+          ]
+        },
+        {
+          date: "03/11/2020",
+          sets: [
+            {
+              reps: 5,
+              weight: 60
+            },
+            {
+              reps: 5,
+              weight: 60
+            },
+            {
+              reps: 5,
+              weight: 60
+            }
+          ]
+        }
+      ]
     },
     {
-      name: "Flat bench press"
+      name: "Flat bench press",
+      history: {}
     },
     {
-      name: "Military press"
+      name: "Military press",
+      history: {}
     },
     {
-      name: "Incline dumbbell press"
+      name: "Incline dumbbell press",
+      history: {}
     },
     {
-      name: "Bicep curls"
+      name: "Bicep curls",
+      history: {}
     },
 
   ];
@@ -88,7 +170,7 @@ function App() {
 
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
-
+  const [workout, setWorkout] = useState();
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -112,12 +194,12 @@ function App() {
           //   :
           //   <ListView type="exercises" listTitle="exercises" list={exercises} setList={setExercises} />
         }
-        
-                  {workoutsView || <ListView type="workouts" listTitle="workouts" list={workouts} setList={setWorkouts} />}
-        
-                  {exercisesView || <ListView type="exercises" listTitle="exercises" list={exercises} setList={setExercises} />}
 
-                  {workoutView || <ListView type="workout" listTitle="Push" list={workouts[0].exercises} setList={setExercises} exerciseList={exercises} />}
+        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+
+        {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
+
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setExercises} exerciseList={exercises} />}
       </main>
     </div>
   );
