@@ -39,10 +39,10 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, workouts
             alert("Chose an exercise");
             return;
         }
-        const newWorkoutList = workoutsList;
-        const workoutPosition = newWorkoutList.findIndex(w => w.name === list.name);
-        newWorkoutList[workoutPosition].exercises = [...list.exercises, newData];
-        setList(newWorkoutList);
+        // const newWorkoutList = workoutsList;
+        const workoutPosition = workoutsList.findIndex(w => w.name === list.name);
+        workoutsList[workoutPosition].exercises = [...list.exercises, newData];
+        setList(workoutsList);
         setNewName("");
         setNewSets(0);
         setNewSets(0);
