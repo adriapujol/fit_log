@@ -1,36 +1,10 @@
 import React, { useState } from 'react';
 
-function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
+function AddModal({ type, list, setList, setModalClicked, exerciseList, workoutsList }) {
 
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);
     const [newReps, setNewReps] = useState(0);
-
-    let newData;
-
-    if (type === "workouts") {
-        newData = { name: newName, last_day: "25/12/2020", exercises: [] };
-        // } else if (type === "exercises") {
-        //     newData = { name: newName };
-    } else if (type === "workout" || type === "exercises") {
-        newData = { name: newName, sets: newSets, reps: newReps, history: [] }
-    } else {
-        alert("Wrong type");
-    }
-
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (newName === "") {
-            alert("Chose an exercise");
-        } else {
-            setList([...list, newData]);
-            setNewName("");
-            setNewSets(0);
-            setNewSets(0);
-            setModalClicked(false);
-        }
-    }
 
     const handleNameInput = e => setNewName(e.target.value);
     const handleSetsInput = e => setNewSets(e.target.value);
@@ -38,59 +12,62 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
     const handleEnterSets = () => setNewSets("");
     const handleEnterReps = () => setNewReps("");
 
+    let newData;
+
+    if (type === "workouts") {
+        newData = { name: newName, last_day: "25/12/2020", exercises: [] };
+    } else if (type === "workout" || type === "exercises") {
+        newData = { name: newName, sets: newSets, reps: newReps, history: [] }
+    } else {
+        alert("Wrong type");
+    }
+
+    const handleSubmitList = e => {
+        e.preventDefault();
+        if (newName === "") {
+            alert("Chose a name");
+            return;
+        }
+        setList([...list, newData]);
+        setNewName("");
+        setModalClicked(false);
+    }
+
+    const handleSubmitWorkout = e => {
+        e.preventDefault();
+        if (newName === "") {
+            alert("Chose an exercise");
+            return;
+        }
+        const newWorkoutList = workoutsList;
+        const workoutPosition = newWorkoutList.findIndex(w => w.name === list.name);
+        newWorkoutList[workoutPosition].exercises = [...list.exercises, newData];
+        setList(newWorkoutList);
+        setNewName("");
+        setNewSets(0);
+        setNewSets(0);
+        setModalClicked(false);
+
+    }
+
+
+
+
 
     let modal_content;
 
 
-    if (type === "workouts") {
+    if (type !== "workout") {
 
         modal_content =
             <input
                 type="text"
-                placeholder={"Workout name..."}
+                placeholder={type === "workouts" ? "Workout name..." : "Exercise name..."}
                 name='name'
                 value={newName}
                 className="input-field"
                 onChange={handleNameInput}
             />;
-    } else if (type === "exercises") {
-        modal_content =
-            <>
-                <input
-                    type="text"
-                    placeholder="Exercise name..."
-                    name='name'
-                    value={newName}
-                    className="input-field"
-                    onChange={handleNameInput}
-                />
-                <div className="sets-reps-inputs">
-                    <div className="number-input-box">
-                        <label>SETS</label>
-                        <input
-                            type="number"
-                            name='sets'
-                            value={newSets}
-                            min="0"
-                            className="input-field number-input"
-                            onClick={handleEnterSets}
-                            onChange={handleSetsInput}
-                        />
-                    </div>
-                    <div className="number-input-box">
-                        <label>REPS</label>
-                        <input
-                            type="number"
-                            name='reps'
-                            value={newReps}
-                            min="0"
-                            className="input-field number-input"
-                            onClick={handleEnterReps}
-                            onChange={handleRepsInput}
-                        />
-                    </div>
-                </div>
-            </>;
     } else if (type === "workout") {
         modal_content =
             <>
@@ -135,10 +112,9 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
 
     }
 
-
     return (
         <div className="modal">
-            <form className="modal-form" onSubmit={handleSubmit}>
+            <form className="modal-form" onSubmit={type === "workout" ? handleSubmitWorkout : handleSubmitList}>
                 <div className="close-modal" onClick={() => setModalClicked(false)}>
                     <i className="fas fa-times"></i>
                 </div>
