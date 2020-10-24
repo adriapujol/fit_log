@@ -199,7 +199,7 @@ function App() {
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
 
-        {workoutView || <ListView type="workout" list={workouts[1]} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />}
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />}
       </main>
     </div>
   );
