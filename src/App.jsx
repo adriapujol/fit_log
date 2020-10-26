@@ -52,6 +52,47 @@ function App() {
               ]
             }
           ]
+        }, 
+        {
+          name: "Military press",
+          sets: 5,
+          reps: 5,
+          history: [
+            {
+              date: "30/10/2020",
+              sets: [
+                {
+                  reps: 5,
+                  weight: 50
+                },
+                {
+                  reps: 5,
+                  weight: 50
+                },
+                {
+                  reps: 3,
+                  weight: 50
+                }
+              ]
+            },
+            {
+              date: "03/11/2020",
+              sets: [
+                {
+                  reps: 5,
+                  weight: 60
+                },
+                {
+                  reps: 5,
+                  weight: 60
+                },
+                {
+                  reps: 5,
+                  weight: 60
+                }
+              ]
+            }
+          ]
         }
       ]
     },

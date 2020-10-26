@@ -54,6 +54,8 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, workouts
 
 
 
+
+
     let modal_content;
 
 
