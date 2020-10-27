@@ -1,0 +1,43 @@
+.header-exercise {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+
+    i {
+        font-size: 1.75em;
+        color: rgba(0,0,0,0.3)
+    }
+
+    .exercise-title {
+        margin: 0 10px;
+        font-size: 1.5em;
+    }
+
+}
+
+.control-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0em 1em;
+
+
+    .small-btn {
+        padding: 0.5em 0.75em;
+        font-size: 1em;
+
+    }
+}
+
+.sets-table {
+
+}
+
+.btn-low-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0em 1em;
+}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
+import Exercise from './components/Exercise/Exercise';
 
 
 
@@ -236,11 +237,22 @@ function App() {
           //   <ListView type="exercises" listTitle="exercises" list={exercises} setList={setExercises} />
         }
 
-        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+        {
+          // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
+        }
+
+        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
 
-        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />}
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />} */}
+
+        {
+          // Exercise, history
+        }
+        <Exercise />
+
+
       </main>
     </div>
   );
