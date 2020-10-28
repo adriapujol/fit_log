@@ -250,7 +250,7 @@ function App() {
         {
           // Exercise, history
         }
-        <Exercise />
+        <Exercise workout={workouts[0]} />
 
 
       </main>

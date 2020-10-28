@@ -2,47 +2,70 @@ import React from 'react';
 import History from './History';
 import './Exercise.scss';
 
-function Exercise() {
+function Exercise({ workout }) {
     return (
         <div className="content">
-            <div className="header-exercise">
-                <i className="fas fa-angle-left" />
-                <div className="workout-title-list exercise-title">
-                    Flat bench press
+            <div className="header-box">
+                <div className="workout-title-list workout-title">
+                    {workout.name}
                 </div>
-                <i className="fas fa-angle-right" />
+                <div className="header-exercise">
+                    <i className="fas fa-angle-left" />
+                    <div className="workout-title-list exercise-title">
+                        {workout.exercises[0].name}
+                    </div>
+                    <i className="fas fa-angle-right" />
+                </div>
             </div>
             <div className="control-box">
-                <button className="btn small-btn">sets&reps</button>
+                <button className="btn small-btn active">sets&reps</button>
                 <button className="btn small-btn">history</button>
             </div>
             <table className="sets-table">
-                <tr>
-                    <th>SET</th>
-                    <th>Weight</th>
-                    <th>Reps</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <div>
-                        <input type="number" min="0" /><small>kg</small>
-                    </div>
-                    <input type="number" min="0" />
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <div>
-                        <input type="number" min="0" /><small>kg</small>
-                    </div>
-                    <input type="number" min="0" />
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <div>
-                        <input type="number" min="0" /><small>kg</small>
-                    </div>
-                    <input type="number" min="0" />
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>SET</th>
+                        <th>Weight</th>
+                        <th>Reps</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <input type="number" min="0" /><small>kg</small>
+                        </td>
+                        <td>
+                            <input type="number" min="0" />
+                        </td>
+                        <td>
+                            <i className="fas fa-times"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <input type="number" min="0" /><small>kg</small>
+                        </td>
+                        <td>
+                            <input type="number" min="0" />
+                        </td>
+                        <td>
+                            <i className="fas fa-times"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <input type="number" min="0" /><small>kg</small>
+                        </td>
+                        <td>
+                            <input type="number" min="0" />
+                        </td>
+                        <td>
+                            <i className="fas fa-times"></i>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
             <button className="btn">+ add set</button>

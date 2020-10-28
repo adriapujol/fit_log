@@ -1,20 +1,40 @@
+.header-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    
+    .workout-title {
+        color: rgba(0,0,0,0.5);
+        font-size: 1.5em;
+    }
+
+}
+
 .header-exercise {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 50px;
+    padding: 0.5em;
+
+    // height: 60px;
 
     i {
         font-size: 1.75em;
-        color: rgba(0,0,0,0.3)
     }
 
     .exercise-title {
-        margin: 0 10px;
+        margin: 0 1em;
         font-size: 1.5em;
     }
 
+}
+
+i {
+    color: rgba(0,0,0,0.3) 
 }
 
 .control-box {
@@ -29,10 +49,48 @@
         font-size: 1em;
 
     }
+
+    .active {
+        background-color:  #900000;
+    }
+}
+
+table {
+    border-collapse: collapse; 
 }
 
 .sets-table {
+    width: 100%;
+    margin: 1em 0;
+    font-size: 1.2em;
 
+    tr {
+        border-bottom: 2px solid #db0000;
+    }
+
+    tbody {
+        
+        th {
+            padding-bottom: 0.5em;
+        }
+        td {
+            text-align: center;
+            padding: 0.5em 0;
+            input {
+                text-align: center;
+                width: 70px;
+                padding: 0.5em;
+                font-size: 1em;                
+            }
+            small {
+                color: grey;
+                padding-left: 0.5em;
+            }
+            i {
+                padding-right: 0.5em;
+            }
+        }
+    }
 }
 
 .btn-low-box {
