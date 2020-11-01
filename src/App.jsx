@@ -56,23 +56,23 @@ function App() {
         }, 
         {
           name: "Military press",
-          sets: 5,
+          sets: 3,
           reps: 5,
           history: [
             {
-              date: "30/10/2020",
+              date: "14/10/2020",
               sets: [
                 {
-                  reps: 5,
-                  weight: 50
+                  reps: 2,
+                  weight: 10
                 },
                 {
-                  reps: 5,
-                  weight: 50
+                  reps: 2,
+                  weight: 10
                 },
                 {
-                  reps: 3,
-                  weight: 50
+                  reps: 2,
+                  weight: 10
                 }
               ]
             },

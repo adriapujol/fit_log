@@ -1,6 +1,14 @@
 import React from 'react';
+import ExericseSet from './ExerciseSet';
 
-function ExerciseTable() {
+function ExerciseTable({ exercise }) {
+
+    const { name, sets, reps, history } = exercise;
+
+    const setNumber = new Array(sets).fill(0);
+
+    console.log("this is the set number: " + setNumber);
+
     return (
         <table className="sets-table">
             <tbody>
@@ -9,43 +17,12 @@ function ExerciseTable() {
                     <th>Weight</th>
                     <th>Reps</th>
                     <th></th>
+                    <th></th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>
-                        <input type="number" min="0" /><small>kg</small>
-                    </td>
-                    <td>
-                        <input type="number" min="0" />
-                    </td>
-                    <td>
-                        <i className="fas fa-times"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>
-                        <input type="number" min="0" /><small>kg</small>
-                    </td>
-                    <td>
-                        <input type="number" min="0" />
-                    </td>
-                    <td>
-                        <i className="fas fa-times"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>
-                        <input type="number" min="0" /><small>kg</small>
-                    </td>
-                    <td>
-                        <input type="number" min="0" />
-                    </td>
-                    <td>
-                        <i className="fas fa-times"></i>
-                    </td>
-                </tr>
+                {
+                    setNumber.map((item, index) => <ExericseSet key={index} set={index} /> )
+                }
+                
             </tbody>
         </table>
     )
