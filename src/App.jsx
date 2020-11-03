@@ -16,97 +16,13 @@ function App() {
         {
           name: "Push ups",
           sets: 5,
-          reps: 5,
-          history: [
-            {
-              date: "30/10/2020",
-              sets: [
-                {
-                  set: 1,
-                  reps: 5,
-                  weight: 50
-                },
-                {
-                  set: 2,
-                  reps: 5,
-                  weight: 50
-                },
-                {
-                  set: 3,
-                  reps: 3,
-                  weight: 50
-                }
-              ]
-            },
-            {
-              date: "03/11/2020",
-              sets: [
-                {
-                  set: 1,
-                  reps: 5,
-                  weight: 60
-                },
-                {
-                  set: 2,
-                  reps: 5,
-                  weight: 60
-                },
-                {
-                  set: 3,
-                  reps: 5,
-                  weight: 60
-                }
-              ]
-            }
-          ]
-        }, 
+          reps: 5
+        },
         {
           name: "Military press",
           sets: 3,
-          reps: 5,
-          history: [
-            {
-              date: "14/10/2020",
-              sets: [
-                {
-                  set: 1,
-                  reps: 2,
-                  weight: 10
-                },
-                {
-                  set: 2,
-                  reps: 2,
-                  weight: 10
-                },
-                {
-                  set: 3,
-                  reps: 2,
-                  weight: 10
-                }
-              ]
-            },
-            {
-              date: "03/11/2020",
-              sets: [
-                {
-                  set: 1,
-                  reps: 5,
-                  weight: 60
-                },
-                {
-                  set: 2,
-                  reps: 5,
-                  weight: 60
-                },
-                {
-                  set: 3,
-                  reps: 5,
-                  weight: 60
-                }
-              ]
-            }
-          ]
-        }
+          reps: 5
+        }    
       ]
     },
     {
@@ -140,14 +56,17 @@ function App() {
           date: "30/10/2020",
           sets: [
             {
+              set: 1,
               reps: 5,
               weight: 50
             },
             {
+              set: 2,
               reps: 5,
               weight: 50
             },
             {
+              set: 3,
               reps: 3,
               weight: 50
             }
@@ -157,14 +76,17 @@ function App() {
           date: "03/11/2020",
           sets: [
             {
+              set: 1,
               reps: 5,
               weight: 60
             },
             {
+              set: 2,
               reps: 5,
               weight: 60
             },
             {
+              set: 3,
               reps: 5,
               weight: 60
             }
@@ -190,34 +112,6 @@ function App() {
     },
 
   ];
-  // const exercise_list = [
-  //   {
-  //     name: "Push ups",
-  //     sets: 5,
-  //     reps: 5
-  //   },
-  //   {
-  //     name: "Flat bench press",
-  //     sets: 5,
-  //     reps: 5
-  //   },
-  //   {
-  //     name: "Military press",
-  //     sets: 5,
-  //     reps: 5
-  //   },
-  //   {
-  //     name: "Incline dumbbell press",
-  //     sets: 5,
-  //     reps: 5
-  //   },
-  //   {
-  //     name: "Bicep curls",
-  //     sets: 5,
-  //     reps: 5
-  //   },
-
-  // ];
 
   //to control workout or exercise view before setting routing
   const [viewWorkouts, setViewWorkouts] = useState(true);
@@ -263,7 +157,6 @@ function App() {
           // Exercise, history
         }
         <Exercise workout={workouts[0]} />
-
 
       </main>
     </div>

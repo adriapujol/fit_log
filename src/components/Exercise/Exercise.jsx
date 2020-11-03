@@ -5,7 +5,7 @@ import './Exercise.scss';
 
 function Exercise({ workout }) {
 
-    const { workoutName, last_day, exercises } = workout;
+    const { name, last_day, exercises } = workout;
 
     const [showHistory, setShowHistory] = useState(false);
     const [exerciseNumber, setExerciseNumber] = useState(0);
@@ -36,7 +36,7 @@ function Exercise({ workout }) {
         <div className="content">
             <div className="header-box">
                 <div className="workout-title-list workout-title">
-                    {workoutName}
+                    {name}
                 </div>
                 <div className="header-exercise">
                     <i className="fas fa-angle-left" onClick={handlePrevExercise} />
