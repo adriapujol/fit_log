@@ -3,7 +3,7 @@ import './List.scss';
 import List from './List';
 import AddModal from './AddModal';
 
-function ListView({ type, list, setList, exerciseList, workoutsList }) {
+function ListView({ type, currWorkout, list, setList, exerciseList, workoutsList }) {
 
     const [modalClicked, setModalClicked] = useState(false);
 
@@ -12,9 +12,18 @@ function ListView({ type, list, setList, exerciseList, workoutsList }) {
 
     return (
         <div className="content">
-            <div className="list-title">{type==="workout" ? list.name : type}</div>
-            <List type={type} list={list} setList={setList} workoutsList={workoutsList} />
-            {!modalClicked || <AddModal type={type} list={list} setList={setList} setModalClicked={setModalClicked} exerciseList={exerciseList} workoutsList={workoutsList} />}
+            <div className="list-title">{type==="workout" ? list[currWorkout].name : type}</div>
+            <List type={type} currWorkout={currWorkout} list={list} setList={setList} workoutsList={workoutsList} />
+            {
+                !modalClicked || <AddModal 
+                                    type={type}
+                                    currWorkout={currWorkout} 
+                                    list={list} 
+                                    setList={setList} 
+                                    setModalClicked={setModalClicked} 
+                                    exerciseList={exerciseList} 
+                                    workoutsList={workoutsList} />
+            }
             <button className="btn btn-list-view" onClick={() => setModalClicked(true)}>+ add {type==="workout" ? "exercise" : type}</button>
         </div>
     )

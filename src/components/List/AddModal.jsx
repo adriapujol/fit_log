@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddModal({ type, list, setList, setModalClicked, exerciseList, workoutsList }) {
+function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseList, workoutsList }) {
 
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);
@@ -16,8 +16,10 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, workouts
 
     if (type === "workouts") {
         newData = { name: newName, last_day: "25/12/2020", exercises: [] };
-    } else if (type === "workout" || type === "exercises") {
-        newData = { name: newName, sets: newSets, reps: newReps, history: [] }
+    } else if (type === "workout") {
+        newData = { name: newName, sets: newSets, reps: newReps }
+    } else if (type === "exercises") {
+        newData = {name: newName, history: []}
     } else {
         alert("Wrong type");
     }
@@ -39,21 +41,15 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, workouts
             alert("Chose an exercise");
             return;
         }
-        // const newWorkoutList = workoutsList;
-        const workoutPosition = workoutsList.findIndex(w => w.name === list.name);
-        workoutsList[workoutPosition].exercises = [...list.exercises, newData];
-        setList(workoutsList);
+        const newWorkout = list[currWorkout];
+        newWorkout.exercises.push(newData);
+        console.log(newWorkout);
+        setList([...list, newWorkout]);
         setNewName("");
         setNewSets(0);
         setNewSets(0);
         setModalClicked(false);
-
     }
-
-
-
-
-
 
 
     let modal_content;

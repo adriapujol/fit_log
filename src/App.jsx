@@ -96,19 +96,19 @@ function App() {
     },
     {
       name: "Flat bench press",
-      history: {}
+      history: []
     },
     {
       name: "Military press",
-      history: {}
+      history: []
     },
     {
       name: "Incline dumbbell press",
-      history: {}
+      history: []
     },
     {
       name: "Bicep curls",
-      history: {}
+      history: []
     },
 
   ];
@@ -118,7 +118,8 @@ function App() {
 
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
-  const [workout, setWorkout] = useState();
+  const [currType, setCurrType] = useState("workouts");
+  const [currWorkout, setCurrWorkout] = useState(0);
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -147,16 +148,16 @@ function App() {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
 
-        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
 
-        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />} */}
+        {workoutView || <ListView type="workout" currWorkout={currWorkout} list={workouts} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />}
 
         {
           // Exercise, history
         }
-        <Exercise workout={workouts[0]} />
+        {/* <Exercise workout={workouts[0]} /> */}
 
       </main>
     </div>
