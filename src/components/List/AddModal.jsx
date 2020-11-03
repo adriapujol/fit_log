@@ -42,9 +42,9 @@ function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseL
             return;
         }
         const newWorkout = list[currWorkout];
-        newWorkout.exercises.push(newData);
-        console.log(newWorkout);
-        setList([...list, newWorkout]);
+        list[currWorkout].exercises.push(newData);
+        // console.log(newWorkout);
+        setList([...list]);
         setNewName("");
         setNewSets(0);
         setNewSets(0);
