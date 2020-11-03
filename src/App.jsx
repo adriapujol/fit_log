@@ -22,14 +22,17 @@ function App() {
               date: "30/10/2020",
               sets: [
                 {
+                  set: 1,
                   reps: 5,
                   weight: 50
                 },
                 {
+                  set: 2,
                   reps: 5,
                   weight: 50
                 },
                 {
+                  set: 3,
                   reps: 3,
                   weight: 50
                 }
@@ -39,14 +42,17 @@ function App() {
               date: "03/11/2020",
               sets: [
                 {
+                  set: 1,
                   reps: 5,
                   weight: 60
                 },
                 {
+                  set: 2,
                   reps: 5,
                   weight: 60
                 },
                 {
+                  set: 3,
                   reps: 5,
                   weight: 60
                 }
@@ -63,14 +69,17 @@ function App() {
               date: "14/10/2020",
               sets: [
                 {
+                  set: 1,
                   reps: 2,
                   weight: 10
                 },
                 {
+                  set: 2,
                   reps: 2,
                   weight: 10
                 },
                 {
+                  set: 3,
                   reps: 2,
                   weight: 10
                 }
@@ -80,14 +89,17 @@ function App() {
               date: "03/11/2020",
               sets: [
                 {
+                  set: 1,
                   reps: 5,
                   weight: 60
                 },
                 {
+                  set: 2,
                   reps: 5,
                   weight: 60
                 },
                 {
+                  set: 3,
                   reps: 5,
                   weight: 60
                 }

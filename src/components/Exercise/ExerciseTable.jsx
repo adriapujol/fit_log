@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ExericseSet from './ExerciseSet';
 
 function ExerciseTable({ exercise }) {
 
     const { name, sets, reps, history } = exercise;
+
+    console.log("THIS IS EXERCISE TALBE CHECK: " + history);
+    const [newSets, setNewSets] = useState([]);
 
     const setNumber = new Array(sets).fill(0);
 
@@ -20,7 +23,7 @@ function ExerciseTable({ exercise }) {
                     <th></th>
                 </tr>
                 {
-                    setNumber.map((item, index) => <ExericseSet key={index} set={index} /> )
+                    setNumber.map((item, index) => <ExericseSet key={index} set={index} newSets={newSets} setNewSets={setNewSets} /> )
                 }
                 
             </tbody>
