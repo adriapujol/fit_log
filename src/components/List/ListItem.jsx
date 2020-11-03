@@ -1,18 +1,12 @@
 import React from 'react'
 
-function ListItem({ type, listItem, list, setList, workoutsList }) {
+function ListItem({ type, listItem, list, currWorkout, setList, workoutsList, handleDeleteListItem }) {
+    // onClick={type === "workout" ? handleDeleteWorkoutExercise : handleDeleteList
 
-    const handleDeleteList = () => {
-        setList(list.filter(item => item.name !== listItem.name));
-    }
-
-    const handleDeleteWorkoutExercise = () => {
-        // const workouts = workoutsList;
-        const newExerciseList = list.exercises.filter(item => item.name !== listItem.name);
-        const workoutPosition = workoutsList.findIndex(w => w.name === list.name);
-        workoutsList[workoutPosition].exercises = [...newExerciseList];
-        setList(workoutsList);
-
+    const handleDeleteItem = () => {
+        console.log(list);
+        handleDeleteItem(type, list, listItem.name);
+        console.log(list);
     }
 
     return (
@@ -33,7 +27,7 @@ function ListItem({ type, listItem, list, setList, workoutsList }) {
 
                     }
                 </small>
-                <div className="delete-item" onClick={type === "workout" ? handleDeleteWorkoutExercise : handleDeleteList}>
+                <div className="delete-item" onClick={() => handleDeleteListItem(type, list, listItem.name)} >
                     <i className="fas fa-times"></i>
                 </div>
             </div>

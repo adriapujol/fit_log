@@ -41,9 +41,10 @@ function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseL
             alert("Chose an exercise");
             return;
         }
+
+        //Changing props like this is OK??? asking for a friend
         const newWorkout = list[currWorkout];
         list[currWorkout].exercises.push(newData);
-        // console.log(newWorkout);
         setList([...list]);
         setNewName("");
         setNewSets(0);
