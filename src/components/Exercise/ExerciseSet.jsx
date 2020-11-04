@@ -1,14 +1,26 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
-function ExerciseSet({ set, newSets, setNewSets }) {
+function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, newSets, setNewSets }) {
 
-    const [reps, setReps] = useState(0);
-    const [weight, setWeight] = useState(0);
+    const [cReps, setCReps] = useState(0);
+    const [cWeight, setCWeight] = useState(0);
 
-    const handleRepsChange = e => setReps(e.target.value);
-    const handleWeightChange = e => setWeight(e.target.value);
-    const handleRepClick = () => setReps("");
-    const handleWeightClick = () => setWeight("");
+    
+    // const handleRepsChange = e => setCurrentExercise(prevCurrentExercise => {
+    //         return prevCurrentExercise.map(cSet => {
+    //             if (cSet === set) {
+    //                 return {...cSet, reps: e.target.value}
+    //             }
+    //             return cSet;
+    //         })
+    // });
+    
+    
+    const handleRepsChange = e => setCReps(e.target.value);
+    const handleWeightChange = e => setCWeight(e.target.value);
+    const handleRepClick = () => setCReps("");
+    const handleWeightClick = () => setCWeight("");
+
 
     const findSet = (list, set) => {
         let found = false;
@@ -23,37 +35,49 @@ function ExerciseSet({ set, newSets, setNewSets }) {
         return found;
     };
 
-    const deleteSet = () => {
-        const crSet = set +1;
-        setNewSets([...newSets.filter(item => item.set !== crSet)]);
-    }
+    // const deleteSet = () => {
+    //     const crSet = set +1;
+    //     setNewSets([...newSets.filter(item => item.set !== crSet)]);
+    // }
+
+    // const handleSet = () => {
+    //     const crSet = set +1;
+        
+    //     if (findSet(newSets, crSet)) {
+    //         setNewSets(currNewSets => {
+    //             return currNewSets.map(sets => {
+    //                 if (sets.set === crSet) {
+    //                     return {...sets, reps: reps, weight: weight}
+    //                 }
+    //                 return sets;
+    //             })
+    //         });
+    //     } else {
+    //         setNewSets([...newSets, {set: crSet, reps: reps, weight: weight}]);
+    //     }
+    // }
 
     const handleSet = () => {
-        const crSet = set +1;
-        
-        if (findSet(newSets, crSet)) {
-            setNewSets(currNewSets => {
-                return currNewSets.map(sets => {
-                    if (sets.set === crSet) {
-                        return {...sets, reps: reps, weight: weight}
-                    }
-                    return sets;
-                })
-            });
-        } else {
-            setNewSets([...newSets, {set: crSet, reps: reps, weight: weight}]);
-        }
+        setCurrentExercise( prevExercise => {
+            return prevExercise.map(cSet => {
+                if (cSet.set === set) {
+                    return {...cSet, reps: cReps, weight: cWeight};
+                }
+                return cSet;
+            })
+        })
     }
 
+    const deleteSet = () => console.log("hi");
 
     return (
         <tr>
-            <td>{set+1}</td>
+            <td>{set}</td>
             <td>
-                <input type="number" min="0" value={reps} onChange={handleRepsChange} onClick={handleRepClick} /><small>kg</small>
+                <input type="number" min="0" value={cWeight}  onChange={handleWeightChange} onClick={handleWeightClick} /><small>kg</small>
             </td>
             <td>
-                <input type="number" min="0" value={weight} onChange={handleWeightChange} onClick={handleWeightClick} />
+                <input type="number" min="0" value={cReps}  onChange={handleRepsChange} onClick={handleRepClick} />
             </td>
             <td>
                 <i className="fas fa-check" onClick={handleSet}></i>

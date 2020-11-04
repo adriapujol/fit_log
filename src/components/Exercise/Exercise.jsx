@@ -9,28 +9,39 @@ function Exercise({ workout }) {
 
     const [showHistory, setShowHistory] = useState(false);
     const [exerciseNumber, setExerciseNumber] = useState(0);
+    const [newSets, setNewSets] = useState([]);
+    const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+        return { set: (index + 1), reps: 0, weight: 0 }
+        })
+    );
 
     const handlePrevExercise = () => {
         if (exerciseNumber > 0) {
-            setExerciseNumber(currExerciseNumber => currExerciseNumber -1 )
+            setExerciseNumber(currExerciseNumber => currExerciseNumber -1 );
         } else {
-            setExerciseNumber(exercises.length-1)
+            setExerciseNumber(exercises.length-1);
         }
+        setCurrentExercise(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+            return { set: (index + 1), reps: 0, weight: 0 }
+            })
+        );
     }
 
     const handleNextExercise = () => {
         if (exerciseNumber < (exercises.length-1)) {
-            setExerciseNumber(currExerciseNumber => currExerciseNumber +1 )
+            setExerciseNumber(currExerciseNumber => currExerciseNumber +1 );
         } else {
-            setExerciseNumber(0)
-        }
- 
+            setExerciseNumber(0);
+        }        
     }
-    // console.log(exercises.length);
 
-    // useEffect(() => {
-    //     console.log("useEffect: " + exerciseNumber)
-    // }, [exerciseNumber])
+    useEffect(() => {
+        const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+            return { set: (index + 1), reps: 0, weight: 0 }
+            });
+        setCurrentExercise([...arr]);
+    }, [exerciseNumber])
+
 
     return (
         <div className="content">
@@ -56,7 +67,7 @@ function Exercise({ workout }) {
                     <History history={exercises[exerciseNumber].history} />
                     :
                     <>
-                        <ExerciseTable exercise={exercises[exerciseNumber]} />
+                        <ExerciseTable exercise={exercises[exerciseNumber]} newSets={newSets} setNewSets={setNewSets} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} />
                         <button className="btn btn-workout-add-set">+ add set</button>
                     </>
             }

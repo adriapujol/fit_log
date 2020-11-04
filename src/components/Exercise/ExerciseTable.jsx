@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import ExericseSet from './ExerciseSet';
 
-function ExerciseTable({ exercise }) {
+function ExerciseTable({ exercise, newSets, setNewSets, currentExercise, setCurrentExercise }) {
 
     const { name, sets, reps, history } = exercise;
+    // const [currentExercise, setCurrentExercise] = useState(new Array(sets).fill(0).map((item, index) => {
+    //     return { set: (index + 1), reps: 0, weight: 0 }
+    //     })
+    // );
+    
+    console.log(sets)
 
     console.log("THIS IS EXERCISE TALBE CHECK: " + history);
-    const [newSets, setNewSets] = useState([]);
 
-    const setNumber = new Array(sets).fill(0);
 
-    console.log("this is the set number: " + setNumber);
+    // const exerciseSets = setNumber.map((item, index) => {
+    //     return {set: (index+1), reps: 0, weight: 0}
+    // });
+
+    // setCurrentExercise([...exerciseSets]);
+
+    // console.log(exerciseSets);
 
     return (
         <table className="sets-table">
@@ -23,9 +33,9 @@ function ExerciseTable({ exercise }) {
                     <th></th>
                 </tr>
                 {
-                    setNumber.map((item, index) => <ExericseSet key={index} set={index} newSets={newSets} setNewSets={setNewSets} /> )
+                    currentExercise.map((item, index) => <ExericseSet key={index} set={item.set} reps={item.reps} weight={item.weight} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise}  newSets={newSets} setNewSets={setNewSets} />)
                 }
-                
+
             </tbody>
         </table>
     )
