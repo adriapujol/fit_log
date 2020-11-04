@@ -148,16 +148,16 @@ function App() {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
 
-        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
 
-        {workoutView || <ListView type="workout" currWorkout={currWorkout} list={workouts} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />}
+        {workoutView || <ListView type="workout" currWorkout={currWorkout} list={workouts} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />} */}
 
         {
           // Exercise, history
         }
-        {/* <Exercise workout={workouts[0]} /> */}
+        <Exercise workout={workouts[0]} />
 
       </main>
     </div>

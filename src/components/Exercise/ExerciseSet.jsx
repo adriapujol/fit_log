@@ -1,16 +1,5 @@
 import React, { useState} from 'react';
 
-const findExercise = (name, list) => {
-    let i = 0;
-
-    while(i < list.length) {
-        if (list[i].name === name ) break;
-        i++;
-    }
-    return i;
-}
-
-
 function ExerciseSet({ set, newSets, setNewSets }) {
 
     const [reps, setReps] = useState(0);
@@ -21,20 +10,39 @@ function ExerciseSet({ set, newSets, setNewSets }) {
     const handleRepClick = () => setReps("");
     const handleWeightClick = () => setWeight("");
 
+    const findSet = (list, set) => {
+        let found = false;
+        let i = 0;
+        while (i < list.length) {
+            if(list[i].set === set) {
+                found = true;
+                break;
+            }
+            i++;
+        }
+        return found;
+    };
+
+    const deleteSet = () => {
+        const crSet = set +1;
+        setNewSets([...newSets.filter(item => item.set !== crSet)]);
+    }
+
     const handleSet = () => {
-
-        setNewSets([...newSets, {reps: reps, weight: weight}]);
-        // const exerciseIndex = findExercise(exerciseName, newHistory);
-        // console.log(exerciseIndex);
-        // newHistory[exerciseIndex].history.sets.push({reps: reps, weight: weight});
-        // setExerciseHistory(newHistory);
-        // newHistory.unshift({date: "03/11/2020", sets: []});
-        // newHistory[0].sets.push({reps: reps, weight: weight});
-        console.log(newSets);
-        // newHistory[set].weight = weight;
-
-        // setExerciseHistory(newHistory);
-
+        const crSet = set +1;
+        
+        if (findSet(newSets, crSet)) {
+            setNewSets(currNewSets => {
+                return currNewSets.map(sets => {
+                    if (sets.set === crSet) {
+                        return {...sets, reps: reps, weight: weight}
+                    }
+                    return sets;
+                })
+            });
+        } else {
+            setNewSets([...newSets, {set: crSet, reps: reps, weight: weight}]);
+        }
     }
 
 
@@ -51,7 +59,7 @@ function ExerciseSet({ set, newSets, setNewSets }) {
                 <i className="fas fa-check" onClick={handleSet}></i>
             </td>
             <td>
-                <i className="fas fa-times"></i>
+                <i className="fas fa-times" onClick={deleteSet}></i>
             </td>
         </tr>
     )
