@@ -35,6 +35,10 @@ function Exercise({ workout }) {
         }        
     }
 
+    const handleAddSet = () => {
+        setCurrentExercise([...currentExercise, {set: currentExercise.length+1, reps: 0, weight: 0}])
+    }
+
     useEffect(() => {
         const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
@@ -67,8 +71,8 @@ function Exercise({ workout }) {
                     <History history={exercises[exerciseNumber].history} />
                     :
                     <>
-                        <ExerciseTable exercise={exercises[exerciseNumber]} newSets={newSets} setNewSets={setNewSets} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} />
-                        <button className="btn btn-workout-add-set">+ add set</button>
+                        <ExerciseTable exercise={exercises[exerciseNumber]} newSets={newSets} setNewSets={setNewSets} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} exerciseNumber={exerciseNumber}/>
+                        <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
                     </>
             }
 

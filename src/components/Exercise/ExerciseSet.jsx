@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, newSets, setNewSets }) {
+function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, newSets, setNewSets, exerciseNumber }) {
 
     const [cReps, setCReps] = useState(0);
     const [cWeight, setCWeight] = useState(0);
+    const [setSaved, setSetSaved] = useState(false);
 
-    
+
     // const handleRepsChange = e => setCurrentExercise(prevCurrentExercise => {
     //         return prevCurrentExercise.map(cSet => {
     //             if (cSet === set) {
@@ -14,19 +15,29 @@ function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, n
     //             return cSet;
     //         })
     // });
-    
-    
+
+
     const handleRepsChange = e => setCReps(e.target.value);
     const handleWeightChange = e => setCWeight(e.target.value);
-    const handleRepClick = () => setCReps("");
-    const handleWeightClick = () => setCWeight("");
+    const handleRepClick = () => {
+        setCReps("");
+        setSetSaved(false);
+    };
+    const handleWeightClick = () => {
+        setCWeight("");
+        setSetSaved(false);
+    };
 
+    useEffect(() => {
+        setCReps(0);
+        setCWeight(0);
+    }, [exerciseNumber])
 
     const findSet = (list, set) => {
         let found = false;
         let i = 0;
         while (i < list.length) {
-            if(list[i].set === set) {
+            if (list[i].set === set) {
                 found = true;
                 break;
             }
@@ -35,6 +46,7 @@ function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, n
         return found;
     };
 
+
     // const deleteSet = () => {
     //     const crSet = set +1;
     //     setNewSets([...newSets.filter(item => item.set !== crSet)]);
@@ -42,7 +54,7 @@ function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, n
 
     // const handleSet = () => {
     //     const crSet = set +1;
-        
+
     //     if (findSet(newSets, crSet)) {
     //         setNewSets(currNewSets => {
     //             return currNewSets.map(sets => {
@@ -58,32 +70,46 @@ function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, n
     // }
 
     const handleSet = () => {
-        setCurrentExercise( prevExercise => {
+        setCurrentExercise(prevExercise => {
             return prevExercise.map(cSet => {
                 if (cSet.set === set) {
-                    return {...cSet, reps: cReps, weight: cWeight};
+                    return { ...cSet, reps: cReps, weight: cWeight };
                 }
                 return cSet;
             })
         })
+        setSetSaved(true);
     }
 
-    const deleteSet = () => console.log("hi");
+
+    const deleteSet = () => {
+        setCurrentExercise(prevExercise => {
+            return prevExercise.filter(cSet => {
+                if (cSet.set !== set) {
+                    return cSet;
+                }
+            })
+        });
+
+    };
 
     return (
-        <tr>
+        <tr className={setSaved ? "saved-set" : ""}>
             <td>{set}</td>
             <td>
-                <input type="number" min="0" value={cWeight}  onChange={handleWeightChange} onClick={handleWeightClick} /><small>kg</small>
+                <input type="number" min="0" value={cWeight} onChange={handleWeightChange} onClick={handleWeightClick} /><small>kg</small>
             </td>
             <td>
-                <input type="number" min="0" value={cReps}  onChange={handleRepsChange} onClick={handleRepClick} />
+                <input type="number" min="0" value={cReps} onChange={handleRepsChange} onClick={handleRepClick} />
             </td>
             <td>
                 <i className="fas fa-check" onClick={handleSet}></i>
             </td>
             <td>
-                <i className="fas fa-times" onClick={deleteSet}></i>
+                {
+                    set !== currentExercise.length || <i className="fas fa-times" onClick={deleteSet}></i>
+
+                }
             </td>
         </tr>
     )

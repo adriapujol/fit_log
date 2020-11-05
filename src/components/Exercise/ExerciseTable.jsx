@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ExericseSet from './ExerciseSet';
 
-function ExerciseTable({ exercise, newSets, setNewSets, currentExercise, setCurrentExercise }) {
+function ExerciseTable({ exercise, newSets, setNewSets, currentExercise, setCurrentExercise, exerciseNumber }) {
 
     const { name, sets, reps, history } = exercise;
     // const [currentExercise, setCurrentExercise] = useState(new Array(sets).fill(0).map((item, index) => {
@@ -33,7 +33,7 @@ function ExerciseTable({ exercise, newSets, setNewSets, currentExercise, setCurr
                     <th></th>
                 </tr>
                 {
-                    currentExercise.map((item, index) => <ExericseSet key={index} set={item.set} reps={item.reps} weight={item.weight} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise}  newSets={newSets} setNewSets={setNewSets} />)
+                    currentExercise.map((item, index) => <ExericseSet key={index} set={item.set} reps={item.reps} weight={item.weight} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise}  newSets={newSets} setNewSets={setNewSets} exerciseNumber={exerciseNumber}/>)
                 }
 
             </tbody>
