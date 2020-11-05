@@ -9,7 +9,6 @@ function Exercise({ workout }) {
 
     const [showHistory, setShowHistory] = useState(false);
     const [exerciseNumber, setExerciseNumber] = useState(0);
-    const [newSets, setNewSets] = useState([]);
     const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
         return { set: (index + 1), reps: 0, weight: 0 }
         })
@@ -71,7 +70,7 @@ function Exercise({ workout }) {
                     <History history={exercises[exerciseNumber].history} />
                     :
                     <>
-                        <ExerciseTable exercise={exercises[exerciseNumber]} newSets={newSets} setNewSets={setNewSets} currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} exerciseNumber={exerciseNumber}/>
+                        <ExerciseTable currentExercise={currentExercise} setCurrentExercise={setCurrentExercise} exerciseNumber={exerciseNumber}/>
                         <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
                     </>
             }

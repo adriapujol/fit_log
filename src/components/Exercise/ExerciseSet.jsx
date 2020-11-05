@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, newSets, setNewSets, exerciseNumber }) {
+function ExerciseSet({ set, currentExercise, setCurrentExercise, exerciseNumber }) {
 
     const [cReps, setCReps] = useState(0);
     const [cWeight, setCWeight] = useState(0);
     const [setSaved, setSetSaved] = useState(false);
-
-
-    // const handleRepsChange = e => setCurrentExercise(prevCurrentExercise => {
-    //         return prevCurrentExercise.map(cSet => {
-    //             if (cSet === set) {
-    //                 return {...cSet, reps: e.target.value}
-    //             }
-    //             return cSet;
-    //         })
-    // });
 
 
     const handleRepsChange = e => setCReps(e.target.value);
@@ -33,41 +23,6 @@ function ExerciseSet({ set, reps, weight, currentExercise, setCurrentExercise, n
         setCWeight(0);
     }, [exerciseNumber])
 
-    const findSet = (list, set) => {
-        let found = false;
-        let i = 0;
-        while (i < list.length) {
-            if (list[i].set === set) {
-                found = true;
-                break;
-            }
-            i++;
-        }
-        return found;
-    };
-
-
-    // const deleteSet = () => {
-    //     const crSet = set +1;
-    //     setNewSets([...newSets.filter(item => item.set !== crSet)]);
-    // }
-
-    // const handleSet = () => {
-    //     const crSet = set +1;
-
-    //     if (findSet(newSets, crSet)) {
-    //         setNewSets(currNewSets => {
-    //             return currNewSets.map(sets => {
-    //                 if (sets.set === crSet) {
-    //                     return {...sets, reps: reps, weight: weight}
-    //                 }
-    //                 return sets;
-    //             })
-    //         });
-    //     } else {
-    //         setNewSets([...newSets, {set: crSet, reps: reps, weight: weight}]);
-    //     }
-    // }
 
     const handleSet = () => {
         setCurrentExercise(prevExercise => {
