@@ -128,13 +128,25 @@ function App() {
   const [currWorkout, setCurrWorkout] = useState({});
 
 
+  const getCurrentDate = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const padded_month = month <= 9 ? "0" + month : month;
+    const padded_day= day <= 9 ? "0" + day : day;
+  
+
+    return `${padded_day }/${padded_month}/${year}`;
+  }
+
   const handleSaveWorkout = (workout) => {
     setWorkingWorkout(workout);
 
     setExercises(prevExercises => {
 
-      // CREATE NEW DATE format dd/mm/yyyy
-      const currentDate = "12/12/2020";
+      const currentDate = getCurrentDate();
       return prevExercises.map(crEx => {
         for (let i = 0; i < workout.length; i++) {
           if (workout[i].name === crEx.name) {
