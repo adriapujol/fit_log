@@ -48,15 +48,19 @@ function Workout({ workout }) {
 
             if (exerciseIndex === -1) {
                 return [...prevCurrWorkout, { name: exercises[exerciseNumber].name, sets: currentExercise }]
+            } else {
+                const wk = [...prevCurrWorkout];
+                wk[exerciseIndex].sets = [...currentExercise];
+                return wk;
             }
 
-            return prevCurrWorkout.map(currEx => {
-                if (currEx.name === exercises[exerciseNumber].name) {
-                    return { ...currEx, sets: currentExercise };
-                } else {
-                    return { name: exercises[exerciseNumber].name, sets: currentExercise };
-                }
-            })
+            // return prevCurrWorkout.map(currEx => {
+            //     if (currEx.name === exercises[exerciseNumber].name) {
+            //         return { ...currEx, sets: currentExercise };
+            //     } else {
+            //         return { name: exercises[exerciseNumber].name, sets: currentExercise };
+            //     }
+            // })
         })
     }
 
