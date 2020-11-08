@@ -43,14 +43,20 @@ function Workout({ workout, setWorkingWorkout }) {
 
         setCurrWorkout(prevCurrWorkout => {
             
-            let exerciseName= exercises[exerciseNumber].name;
-            let exerciseIndex = prevCurrWorkout.findIndex((item) => item.name === exerciseName);
+            const exerciseName= exercises[exerciseNumber].name;
+            const exerciseIndex = prevCurrWorkout.findIndex((item) => item.name === exerciseName);
+            const cleanSets = currentExercise.filter(set => set.reps > 0);
+
+            if (cleanSets.length === 0) {
+                alert("don't have any working sets");
+                return prevCurrWorkout;
+            }
 
             if (exerciseIndex === -1) {
-                return [...prevCurrWorkout, { name: exerciseName, sets: currentExercise }]
+                return [...prevCurrWorkout, { name: exerciseName, sets: cleanSets }]
             } else {
                 const wk = [...prevCurrWorkout];
-                wk[exerciseIndex].sets = [...currentExercise];
+                wk[exerciseIndex].sets = [...cleanSets];
                 return wk;
             }
         })
