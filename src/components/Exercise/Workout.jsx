@@ -3,7 +3,7 @@ import History from './History';
 import ExerciseTable from './ExerciseTable';
 import './Workout.scss';
 
-function Workout({ workout }) {
+function Workout({ workout, setWorkingWorkout }) {
 
     const { name, last_day, exercises } = workout;
 
@@ -42,26 +42,26 @@ function Workout({ workout }) {
     const handleSaveWorkout = () => {
 
         setCurrWorkout(prevCurrWorkout => {
-            console.log(prevCurrWorkout);
-
-            let exerciseIndex = prevCurrWorkout.findIndex((item) => item.name === exercises[exerciseNumber].name);
+            
+            let exerciseName= exercises[exerciseNumber].name;
+            let exerciseIndex = prevCurrWorkout.findIndex((item) => item.name === exerciseName);
 
             if (exerciseIndex === -1) {
-                return [...prevCurrWorkout, { name: exercises[exerciseNumber].name, sets: currentExercise }]
+                return [...prevCurrWorkout, { name: exerciseName, sets: currentExercise }]
             } else {
                 const wk = [...prevCurrWorkout];
                 wk[exerciseIndex].sets = [...currentExercise];
                 return wk;
             }
-
-            // return prevCurrWorkout.map(currEx => {
-            //     if (currEx.name === exercises[exerciseNumber].name) {
-            //         return { ...currEx, sets: currentExercise };
-            //     } else {
-            //         return { name: exercises[exerciseNumber].name, sets: currentExercise };
-            //     }
-            // })
         })
+    }
+
+    const handleFinishWorkout = current_workout => {
+        setWorkingWorkout(current_workout);
+        setCurrWorkout([]);
+        setCurrentExercise(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+            return { set: (index + 1), reps: 0, weight: 0 }
+        }));
     }
 
     useEffect(() => {
@@ -114,7 +114,7 @@ function Workout({ workout }) {
 
             <div className="btn-list-view btn-low-box">
                 <button className="btn">Cancel</button>
-                <button className="btn">Finish Workout</button>
+                <button className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</button>
             </div>
 
 

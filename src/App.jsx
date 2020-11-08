@@ -27,7 +27,7 @@ function App() {
           name: "Tricep extension",
           sets: 2,
           reps: 15
-        }     
+        }
       ]
     },
     {
@@ -124,7 +124,30 @@ function App() {
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
-  // const [currWorkout, setCurrWorkout] = useState({});
+  const [workingWorkout, setWorkingWorkout] = useState([]);
+  const [currWorkout, setCurrWorkout] = useState({});
+
+
+  const handleSaveWorkout = (workout) => {
+    setWorkingWorkout(workout);
+
+    setExercises(prevExercises => {
+
+      // CREATE NEW DATE format dd/mm/yyyy
+      const currentDate = "12/12/2020";
+      return prevExercises.map(crEx => {
+        for (let i = 0; i < workout.length; i++) {
+          if (workout[i].name === crEx.name) {
+            let currExHistory = [ {day: currentDate, sets: [...workout[i].sets]} ,...crEx.history]
+            return {...crEx, history: currExHistory};
+          }
+        }
+        return crEx; 
+      })
+
+    })
+
+  }
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -162,7 +185,7 @@ function App() {
         {
           // Exercise, history
         }
-        <Workout workout={workouts[0] } />
+        <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} />
 
       </main>
     </div>
