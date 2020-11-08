@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
-import Exercise from './components/Exercise/Exercise';
+import Workout from './components/Exercise/Workout';
 
 
 
@@ -22,7 +22,12 @@ function App() {
           name: "Military press",
           sets: 3,
           reps: 5
-        }    
+        },
+        {
+          name: "Tricep extension",
+          sets: 2,
+          reps: 15
+        }     
       ]
     },
     {
@@ -119,7 +124,7 @@ function App() {
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
-  const [currWorkout, setCurrWorkout] = useState(0);
+  // const [currWorkout, setCurrWorkout] = useState({});
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -157,7 +162,7 @@ function App() {
         {
           // Exercise, history
         }
-        <Exercise workout={workouts[0]} />
+        <Workout workout={workouts[0] } />
 
       </main>
     </div>

@@ -41,17 +41,18 @@ i {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0em 1em;
-
+    background-color: #dddada;
 
     .small-btn {
         padding: 0.5em 0.75em;
         font-size: 1em;
-
     }
-
+    
     .active {
-        background-color:  #900000;
+        // background-color: #c5c5c5;
+        border-bottom: 2px solid #db0000;
     }
 }
 
@@ -73,10 +74,15 @@ table {
     }
 
     tbody {
+
+        th:first-child, td:first-child {
+            padding-left: 0.75em;
+        }
         
         th {
             padding-bottom: 0.5em;
         }
+
         td {
             text-align: center;
             padding: 0.5em 0;

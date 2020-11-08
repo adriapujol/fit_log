@@ -21,6 +21,7 @@ function ExerciseSet({ set, currentExercise, setCurrentExercise, exerciseNumber 
     useEffect(() => {
         setCReps(0);
         setCWeight(0);
+        setSetSaved(false);
     }, [exerciseNumber])
 
 
