@@ -24,7 +24,7 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
         alert("Wrong type");
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = e => {
         e.preventDefault();
         if (newName === "") {
             alert("Chose a name");
@@ -34,8 +34,9 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
             setList(prevWorkout => {
                 return prevWorkout.map(workout => {
                     if (workout.name === list.name) {
-                        const newExercises = [...list.exercises, newData];
-                        return { ...workout, exercises: newExercises }
+                        let newExercises = workout.exercises.filter(exercise => exercise.name !== newData.name);
+
+                        return { ...workout, exercises: [...newExercises, newData] }
                     }
                     return workout;
                 })
@@ -44,51 +45,16 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
             setNewSets(0);
             setNewSets(0);
             setModalClicked(false);
-        }
-        if (type === "exercises") {
+        } else {
             setList([...list, newData]);
             setNewName("");
             setModalClicked(false);
         }
-        if (type === "workouts") {
-            setList([...list, newData]);
-            setNewName("");
-            setModalClicked(false);
-        }
+
     }
 
 
-    // const handleSubmitList = e => {
-    //     e.preventDefault();
-    //     if (newName === "") {
-    //         alert("Chose a name");
-    //         return;
-    //     }
-    //     setList([...list, newData]);
-    //     setNewName("");
-    //     setModalClicked(false);
-    // }
-
-    // const handleSubmitWorkout = e => {
-    //     e.preventDefault();
-    //     if (newName === "") {
-    //         alert("Chose an exercise");
-    //         return;
-    //     }
-
-    //     //Changing props like this is OK??? asking for a friend
-    //     const newWorkout = list[currWorkout];
-    //     newWorkout[currWorkout].exercises.push(newData);
-    //     setList([...newWorkout]);
-    //     setNewName("");
-    //     setNewSets(0);
-    //     setNewSets(0);
-    //     setModalClicked(false);
-    // }
-
-
     let modal_content;
-
 
     if (type !== "workout") {
 
