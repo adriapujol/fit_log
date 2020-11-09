@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseList }) {
+function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
 
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);
@@ -15,42 +15,76 @@ function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseL
     let newData;
 
     if (type === "workouts") {
-        newData = { name: newName, last_day: "25/12/2020", exercises: [] };
+        newData = { name: newName, last_day: "", exercises: [] };
     } else if (type === "workout") {
         newData = { name: newName, sets: newSets, reps: newReps }
     } else if (type === "exercises") {
-        newData = {name: newName, history: []}
+        newData = { name: newName, history: [] }
     } else {
         alert("Wrong type");
     }
 
-    const handleSubmitList = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (newName === "") {
             alert("Chose a name");
             return;
         }
-        setList([...list, newData]);
-        setNewName("");
-        setModalClicked(false);
-    }
-
-    const handleSubmitWorkout = e => {
-        e.preventDefault();
-        if (newName === "") {
-            alert("Chose an exercise");
-            return;
+        if (type === "workout") {
+            setList(prevWorkout => {
+                return prevWorkout.map(workout => {
+                    if (workout.name === list.name) {
+                        const newExercises = [...list.exercises, newData];
+                        return { ...workout, exercises: newExercises }
+                    }
+                    return workout;
+                })
+            });
+            setNewName("");
+            setNewSets(0);
+            setNewSets(0);
+            setModalClicked(false);
         }
-
-        //Changing props like this is OK??? asking for a friend
-        const newWorkout = list[currWorkout];
-        list[currWorkout].exercises.push(newData);
-        setList([...list]);
-        setNewName("");
-        setNewSets(0);
-        setNewSets(0);
-        setModalClicked(false);
+        if (type === "exercises") {
+            setList([...list, newData]);
+            setNewName("");
+            setModalClicked(false);
+        }
+        if (type === "workouts") {
+            setList([...list, newData]);
+            setNewName("");
+            setModalClicked(false);
+        }
     }
+
+
+    // const handleSubmitList = e => {
+    //     e.preventDefault();
+    //     if (newName === "") {
+    //         alert("Chose a name");
+    //         return;
+    //     }
+    //     setList([...list, newData]);
+    //     setNewName("");
+    //     setModalClicked(false);
+    // }
+
+    // const handleSubmitWorkout = e => {
+    //     e.preventDefault();
+    //     if (newName === "") {
+    //         alert("Chose an exercise");
+    //         return;
+    //     }
+
+    //     //Changing props like this is OK??? asking for a friend
+    //     const newWorkout = list[currWorkout];
+    //     newWorkout[currWorkout].exercises.push(newData);
+    //     setList([...newWorkout]);
+    //     setNewName("");
+    //     setNewSets(0);
+    //     setNewSets(0);
+    //     setModalClicked(false);
+    // }
 
 
     let modal_content;
@@ -113,7 +147,7 @@ function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseL
 
     return (
         <div className="modal">
-            <form className="modal-form" onSubmit={type === "workout" ? handleSubmitWorkout : handleSubmitList}>
+            <form className="modal-form" onSubmit={handleSubmit}>
                 <div className="close-modal" onClick={() => setModalClicked(false)}>
                     <i className="fas fa-times"></i>
                 </div>

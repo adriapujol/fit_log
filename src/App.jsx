@@ -208,7 +208,7 @@ function App() {
         {
           // Exercise, history
         }
-        <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} />
+        {/* <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} /> */}
 
       </main>
     </div>
