@@ -63,7 +63,7 @@ function Workout({ workout, setWorkingWorkout }) {
     }
 
     const handleFinishWorkout = current_workout => {
-        setWorkingWorkout(current_workout);
+        setWorkingWorkout(name, current_workout);
         setCurrWorkout([]);
         setCurrentExercise(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }

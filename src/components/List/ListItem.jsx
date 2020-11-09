@@ -1,13 +1,17 @@
 import React from 'react'
 
-function ListItem({ type, listItem, list, currWorkout, setList, workoutsList, handleDeleteListItem }) {
+function ListItem({ type, listItem, workoutName, handleDeleteListItem }) {
     // onClick={type === "workout" ? handleDeleteWorkoutExercise : handleDeleteList
 
-    const handleDeleteItem = () => {
-        console.log(list);
-        handleDeleteItem(type, list, listItem.name);
-        console.log(list);
-    }
+    // const handleDeleteItem = () => {
+    //     console.log(list);
+    //     handleDeleteItem(type, list, listItem.name);
+    //     console.log(list);
+    // }
+
+    // const handleDeleteItem = (name) => {
+    //     handleDele
+    // }
 
     return (
         <li className="list-item">
@@ -27,7 +31,7 @@ function ListItem({ type, listItem, list, currWorkout, setList, workoutsList, ha
 
                     }
                 </small>
-                <div className="delete-item" onClick={() => handleDeleteListItem(type, list, listItem.name)} >
+                <div className="delete-item" onClick={() => handleDeleteListItem(type, listItem.name, workoutName)} >
                     <i className="fas fa-times"></i>
                 </div>
             </div>

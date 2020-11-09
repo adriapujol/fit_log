@@ -26,15 +26,19 @@ function ExerciseSet({ set, currentExercise, setCurrentExercise, exerciseNumber 
 
 
     const handleSet = () => {
-        setCurrentExercise(prevExercise => {
-            return prevExercise.map(cSet => {
-                if (cSet.set === set) {
-                    return { ...cSet, reps: cReps, weight: cWeight };
-                }
-                return cSet;
+        if (cReps === 0) {
+            alert("You need to do some reps");
+        } else {
+            setCurrentExercise(prevExercise => {
+                return prevExercise.map(cSet => {
+                    if (cSet.set === set) {
+                        return { ...cSet, reps: cReps, weight: cWeight };
+                    }
+                    return cSet;
+                })
             })
-        })
-        setSetSaved(true);
+            setSetSaved(true);
+        }
     }
 
 

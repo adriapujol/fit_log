@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseList, workoutsList }) {
+function AddModal({ type, currWorkout, list, setList, setModalClicked, exerciseList }) {
 
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);

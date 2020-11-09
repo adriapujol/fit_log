@@ -33,7 +33,13 @@ function App() {
     {
       name: "Pull",
       last_day: "1/1/2020",
-      exercises: []
+      exercises: [
+        {
+          name: "Pull ups",
+          sets: 5,
+          reps: 5
+        }
+      ]
     },
     {
       name: "Legs",
@@ -124,7 +130,6 @@ function App() {
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
-  const [workingWorkout, setWorkingWorkout] = useState([]);
   const [currWorkout, setCurrWorkout] = useState({});
 
 
@@ -135,26 +140,32 @@ function App() {
     const year = date.getFullYear();
 
     const padded_month = month <= 9 ? "0" + month : month;
-    const padded_day= day <= 9 ? "0" + day : day;
-  
+    const padded_day = day <= 9 ? "0" + day : day;
 
-    return `${padded_day }/${padded_month}/${year}`;
+
+    return `${padded_day}/${padded_month}/${year}`;
   }
 
-  const handleSaveWorkout = (workout) => {
-    setWorkingWorkout(workout);
+  const handleSaveWorkout = (name, workout) => {
+    const currentDate = getCurrentDate();
+    setWorkouts(prevWorkouts => prevWorkouts.map(workout => {
+      if (workout.name === name) {
+        return { ...workout, last_day: currentDate };
+      }
+      return workout;
+    })
+    )
 
     setExercises(prevExercises => {
 
-      const currentDate = getCurrentDate();
       return prevExercises.map(crEx => {
         for (let i = 0; i < workout.length; i++) {
           if (workout[i].name === crEx.name) {
-            let currExHistory = [ {day: currentDate, sets: [...workout[i].sets]} ,...crEx.history]
-            return {...crEx, history: currExHistory};
+            let currExHistory = [{ day: currentDate, sets: [...workout[i].sets] }, ...crEx.history]
+            return { ...crEx, history: currExHistory };
           }
         }
-        return crEx; 
+        return crEx;
       })
 
     })
@@ -188,11 +199,11 @@ function App() {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
 
-        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
-        {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} />}
+        {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />}
 
-        {workoutView || <ListView type="workout" currWorkout={currWorkout} list={workouts} setList={setWorkouts} exerciseList={exercises} workoutsList={workouts} />} */}
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />}
 
         {
           // Exercise, history

@@ -1,20 +1,31 @@
 import React from 'react';
 import ListItem from './ListItem.jsx';
 
-function List({ type, currWorkout, list, setList, workoutsList }) {
+function List({ type, list, setList, setSecondList }) {
 
-    const workingList = type !== "workout" ? list : list[currWorkout].exercises;
+    const workingList = type === "workout" ? list.exercises : list;
 
-    const handleDeleteList = (t, l, n) => {
-        if (t !== "workout") {
-            setList(l.filter(item => item.name !== n));
+    const handleDeleteList = (t, n, ln = "") => {
+        if (t === "workouts") {
+            setList(prevList => prevList.filter(item => item.name !== n));
         } else if (t === "workout") {
-
-            // const workoutPosition = wl.findIndex(w => w.name === wn);
-            // wl[workoutPosition].exercises = l.filter(item => item.name !== n)
-            // setList([...wl]);
+            setList(prevList => {               
+                return prevList.map(workout => {
+                    if(workout.name === ln) {
+                        return {...workout, exercises: [...workout.exercises.filter(item => item.name !== n)]};
+                    }
+                    return workout;
+                });
+            })
+        } else if (t === "exercises") {
+            setList(prevList => prevList.filter(item => item.name !== n));
+            setSecondList(prevSecondList => {
+                return prevSecondList.map(workout => {
+                    const newExercises = workout.exercises.filter(exercise => exercise.name !== n);
+                    return {...workout, exercises: [...newExercises]}
+                })
+            })
         }
-        console.log(l);
     }
 
     // const handleDeleteWorkoutExercise = () => {
@@ -33,10 +44,7 @@ function List({ type, currWorkout, list, setList, workoutsList }) {
                                                     key={index} 
                                                     type={type} 
                                                     listItem={item} 
-                                                    list={list}
-                                                    currWorkout={currWorkout} 
-                                                    setList={setList} 
-                                                    workoutsList={workoutsList}
+                                                    workoutName={list.name}
                                                     handleDeleteListItem={handleDeleteList} />)
             }
         </ul>
