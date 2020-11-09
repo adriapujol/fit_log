@@ -190,7 +190,7 @@ function App() {
       return prevExercises.map(crEx => {
         for (let i = 0; i < workout.length; i++) {
           if (workout[i].name === crEx.name) {
-            let currExHistory = [{ day: currentDate, sets: [...workout[i].sets] }, ...crEx.history]
+            let currExHistory = [{ date: currentDate, sets: [...workout[i].sets] }, ...crEx.history]
             return { ...crEx, history: currExHistory };
           }
         }
