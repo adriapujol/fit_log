@@ -3,7 +3,7 @@ import History from './History';
 import ExerciseTable from './ExerciseTable';
 import './Workout.scss';
 
-function Workout({ workout, setWorkingWorkout }) {
+function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     const { name, last_day, exercises } = workout;
 
@@ -14,6 +14,19 @@ function Workout({ workout, setWorkingWorkout }) {
         return { set: (index + 1), reps: 0, weight: 0 }
     })
     );
+
+    const filterByName = (arr, arrFilter) => {
+        return arr.filter(item => {
+            let found = false;
+            for (let it of arrFilter) {
+                if (it.name === item.name) found = true;
+            }
+            return found;
+        })
+    }
+    const filtered_exerciseList = filterByName(exerciseList, exercises);
+    const history = filtered_exerciseList.find(exercise => exercise.name === exercises[exerciseNumber].name).history;
+    console.log(history);
 
     const handlePrevExercise = () => {
         if (exerciseNumber > 0) {
@@ -103,8 +116,8 @@ function Workout({ workout, setWorkingWorkout }) {
 
             {
                 showHistory ?
-                    // <History history={exercises[exerciseNumber].history} />
-                    "THIS IS HISTORY"
+                    <History history={history} />
+                    // "THIS IS HISTORY"
                     :
                     <>
                         <ExerciseTable

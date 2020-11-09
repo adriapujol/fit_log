@@ -110,8 +110,33 @@ function App() {
       history: []
     },
     {
-      name: "Military press",
+      name: "Tricep extension",
       history: []
+    },
+    {
+      name: "Military press",
+      history: [
+        {
+          date: "11/04/1920",
+          sets: [
+            {
+              set: 1,
+              reps: 5,
+              weight: 20
+            },
+            {
+              set: 2,
+              reps: 5,
+              weight: 24
+            },
+            {
+              set: 3,
+              reps: 3,
+              weight: 25
+            }
+          ]
+        },
+      ]
     },
     {
       name: "Incline dumbbell press",
@@ -121,6 +146,10 @@ function App() {
       name: "Bicep curls",
       history: []
     },
+    {
+      name: "Pull ups",
+      hisotyr: []
+    }
 
   ];
 
@@ -198,17 +227,17 @@ function App() {
         {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
-
+        {/* 
         {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />}
 
-        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />}
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />} */}
 
         {
           // Exercise, history
         }
-        {/* <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} /> */}
+        <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
 
       </main>
     </div>
