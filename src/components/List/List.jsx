@@ -28,15 +28,6 @@ function List({ type, list, setList, setSecondList }) {
         }
     }
 
-    // const handleDeleteWorkoutExercise = () => {
-    //     // const workouts = workoutsList;
-    //     const newExerciseList = list.exercises.filter(item => item.name !== listItem.name);
-    //     const workoutPosition = workoutsList.findIndex(w => w.name === list.name);
-    //     workoutsList[workoutPosition].exercises = [...newExerciseList];
-    //     setList(workoutsList);
-
-    // }
-
     return (
         <ul className="list">
             {

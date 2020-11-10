@@ -159,7 +159,7 @@ function App() {
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
-  const [currWorkout, setCurrWorkout] = useState({});
+
 
 
   const getCurrentDate = () => {
@@ -227,12 +227,12 @@ function App() {
         {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
-        {/* 
+        
         {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
 
         {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />}
 
-        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />} */}
+        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />}
 
         {
           // Exercise, history
