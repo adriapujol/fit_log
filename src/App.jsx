@@ -3,6 +3,7 @@ import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Exercise/Workout';
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 
 
 
@@ -159,6 +160,8 @@ function App() {
   const [exercises, setExercises] = useState(exercise_list);
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
+  const [currWorkoutName, setCurrWorkoutName] = useState("Push");
+  const { path, url } = useRouteMatch();
 
 
 
@@ -212,6 +215,8 @@ function App() {
   const workoutsView = false;
   const exercisesView = false;
   const workoutView = false;
+  let currW = workouts.find(w => w.name === currWorkoutName);
+  console.log(currW);
 
   return (
     <div className="App">
@@ -227,17 +232,29 @@ function App() {
         {
           // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
         }
-        
-        {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />}
+        <Switch>
+          <Route exact path={["/", "/workouts"]}>
+            <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+          </Route>
+          <Route exact path={"/exercises"}>
+            <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />
+          </Route>
 
-        {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />}
+          <Route path={`/workouts/:itemName`}>
+            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} url={url} />
+          </Route>
+        </Switch>
 
-        {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />}
+        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />} */}
+
+        {/* {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />} */}
+
+        {/* {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />} */}
 
         {
           // Exercise, history
         }
-        <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+        {/* <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} /> */}
 
       </main>
     </div>
