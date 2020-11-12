@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+$navbar-height: 7vh;
+$links-height: calc(100vh - #{$navbar-height});
+
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-height: $links-height;
+
+    .list-title {
+        margin: 0.5em 0;
+        font-size: 1.5em;
+        text-transform: capitalize;
+    }
+}
+
+.modal {
+
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .modal-form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        padding: 2.5em 2em;
+        background-color: white;
+        // box-shadow: 1px 5px 10px 10px rgba(0, 0, 0, 0.4);
+
+        .close-modal {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 1.5em;
+            color: #575757;
+        }
+    
+        input, select {
+            padding: 0.5em;
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+
+        .sets-reps-inputs {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .number-input-box {
+
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    width: 110px;
+                }
+            }
+
+        }
+        
+        button {
+            width: 100px;
+        }
+
+        .confirm-title {
+            font-weight: 700;
+            font-size: 1.5em;
+        }
+
+        .confirm-text {
+            // width: 80%;
+            padding: 1em 0em 2em 0em;
+            text-align: center;
+        }
+
+        .confirm-cancel-btn-box {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+
+            button {
+                
+            }
+
+            .cancel-btn {
+
+            }
+        }
+    }
+}
+
+
+.btn {
+    padding: 0.75em;
+    background-color: #db0000;
+    color: white;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #900000;
+    }
+}
+
+.btn-list-view {
+    margin-top: auto;
+    margin-bottom: 2em;
+}
+
+ul {
+    list-style-type: none;
+}

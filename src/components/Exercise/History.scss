@@ -1,0 +1,35 @@
+.history {
+    width: 100%;
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .history-log {
+        width: 100%;
+
+        .date {
+            border-bottom: 2px solid #db0000;
+            h4 {
+                margin-left: 1em;
+            }
+        }
+
+        .sets {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 0 1em 1em 1em;
+
+            .set {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+
+    .no-history {
+        margin-top: 3em;
+    }
+}
