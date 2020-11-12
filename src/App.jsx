@@ -3,7 +3,8 @@ import './App.scss';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Exercise/Workout';
-import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
+import ExerciseView from './components/Exercise/ExerciseView';
+import { Link, Route, Switch, useRouteMatch, useParams, useLocation } from "react-router-dom";
 
 
 
@@ -149,7 +150,7 @@ function App() {
     },
     {
       name: "Pull ups",
-      hisotyr: []
+      history: []
     }
 
   ];
@@ -161,8 +162,17 @@ function App() {
   const [workouts, setWorkouts] = useState(workout_list);
   const [currType, setCurrType] = useState("workouts");
   const [currWorkoutName, setCurrWorkoutName] = useState("Push");
-  const { path, url } = useRouteMatch();
+  const [currExerciseName, setCurrExerciseName] = useState();
+  const { itemName } = useParams();
+  const location = useLocation();
 
+  console.log("++++++++++++");
+
+  console.log(itemName);
+  console.log(location);
+
+
+  console.log("++++++++++++");
 
 
   const getCurrentDate = () => {
@@ -217,6 +227,8 @@ function App() {
   const workoutView = false;
   let currW = workouts.find(w => w.name === currWorkoutName);
   console.log(currW);
+  let currE = exercises.find(ex => ex.name === currExerciseName);
+  console.log(currE);
 
   return (
     <div className="App">
@@ -237,12 +249,21 @@ function App() {
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
           </Route>
           <Route exact path={"/exercises"}>
-            <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />
+            <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
           </Route>
 
-          <Route path={`/workouts/:itemName`}>
-            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} url={url} />
+          <Route exact path={`/workouts/:itemName`}>
+            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
           </Route>
+          <Route path={`/exercises/:itemName`}>
+            <ExerciseView exercise={currE} />
+          </Route>
+          <Route path={`/workouts/:itemName/start`}>
+            <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+          </Route>
+
+
+
         </Switch>
 
         {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />} */}
