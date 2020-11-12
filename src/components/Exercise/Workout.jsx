@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import History from './History';
 import ExerciseTable from './ExerciseTable';
+import { Link } from "react-router-dom";
 import './Workout.scss';
 
 function Workout({ workout, setWorkingWorkout, exerciseList }) {
@@ -55,8 +56,8 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const handleSaveWorkout = () => {
 
         setCurrWorkout(prevCurrWorkout => {
-            
-            const exerciseName= exercises[exerciseNumber].name;
+
+            const exerciseName = exercises[exerciseNumber].name;
             const exerciseIndex = prevCurrWorkout.findIndex((item) => item.name === exerciseName);
             const cleanSets = currentExercise.filter(set => set.reps > 0);
 
@@ -133,7 +134,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
             <div className="btn-list-view btn-low-box">
                 <button className="btn">Cancel</button>
-                <button className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</button>
+                <Link to={"/workouts"} className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</Link>
             </div>
 
 

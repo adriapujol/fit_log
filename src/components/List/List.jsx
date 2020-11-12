@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItem from './ListItem.jsx';
 
-function List({ type, list, setList, setSecondList, url, setCurrWorkoutName }) {
+function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrExerciseName }) {
 
     const workingList = type === "workout" ? list.exercises : list;
 
@@ -37,8 +37,8 @@ function List({ type, list, setList, setSecondList, url, setCurrWorkoutName }) {
                                                     listItem={item} 
                                                     workoutName={list.name}
                                                     handleDeleteListItem={handleDeleteList}
-                                                    url={url}
                                                     setCurrWorkoutName={setCurrWorkoutName}
+                                                    setCurrExerciseName={setCurrExerciseName}
                                                      />)
             }
         </ul>
