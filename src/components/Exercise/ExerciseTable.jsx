@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ExericseSet from './ExerciseSet';
 
 function ExerciseTable({ currentExercise, setCurrentExercise, exerciseNumber }) {
-
-    // const { name, sets, reps, history } = exercise;
-
-    // console.log(sets)
-
-    // console.log("THIS IS EXERCISE TALBE CHECK: " + history);
-
 
     return (
         <table className="sets-table">
@@ -31,7 +24,6 @@ function ExerciseTable({ currentExercise, setCurrentExercise, exerciseNumber }) 
                         />
                     )
                 }
-
             </tbody>
         </table>
     )

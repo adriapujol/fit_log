@@ -2,7 +2,7 @@ import React from 'react';
 import History from './History';
 
 
-function ExerciseView( {exercise}) {
+function ExerciseView({ exercise }) {
 
     const { name, history } = exercise;
 
@@ -14,7 +14,6 @@ function ExerciseView( {exercise}) {
                 </div>
             </div>
             <History history={history} />
-
         </div>
     )
 }

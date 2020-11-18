@@ -107,18 +107,14 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 </div>
             </div>
             <div className="control-box">
-                {/* <button className={showHistory ? "btn small-btn" : "btn small-btn active"} onClick={() => { setShowHistory(false) }}>sets&reps</button> */}
                 <div className={showHistory ? "small-btn" : "small-btn active"} onClick={() => { setShowHistory(false) }}>sets&reps</div>
                 <div className="workout-title-list exercise-title" >{exercises[exerciseNumber].sets + " SETS / " + exercises[exerciseNumber].reps + " REPS"}</div>
-
-                {/* <button className={showHistory ? "btn small-btn active" : "btn small-btn"} onClick={() => { setShowHistory(true) }}>history</button> */}
                 <div className={showHistory ? "small-btn active" : "small-btn"} onClick={() => { setShowHistory(true) }}>history</div>
             </div>
 
             {
                 showHistory ?
                     <History history={history} />
-                    // "THIS IS HISTORY"
                     :
                     <>
                         <ExerciseTable

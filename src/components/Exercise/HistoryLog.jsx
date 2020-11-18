@@ -1,7 +1,7 @@
 import React from 'react';
 import HistorySet from './HistorySet';
 
-function HistoryLog( { date, sets } ) {
+function HistoryLog({ date, sets }) {
     return (
         <div className="history-log">
             <div className="date">
@@ -10,14 +10,14 @@ function HistoryLog( { date, sets } ) {
             <div className="sets">
                 {
                     sets.map(
-                        (set, index) => 
+                        (set, index) =>
                             <HistorySet
                                 key={index}
                                 set={index}
                                 reps={set.reps}
                                 weight={set.weight}
-                            /> 
-                        )
+                            />
+                    )
                 }
             </div>
         </div>

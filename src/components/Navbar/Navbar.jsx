@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import './Navbar.scss';
-import navbarItems from './navbarItem.json';
 import { Link } from "react-router-dom";
 
 
-function Navbar({ setViewWorkouts }) {
+function Navbar() {
 
     const [isClicked, setIsClicked] = useState(false);
 
-    //ACCESS WORKOUTS LIST OR EXERCISES LIST
-
     const handleLinks = () => {
-        // if (e.target.textContent === "Workouts") {
-        //     setViewWorkouts(true);
-        // } else {
-        //     setViewWorkouts(false);
-        // }
         setIsClicked(false);
     }
 

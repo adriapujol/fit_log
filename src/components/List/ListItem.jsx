@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ConfirmModal from '../ConfirmModal';
 
 function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWorkoutName, setCurrExerciseName }) {
 
     const [confirm, setConfirm] = useState(false);
-    const { itemName, itemType } = useParams();
-    const location = useLocation();
-    console.log(itemName, location.pathname);
 
     const onConfirm = () => {
         handleDeleteListItem(type, listItem.name, workoutName);
@@ -15,10 +12,6 @@ function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWo
     }
 
     const onCancel = () => {
-        setConfirm(false);
-    }
-
-    const onClose = () => {
         setConfirm(false);
     }
 
@@ -38,15 +31,15 @@ function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWo
 
     return (
         <>
-            {confirm && <ConfirmModal message={confirmMessage} onClose={onClose} onConfirm={onConfirm} onCancel={onCancel} />}
+            {confirm && <ConfirmModal message={confirmMessage} onConfirm={onConfirm} onCancel={onCancel} />}
             <li className="list-item">
                 <div className="item-title-list">
                     {
-                        type !== "workout" ?
-                            <Link to={`/${type}/${listItem.name.replace(/ /g, "-").toLowerCase()}`} onClick={selectWorkout}>
+                        type === "workouts" ?
+                            <Link to={`/workout-detail`} onClick={selectWorkout}>
                                 {listItem.name}
                             </Link> :
-                            <Link to={`/exercises/${listItem.name.replace(/ /g, "-").toLowerCase()}`} onClick={selectWorkout}>
+                            <Link to={`/exercise-detail`} onClick={selectWorkout}>
                                 {listItem.name}
                             </Link>
                     }
