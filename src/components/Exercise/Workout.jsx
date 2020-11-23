@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import History from './History';
 import ExerciseTable from './ExerciseTable';
+import ConfirmModal from '../ConfirmModal';
 import { Link } from "react-router-dom";
 import './Workout.scss';
 
 function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
-    const { name, last_day, exercises } = workout;
+    const { name, exercises } = workout;
 
     const [showHistory, setShowHistory] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [direction, setDirection] = useState("prev");
+    const [saved, setSaved] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
     const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
@@ -27,27 +31,57 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
     const filtered_exerciseList = filterByName(exerciseList, exercises);
     const history = filtered_exerciseList.find(exercise => exercise.name === exercises[exerciseNumber].name).history;
-    console.log(history);
 
-    const handlePrevExercise = () => {
+
+    const prevExercise = () => {
+        console.log("prev fired");
         if (exerciseNumber > 0) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber - 1);
         } else {
             setExerciseNumber(exercises.length - 1);
         }
-        setCurrentExercise(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
-            return { set: (index + 1), reps: 0, weight: 0 }
-        })
-        );
     }
 
-    const handleNextExercise = () => {
+    const nextExercise = () => {
+        console.log("next fired");
         if (exerciseNumber < (exercises.length - 1)) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber + 1);
         } else {
             setExerciseNumber(0);
         }
     }
+
+    const handlePrevExercise = () => {
+        setDirection("prev");
+        if (!saved) {
+            setShowModal(true);
+        } else  {
+            prevExercise();
+        }
+    }
+
+    const handleNextExercise = () => {
+        setDirection("next");
+        if (!saved) {
+            setShowModal(true);
+        } else {
+            nextExercise();
+        }
+    }
+
+    const handleNotSavedDirections = () => {
+        if (direction === "next") {
+            nextExercise();
+            console.log("modal next method fired");
+            setShowModal(false);
+        } else if (direction === "prev") {
+            prevExercise();
+            console.log("modal prev method fired");
+            setShowModal(false);
+        }
+    }
+
+    const changeExerciseMessage = "The data not saved will be lost";
 
     const handleAddSet = () => {
         setCurrentExercise([...currentExercise, { set: currentExercise.length + 1, reps: 0, weight: 0 }])
@@ -74,6 +108,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 return wk;
             }
         })
+        setSaved(true);
     }
 
     const handleFinishWorkout = current_workout => {
@@ -89,11 +124,13 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
-    }, [exerciseNumber])
+        setSaved(false);
+    }, [exerciseNumber, exercises])
 
 
     return (
         <div className="content">
+            {showModal && <ConfirmModal message={changeExerciseMessage} onConfirm={handleNotSavedDirections} onCancel={() => { setShowModal(false) }} />}
             <div className="header-box">
                 <div className="workout-title-list workout-title">
                     {name}
