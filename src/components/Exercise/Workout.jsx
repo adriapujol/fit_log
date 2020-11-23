@@ -4,6 +4,7 @@ import ExerciseTable from './ExerciseTable';
 import ConfirmModal from '../ConfirmModal';
 import { Link } from "react-router-dom";
 import './Workout.scss';
+import DoneExercise from './DoneExercise';
 
 function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
@@ -13,6 +14,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const [showModal, setShowModal] = useState(false);
     const [direction, setDirection] = useState("prev");
     const [saved, setSaved] = useState(false);
+    const [isDone, setIsDone] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
     const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
@@ -32,6 +34,23 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const filtered_exerciseList = filterByName(exerciseList, exercises);
     const history = filtered_exerciseList.find(exercise => exercise.name === exercises[exerciseNumber].name).history;
 
+
+    const findItem = (arr, item) => {
+        let found = false;
+        for (let it of arr) {
+            if (it.name === item.name) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    const isItDone = () => {
+        const alreadyDone = findItem(currWorkout, exercises[exerciseNumber]);
+        setIsDone(alreadyDone);
+        setSaved(alreadyDone);
+    }
 
     const prevExercise = () => {
         console.log("prev fired");
@@ -55,7 +74,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
         setDirection("prev");
         if (!saved) {
             setShowModal(true);
-        } else  {
+        } else {
             prevExercise();
         }
     }
@@ -124,12 +143,14 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
-        setSaved(false);
+        // setSaved(false);
+        isItDone();
     }, [exerciseNumber, exercises])
 
 
     return (
         <div className="content">
+            {isDone && "shit"}
             {showModal && <ConfirmModal message={changeExerciseMessage} onConfirm={handleNotSavedDirections} onCancel={() => { setShowModal(false) }} />}
             <div className="header-box">
                 <div className="workout-title-list workout-title">
@@ -149,8 +170,15 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 <div className={showHistory ? "small-btn active" : "small-btn"} onClick={() => { setShowHistory(true) }}>history</div>
             </div>
 
-            {
-                showHistory ?
+
+
+
+
+            {   isDone ?
+                <DoneExercise />
+                :
+
+                (showHistory ?
                     <History history={history} />
                     :
                     <>
@@ -161,7 +189,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                         />
                         <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
                         <button className="btn btn-workout-add-set" onClick={handleSaveWorkout}>Save</button>
-                    </>
+                    </>)
             }
 
 
