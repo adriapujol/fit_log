@@ -1,7 +1,7 @@
 import React from 'react';
 import './DoneExercise.scss';
-import './History.scss';
-import HistorySet from './HistorySet';
+import '../History/History.scss';
+import HistorySet from '../History/HistorySet';
 
 function DoneExercise({ sets }) {
     return (

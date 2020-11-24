@@ -1,5 +1,5 @@
 import React from 'react';
-import History from './History';
+import History from '../History/History';
 
 
 function ExerciseView({ exercise }) {
