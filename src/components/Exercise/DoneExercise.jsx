@@ -6,13 +6,11 @@ import HistorySet from './HistorySet';
 function DoneExercise({ sets }) {
     return (
         <>
-            <div className="done-exercise">
-                <h3>DONE</h3>
-            </div>
             <div className="history">
                 <div className="history-log">
                     <div className="sets">
                         {
+                            sets &&
                             sets.map((set, index) => {
                                 return <HistorySet
                                     key={index}
@@ -24,6 +22,9 @@ function DoneExercise({ sets }) {
                         }
                     </div>
                 </div>
+            </div>
+            <div className="done-exercise">
+                <h3>DONE</h3>
             </div>
         </>
     )
