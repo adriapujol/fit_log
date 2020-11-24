@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import History from './History';
-import ExerciseTable from './ExerciseTable';
-import ConfirmModal from '../ConfirmModal';
+import History from '../History/History';
+import ExerciseTable from '../Exercise/ExerciseTable';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import { Link } from "react-router-dom";
 import './Workout.scss';
-import DoneExercise from './DoneExercise';
+import DoneExercise from '../DoneExercise/DoneExercise';
 
 function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
@@ -49,13 +49,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 break;
             }
         }
-        console.log(currentlyDone);
         return { found, currentlyDone };
     }
 
 
     const prevExercise = () => {
-        console.log("prev fired");
         if (exerciseNumber > 0) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber - 1);
         } else {
@@ -64,7 +62,6 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
 
     const nextExercise = () => {
-        console.log("next fired");
         if (exerciseNumber < (exercises.length - 1)) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber + 1);
         } else {
@@ -95,11 +92,9 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const handleNotSavedDirections = () => {
         if (direction === "next") {
             nextExercise();
-            console.log("modal next method fired");
             setShowModal(false);
         } else if (direction === "prev") {
             prevExercise();
-            console.log("modal prev method fired");
             setShowModal(false);
         }
     }

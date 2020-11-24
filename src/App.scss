@@ -43,7 +43,6 @@ $links-height: calc(100vh - #{$navbar-height});
         width: 80%;
         padding: 2.5em 2em;
         background-color: white;
-        // box-shadow: 1px 5px 10px 10px rgba(0, 0, 0, 0.4);
 
         .close-modal {
             position: absolute;
@@ -86,7 +85,6 @@ $links-height: calc(100vh - #{$navbar-height});
         }
 
         .confirm-text {
-            // width: 80%;
             padding: 1em 0em 2em 0em;
             text-align: center;
         }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import ConfirmModal from '../ConfirmModal';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWorkoutName, setCurrExerciseName }) {
 
@@ -23,7 +23,7 @@ function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWo
         }
     }
 
-    const deleteExerciseFromWorkoutMsg = `The <strong>${listItem.name}<strong> exercise will be deleted from the ${workoutName} workout.`;
+    const deleteExerciseFromWorkoutMsg = `The ${listItem.name} exercise will be deleted from the ${workoutName} workout.`;
     const deleteWorkoutMsg = `The ${listItem.name} workout will be deleted. ${workoutName}`;
     const deleteExerciseMsg = `The ${listItem.name} exercise will be removed from all the workouts and it will lose its history.`;
     const confirmMessage = type === "workout" ? deleteExerciseFromWorkoutMsg : (type === "workouts" ? deleteWorkoutMsg : deleteExerciseMsg)

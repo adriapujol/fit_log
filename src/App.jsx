@@ -4,7 +4,7 @@ import ExercisesList from './exercises.json';
 import WorkoutsList from './workouts.json';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
-import Workout from './components/Exercise/Workout';
+import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
 import { Route, Switch } from "react-router-dom";
 
