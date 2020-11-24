@@ -12,8 +12,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     const [showHistory, setShowHistory] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showModalSaved, setShowModalSaved] = useState(false);
     const [direction, setDirection] = useState("prev");
     const [saved, setSaved] = useState(false);
+    const [savedCurrDoneSets, setSavedCurrDoneSets] = useState({});
+    const [emptySets, setEmptySets] = useState(false);
     const [isDone, setIsDone] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
@@ -37,19 +40,24 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     const findItem = (arr, item) => {
         let found = false;
+        let currentlyDone = {};
+
         for (let it of arr) {
             if (it.name === item.name) {
                 found = true;
+                currentlyDone = {...it};
                 break;
             }
         }
-        return found;
+        console.log(currentlyDone);
+        return {found, currentlyDone};
     }
 
     const isItDone = () => {
         const alreadyDone = findItem(currWorkout, exercises[exerciseNumber]);
-        setIsDone(alreadyDone);
-        setSaved(alreadyDone);
+        setIsDone(alreadyDone.found);
+        setSaved(alreadyDone.found);
+        setSavedCurrDoneSets(alreadyDone.currentlyDone);
     }
 
     const prevExercise = () => {
@@ -72,7 +80,8 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     const handlePrevExercise = () => {
         setDirection("prev");
-        if (!saved) {
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (!saved && cleanSets.length !== 0) {
             setShowModal(true);
         } else {
             prevExercise();
@@ -81,7 +90,8 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     const handleNextExercise = () => {
         setDirection("next");
-        if (!saved) {
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (!saved && cleanSets.length !== 0) {
             setShowModal(true);
         } else {
             nextExercise();
@@ -100,7 +110,8 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
         }
     }
 
-    const changeExerciseMessage = "The data not saved will be lost";
+    const changeExerciseMessage = "The data not saved will be lost.";
+    const savedExerciseMessage = "You won't be able to edit afterwards.";
 
     const handleAddSet = () => {
         setCurrentExercise([...currentExercise, { set: currentExercise.length + 1, reps: 0, weight: 0 }])
@@ -128,7 +139,23 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
             }
         })
         setSaved(true);
+        setShowModalSaved(false);
     }
+
+    const handleSavedModal = () => {
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (cleanSets.length === 0) {
+            setEmptySets(true);
+        } else {
+            setEmptySets(false);
+            setShowModalSaved(true);
+        }
+
+    }
+
+    useEffect(() => {
+        isItDone();
+    }, [currWorkout])
 
     const handleFinishWorkout = current_workout => {
         setWorkingWorkout(name, current_workout);
@@ -139,19 +166,20 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
 
     useEffect(() => {
+        isItDone();
         const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
+        setEmptySets(false);
         // setSaved(false);
-        isItDone();
     }, [exerciseNumber, exercises])
 
 
     return (
         <div className="content">
-            {isDone && "shit"}
-            {showModal && <ConfirmModal message={changeExerciseMessage} onConfirm={handleNotSavedDirections} onCancel={() => { setShowModal(false) }} />}
+            {showModalSaved && <ConfirmModal message={savedExerciseMessage} onConfirm={handleSaveWorkout} onCancel={() => setShowModalSaved(false)} />}
+            {showModal && <ConfirmModal message={changeExerciseMessage} onConfirm={handleNotSavedDirections} onCancel={() => setShowModal(false)} />}
             <div className="header-box">
                 <div className="workout-title-list workout-title">
                     {name}
@@ -175,7 +203,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
 
             {   isDone ?
-                <DoneExercise />
+                <DoneExercise sets={savedCurrDoneSets.sets} />
                 :
 
                 (showHistory ?
@@ -187,8 +215,9 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                             setCurrentExercise={setCurrentExercise}
                             exerciseNumber={exerciseNumber}
                         />
+                        <div className="empty-sets-alert">{emptySets && "Don't have any working sets"}</div>
                         <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
-                        <button className="btn btn-workout-add-set" onClick={handleSaveWorkout}>Save</button>
+                        <button className="btn btn-workout-add-set" onClick={handleSavedModal}>Save</button>
                     </>)
             }
 
