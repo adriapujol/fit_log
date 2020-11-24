@@ -1,0 +1,49 @@
+[
+    {
+        "name": "Push",
+        "last_day": "30/12/2020",
+        "exercises": [
+            {
+                "name": "Push ups",
+                "sets": 5,
+                "reps": 5
+            },
+            {
+                "name": "Military press",
+                "sets": 3,
+                "reps": 5
+            },
+            {
+                "name": "Tricep extension",
+                "sets": 2,
+                "reps": 15
+            }
+        ]
+    },
+    {
+        "name": "Pull",
+        "last_day": "1/1/2020",
+        "exercises": [
+            {
+                "name": "Pull ups",
+                "sets": 5,
+                "reps": 5
+            }
+        ]
+    },
+    {
+        "name": "Legs",
+        "last_day": "13/10/2020",
+        "exercises": []
+    },
+    {
+        "name": "Upper",
+        "last_day": "13/10/2020",
+        "exercises": []
+    },
+    {
+        "name": "Lower",
+        "last_day": "",
+        "exercises": []
+    }
+]

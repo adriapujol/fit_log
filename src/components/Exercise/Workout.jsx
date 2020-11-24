@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import History from './History';
 import ExerciseTable from './ExerciseTable';
+import ConfirmModal from '../ConfirmModal';
 import { Link } from "react-router-dom";
 import './Workout.scss';
+import DoneExercise from './DoneExercise';
 
 function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
-    const { name, last_day, exercises } = workout;
+    const { name, exercises } = workout;
 
     const [showHistory, setShowHistory] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [showModalSaved, setShowModalSaved] = useState(false);
+    const [direction, setDirection] = useState("prev");
+    const [saved, setSaved] = useState(false);
+    const [savedCurrDoneSets, setSavedCurrDoneSets] = useState({});
+    const [emptySets, setEmptySets] = useState(false);
+    const [isDone, setIsDone] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
     const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
@@ -27,27 +36,74 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
     const filtered_exerciseList = filterByName(exerciseList, exercises);
     const history = filtered_exerciseList.find(exercise => exercise.name === exercises[exerciseNumber].name).history;
-    console.log(history);
 
-    const handlePrevExercise = () => {
+
+    const findItem = (arr, item) => {
+        let found = false;
+        let currentlyDone = {};
+
+        for (let it of arr) {
+            if (it.name === item.name) {
+                found = true;
+                currentlyDone = { ...it };
+                break;
+            }
+        }
+        console.log(currentlyDone);
+        return { found, currentlyDone };
+    }
+
+
+    const prevExercise = () => {
+        console.log("prev fired");
         if (exerciseNumber > 0) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber - 1);
         } else {
             setExerciseNumber(exercises.length - 1);
         }
-        setCurrentExercise(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
-            return { set: (index + 1), reps: 0, weight: 0 }
-        })
-        );
     }
 
-    const handleNextExercise = () => {
+    const nextExercise = () => {
+        console.log("next fired");
         if (exerciseNumber < (exercises.length - 1)) {
             setExerciseNumber(currExerciseNumber => currExerciseNumber + 1);
         } else {
             setExerciseNumber(0);
         }
     }
+
+    const handlePrevExercise = () => {
+        setDirection("prev");
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (!saved && cleanSets.length !== 0) {
+            setShowModal(true);
+        } else {
+            prevExercise();
+        }
+    }
+
+    const handleNextExercise = () => {
+        setDirection("next");
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (!saved && cleanSets.length !== 0) {
+            setShowModal(true);
+        } else {
+            nextExercise();
+        }
+    }
+
+    const handleNotSavedDirections = () => {
+        if (direction === "next") {
+            nextExercise();
+            console.log("modal next method fired");
+            setShowModal(false);
+        } else if (direction === "prev") {
+            prevExercise();
+            console.log("modal prev method fired");
+            setShowModal(false);
+        }
+    }
+
 
     const handleAddSet = () => {
         setCurrentExercise([...currentExercise, { set: currentExercise.length + 1, reps: 0, weight: 0 }])
@@ -62,7 +118,6 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
             const cleanSets = currentExercise.filter(set => set.reps > 0);
 
             if (cleanSets.length === 0) {
-                alert("don't have any working sets");
                 return prevCurrWorkout;
             }
 
@@ -74,6 +129,19 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 return wk;
             }
         })
+        setSaved(true);
+        setShowModalSaved(false);
+    }
+
+    const handleSavedModal = () => {
+        const cleanSets = currentExercise.filter(set => set.reps > 0);
+        if (cleanSets.length === 0) {
+            setEmptySets(true);
+        } else {
+            setEmptySets(false);
+            setShowModalSaved(true);
+        }
+
     }
 
     const handleFinishWorkout = current_workout => {
@@ -85,15 +153,29 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
 
     useEffect(() => {
+        const alreadyDone = findItem(currWorkout, exercises[exerciseNumber]);
+        setIsDone(alreadyDone.found);
+        setSaved(alreadyDone.found);
+        setSavedCurrDoneSets(alreadyDone.currentlyDone);
+    }, [currWorkout, exerciseNumber, exercises])
+
+    useEffect(() => {
         const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
-    }, [exerciseNumber])
+        setEmptySets(false);
+    }, [exerciseNumber, exercises])
 
+
+
+    const changeExerciseMessage = "The data not saved will be lost.";
+    const savedExerciseMessage = "You won't be able to edit afterwards.";
 
     return (
         <div className="content">
+            {showModalSaved && <ConfirmModal message={savedExerciseMessage} onConfirm={handleSaveWorkout} onCancel={() => setShowModalSaved(false)} />}
+            {showModal && <ConfirmModal message={changeExerciseMessage} onConfirm={handleNotSavedDirections} onCancel={() => setShowModal(false)} />}
             <div className="header-box">
                 <div className="workout-title-list workout-title">
                     {name}
@@ -107,18 +189,21 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                 </div>
             </div>
             <div className="control-box">
-                {/* <button className={showHistory ? "btn small-btn" : "btn small-btn active"} onClick={() => { setShowHistory(false) }}>sets&reps</button> */}
                 <div className={showHistory ? "small-btn" : "small-btn active"} onClick={() => { setShowHistory(false) }}>sets&reps</div>
                 <div className="workout-title-list exercise-title" >{exercises[exerciseNumber].sets + " SETS / " + exercises[exerciseNumber].reps + " REPS"}</div>
-
-                {/* <button className={showHistory ? "btn small-btn active" : "btn small-btn"} onClick={() => { setShowHistory(true) }}>history</button> */}
                 <div className={showHistory ? "small-btn active" : "small-btn"} onClick={() => { setShowHistory(true) }}>history</div>
             </div>
 
-            {
-                showHistory ?
+
+
+
+
+            {   isDone ?
+                <DoneExercise sets={savedCurrDoneSets.sets} />
+                :
+
+                (showHistory ?
                     <History history={history} />
-                    // "THIS IS HISTORY"
                     :
                     <>
                         <ExerciseTable
@@ -126,14 +211,15 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                             setCurrentExercise={setCurrentExercise}
                             exerciseNumber={exerciseNumber}
                         />
+                        <div className="empty-sets-alert">{emptySets && "You don't have any working sets"}</div>
                         <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
-                        <button className="btn btn-workout-add-set" onClick={handleSaveWorkout}>Save</button>
-                    </>
+                        <button className="btn btn-workout-add-set" onClick={handleSavedModal}>Save</button>
+                    </>)
             }
 
 
             <div className="btn-list-view btn-low-box">
-                <button className="btn">Cancel</button>
+                <Link to={"/workouts"} className="btn">Cancel</Link>
                 <Link to={"/workouts"} className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</Link>
             </div>
 

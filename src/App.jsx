@@ -1,178 +1,24 @@
 import React, { useState } from 'react';
 import './App.scss';
+import ExercisesList from './exercises.json';
+import WorkoutsList from './workouts.json';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Exercise/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
-import { Link, Route, Switch, useRouteMatch, useParams, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 
 
 function App() {
 
-  const workout_list = [
-    {
-      name: "Push",
-      last_day: "30/12/2020",
-      exercises: [
-        {
-          name: "Push ups",
-          sets: 5,
-          reps: 5
-        },
-        {
-          name: "Military press",
-          sets: 3,
-          reps: 5
-        },
-        {
-          name: "Tricep extension",
-          sets: 2,
-          reps: 15
-        }
-      ]
-    },
-    {
-      name: "Pull",
-      last_day: "1/1/2020",
-      exercises: [
-        {
-          name: "Pull ups",
-          sets: 5,
-          reps: 5
-        }
-      ]
-    },
-    {
-      name: "Legs",
-      last_day: "13/10/2020",
-      exercises: []
-    },
-    {
-      name: "Upper",
-      last_day: "13/10/2020",
-      exercises: []
-    },
-    {
-      name: "Lower",
-      last_day: "",
-      exercises: []
-    },
+  const exercises_data = [...ExercisesList];
+  const workouts_data = [...WorkoutsList];
 
-  ];
-
-  const exercise_list = [
-    {
-      name: "Push ups",
-      history: [
-        {
-          date: "30/10/2020",
-          sets: [
-            {
-              set: 1,
-              reps: 5,
-              weight: 50
-            },
-            {
-              set: 2,
-              reps: 5,
-              weight: 50
-            },
-            {
-              set: 3,
-              reps: 3,
-              weight: 50
-            }
-          ]
-        },
-        {
-          date: "03/11/2020",
-          sets: [
-            {
-              set: 1,
-              reps: 5,
-              weight: 60
-            },
-            {
-              set: 2,
-              reps: 5,
-              weight: 60
-            },
-            {
-              set: 3,
-              reps: 5,
-              weight: 60
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Flat bench press",
-      history: []
-    },
-    {
-      name: "Tricep extension",
-      history: []
-    },
-    {
-      name: "Military press",
-      history: [
-        {
-          date: "11/04/1920",
-          sets: [
-            {
-              set: 1,
-              reps: 5,
-              weight: 20
-            },
-            {
-              set: 2,
-              reps: 5,
-              weight: 24
-            },
-            {
-              set: 3,
-              reps: 3,
-              weight: 25
-            }
-          ]
-        },
-      ]
-    },
-    {
-      name: "Incline dumbbell press",
-      history: []
-    },
-    {
-      name: "Bicep curls",
-      history: []
-    },
-    {
-      name: "Pull ups",
-      history: []
-    }
-
-  ];
-
-  //to control workout or exercise view before setting routing
-  const [viewWorkouts, setViewWorkouts] = useState(true);
-
-  const [exercises, setExercises] = useState(exercise_list);
-  const [workouts, setWorkouts] = useState(workout_list);
-  const [currType, setCurrType] = useState("workouts");
+  const [exercises, setExercises] = useState(exercises_data);
+  const [workouts, setWorkouts] = useState(workouts_data);
   const [currWorkoutName, setCurrWorkoutName] = useState("Push");
   const [currExerciseName, setCurrExerciseName] = useState();
-  const { itemName } = useParams();
-  const location = useLocation();
-
-  console.log("++++++++++++");
-
-  console.log(itemName);
-  console.log(location);
-
-
-  console.log("++++++++++++");
 
 
   const getCurrentDate = () => {
@@ -214,36 +60,23 @@ function App() {
 
   }
 
+  let currW = workouts.find(w => w.name === currWorkoutName);
+
+  let currE = exercises.find(ex => ex.name === currExerciseName);
+
+
   /*TYPES OF DATA
     workout list has type = workouts
     exercise list has type = exercises
     workout view has type = workout
   */
 
-  //this is for developing puropses
-
-  const workoutsView = false;
-  const exercisesView = false;
-  const workoutView = false;
-  let currW = workouts.find(w => w.name === currWorkoutName);
-  console.log(currW);
-  let currE = exercises.find(ex => ex.name === currExerciseName);
-  console.log(currE);
 
   return (
     <div className="App">
-      <Navbar setViewWorkouts={setViewWorkouts} />
+      <Navbar />
       <main className="content-wrapper">
-        {
-          // viewWorkouts ?
-          //   <ListView type="workouts" listTitle="workouts" list={workouts} setList={setWorkouts} />
-          //   :
-          //   <ListView type="exercises" listTitle="exercises" list={exercises} setList={setExercises} />
-        }
 
-        {
-          // list views, EXERCISE LIST; WORKOUT LIST; WORKOUT EXERCISE LIST
-        }
         <Switch>
           <Route exact path={["/", "/workouts"]}>
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
@@ -251,31 +84,19 @@ function App() {
           <Route exact path={"/exercises"}>
             <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
           </Route>
-
-          <Route exact path={`/workouts/:itemName`}>
+          <Route exact path={`/workout-detail`}>
             <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
           </Route>
-          <Route path={`/exercises/:itemName`}>
+          <Route path={`/exercise-detail`}>
             <ExerciseView exercise={currE} />
           </Route>
-          <Route path={`/workouts/:itemName/start`}>
+          <Route path={`/workout-detail/start`}>
             <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
           </Route>
-
-
-
+          <Route>
+            {"Not found"}
+          </Route>
         </Switch>
-
-        {/* {workoutsView || <ListView type="workouts" list={workouts} setList={setWorkouts} />} */}
-
-        {/* {exercisesView || <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} />} */}
-
-        {/* {workoutView || <ListView type="workout" list={workouts[0]} setList={setWorkouts} exerciseList={exercises} />} */}
-
-        {
-          // Exercise, history
-        }
-        {/* <Workout workout={workouts[0]} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} /> */}
 
       </main>
     </div>

@@ -62,7 +62,7 @@ table {
 
 .sets-table {
     width: 100%;
-    margin: 1em 0;
+    margin-top: 1em;
     font-size: 1.1em;
 
     tr {
@@ -112,4 +112,13 @@ table {
     display: flex;
     justify-content: space-between;
     padding: 0em 1em;
+}
+
+.empty-sets-alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    color: #db0000;
+    height: 40px;
 }

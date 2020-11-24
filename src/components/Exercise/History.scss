@@ -25,6 +25,26 @@
             .set {
                 display: flex;
                 justify-content: space-between;
+                
+                div {
+                    width: 33%;
+                    
+                }
+
+                .set-number {
+                    width: 20%;
+                    text-align: start;
+                }
+
+                .reps-number {
+                    width: 40%;
+                    text-align: end;
+                }
+
+                .weight-number {
+                    width: 40%;
+                    text-align: end;
+                }
             }
         }
     }
