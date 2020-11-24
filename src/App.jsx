@@ -78,19 +78,19 @@ function App() {
       <main className="content-wrapper">
 
         <Switch>
-          <Route exact path={["/", "/workouts"]}>
+          <Route exact path={["/fit_log", "/fit_log/workouts"]}>
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
           </Route>
-          <Route exact path={"/exercises"}>
+          <Route exact path={"/fit_log/exercises"}>
             <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
           </Route>
-          <Route exact path={`/workout-detail`}>
+          <Route exact path={`/fit_log/workout-detail`}>
             <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
           </Route>
-          <Route path={`/exercise-detail`}>
+          <Route path={`/fit_log/exercise-detail`}>
             <ExerciseView exercise={currE} />
           </Route>
-          <Route path={`/workout-detail/start`}>
+          <Route path={`/fit_log/workout-detail/start`}>
             <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
           </Route>
           <Route>

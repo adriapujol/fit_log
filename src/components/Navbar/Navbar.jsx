@@ -18,10 +18,10 @@ function Navbar() {
             </div>
             <ul className={isClicked ? "nav-menu active" : "nav-menu"}>
                 <li >
-                    <Link to={"/workouts"} className="nav-links" onClick={handleLinks}>Workouts</Link>
+                    <Link to={"/fit_log/workouts"} className="nav-links" onClick={handleLinks}>Workouts</Link>
                 </li>
                 <li>
-                    <Link to="/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
+                    <Link to="/fit_log/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
                 </li>
             </ul>
         </nav>
