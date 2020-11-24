@@ -45,20 +45,14 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
         for (let it of arr) {
             if (it.name === item.name) {
                 found = true;
-                currentlyDone = {...it};
+                currentlyDone = { ...it };
                 break;
             }
         }
         console.log(currentlyDone);
-        return {found, currentlyDone};
+        return { found, currentlyDone };
     }
 
-    const isItDone = () => {
-        const alreadyDone = findItem(currWorkout, exercises[exerciseNumber]);
-        setIsDone(alreadyDone.found);
-        setSaved(alreadyDone.found);
-        setSavedCurrDoneSets(alreadyDone.currentlyDone);
-    }
 
     const prevExercise = () => {
         console.log("prev fired");
@@ -110,8 +104,6 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
         }
     }
 
-    const changeExerciseMessage = "The data not saved will be lost.";
-    const savedExerciseMessage = "You won't be able to edit afterwards.";
 
     const handleAddSet = () => {
         setCurrentExercise([...currentExercise, { set: currentExercise.length + 1, reps: 0, weight: 0 }])
@@ -126,7 +118,6 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
             const cleanSets = currentExercise.filter(set => set.reps > 0);
 
             if (cleanSets.length === 0) {
-                alert("don't have any working sets");
                 return prevCurrWorkout;
             }
 
@@ -153,10 +144,6 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
     }
 
-    useEffect(() => {
-        isItDone();
-    }, [currWorkout])
-
     const handleFinishWorkout = current_workout => {
         setWorkingWorkout(name, current_workout);
         setCurrWorkout([]);
@@ -166,15 +153,24 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }
 
     useEffect(() => {
-        isItDone();
+        const alreadyDone = findItem(currWorkout, exercises[exerciseNumber]);
+        setIsDone(alreadyDone.found);
+        setSaved(alreadyDone.found);
+        setSavedCurrDoneSets(alreadyDone.currentlyDone);
+    }, [currWorkout, exerciseNumber, exercises])
+
+    useEffect(() => {
         const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
         setEmptySets(false);
-        // setSaved(false);
     }, [exerciseNumber, exercises])
 
+
+
+    const changeExerciseMessage = "The data not saved will be lost.";
+    const savedExerciseMessage = "You won't be able to edit afterwards.";
 
     return (
         <div className="content">
@@ -215,7 +211,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                             setCurrentExercise={setCurrentExercise}
                             exerciseNumber={exerciseNumber}
                         />
-                        <div className="empty-sets-alert">{emptySets && "Don't have any working sets"}</div>
+                        <div className="empty-sets-alert">{emptySets && "You don't have any working sets"}</div>
                         <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
                         <button className="btn btn-workout-add-set" onClick={handleSavedModal}>Save</button>
                     </>)
@@ -223,7 +219,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
 
             <div className="btn-list-view btn-low-box">
-                <button className="btn">Cancel</button>
+                <Link to={"/workouts"} className="btn">Cancel</Link>
                 <Link to={"/workouts"} className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</Link>
             </div>
 

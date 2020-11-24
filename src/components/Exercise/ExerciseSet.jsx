@@ -26,9 +26,7 @@ function ExerciseSet({ set, currentExercise, setCurrentExercise, exerciseNumber 
 
 
     const handleSet = () => {
-        if (cReps === 0) {
-            alert("You need to do some reps");
-        } else {
+        if (cReps !== 0) {
             setCurrentExercise(prevExercise => {
                 return prevExercise.map(cSet => {
                     if (cSet.set === set) {
