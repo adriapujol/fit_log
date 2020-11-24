@@ -45,9 +45,8 @@ function ExerciseSet({ set, currentExercise, setCurrentExercise, exerciseNumber 
     const deleteSet = () => {
         setCurrentExercise(prevExercise => {
             return prevExercise.filter(cSet => {
-                if (cSet.set !== set) {
-                    return cSet;
-                }
+                return cSet.set !== set
+
             })
         });
 
