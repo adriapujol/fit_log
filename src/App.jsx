@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
+import Login from './components/Login/Login';
 import { Route, Switch } from "react-router-dom";
 
 
@@ -74,11 +75,14 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      {/* <Navbar /> */}
       <main className="content-wrapper">
 
         <Switch>
-          <Route exact path={["/fit_log", "/fit_log/workouts"]}>
+          <Route exact path={"/fit_log"}>
+            <Login />
+          </Route>
+          <Route exact path={["/fit_log/workouts"]}>
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
           </Route>
           <Route exact path={"/fit_log/exercises"}>
