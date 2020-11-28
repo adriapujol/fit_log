@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
-import Login from './components/Login/Login';
+import LandingPage from './components/LandingPage/LandingPage';
 import { Route, Switch } from "react-router-dom";
 
 
@@ -80,7 +80,7 @@ function App() {
 
         <Switch>
           <Route exact path={"/fit_log"}>
-            <Login />
+            <LandingPage />
           </Route>
           <Route exact path={["/fit_log/workouts"]}>
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />

@@ -1,9 +1,9 @@
 import React from 'react';
-import './Login.scss';
+import './Register.scss';
 import { Link } from 'react-router-dom';
 
 
-function Login() {
+function Register() {
     return (
         <form className="login-form">
             <input
@@ -18,14 +18,19 @@ function Login() {
                 placeholder="Password"
                 className="login-input"
             />
-            
-            <button className="login-btn">Login</button>
+            <input
+                type="password"
+                name="password"
+                placeholder="Confirm password"
+                className="login-input"
+            />
+            <button className="login-btn">Register</button>
 
             <div className="no-account">
-                <p>Don't have an account? <Link to="" className="sign-link">Try it for free</Link></p>
+                <p>Already have an account? <Link to="" className="sign-link">Login</Link></p>
             </div>
         </form>
     )
 }
 
-export default Login;
+export default Register;
