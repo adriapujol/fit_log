@@ -44,51 +44,7 @@
             }
         }
 
-        .login-form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 50%;
-            width: 20%;
-            min-width: 300px;
-            
 
-            .login-input, .login-btn {
-                width: 100%;
-                font-size: 1em;
-                padding: 10px;
-                border-radius: 20px;
-                margin-bottom: 0.5em;
-                border-style: none;
-
-                &:focus {
-                    // border-style: none;
-                    outline: none;
-                    background-color: #fff495;
-                }
-            }
-
-
-
-            .login-btn {
-                border-style: none;
-                background-color: #db0000;
-                color: #ffffff;
-                margin: 1em;
-                cursor: pointer;
-            }
-
-            .no-account {
-                 color: #db3535;
-                .sign-link {
-                    color: #ffffff;
-                    // text-decoration: none;
-                }
-            }
-
-
-        }
     }
 
 

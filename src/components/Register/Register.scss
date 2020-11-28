@@ -13,7 +13,7 @@
         font-size: 1em;
         padding: 10px;
         border-radius: 20px;
-        margin-bottom: 0.5em;
+        margin-bottom: 0;
         border-style: none;
 
         &:focus {
@@ -21,6 +21,12 @@
             outline: none;
             background-color: #fff495;
         }
+    }
+
+    .error-message {
+        color: #ff8888;
+        font-size: 12px;
+        align-self: flex-start;
     }
 
 

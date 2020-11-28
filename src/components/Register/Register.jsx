@@ -12,22 +12,25 @@ function Register() {
                 placeholder="Username"
                 className="login-input"
             />
+            <p className="error-message">* Wrong user name</p>
             <input
                 type="password"
                 name="password"
                 placeholder="Password"
                 className="login-input"
             />
+            <p className="error-message">* Wrong password</p>
             <input
                 type="password"
                 name="password"
                 placeholder="Confirm password"
                 className="login-input"
             />
+            <p className="error-message">* Wrong password</p>
             <button className="login-btn">Register</button>
 
             <div className="no-account">
-                <p>Already have an account? <Link to="" className="sign-link">Login</Link></p>
+                <p>Already have an account?  <Link to="" className="sign-link">Login</Link></p>
             </div>
         </form>
     )
