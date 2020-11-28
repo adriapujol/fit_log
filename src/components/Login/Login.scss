@@ -60,7 +60,16 @@
                 padding: 10px;
                 border-radius: 20px;
                 margin-bottom: 0.5em;
+                border-style: none;
+
+                &:focus {
+                    // border-style: none;
+                    outline: none;
+                    background-color: #fff495;
+                }
             }
+
+
 
             .login-btn {
                 border-style: none;
@@ -69,6 +78,15 @@
                 margin: 1em;
                 cursor: pointer;
             }
+
+            .no-account {
+                color: #db3535;
+                .sign-link {
+                    color: #ffffff;
+                    // text-decoration: none;
+                }
+            }
+
 
         }
     }

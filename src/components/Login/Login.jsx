@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.scss';
+import { Link } from 'react-router-dom';
 import barbellLogo from '../../img/barbell_logo.png';
 
 function Login() {
@@ -16,16 +17,24 @@ function Login() {
 
                 <form className="login-form">
                     <input
-                        type="password"
+                        type="text"
+                        name="username"
                         placeholder="Username"
                         className="login-input"
                     />
                     <input
-                        type="text"
+                        type="password"
+                        name="password"
                         placeholder="Password"
                         className="login-input"
                     />
                     <button className="login-btn">Login</button>
+
+                    <div className="no-account">
+                        <div>
+                            <p>Don't have an account? <Link to="" className="sign-link">Try it for free</Link></p>
+                        </div>
+                    </div>
                 </form>
             </div>
 
