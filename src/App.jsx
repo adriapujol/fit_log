@@ -8,6 +8,7 @@ import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import { AuthProvider } from './contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
 
 
@@ -75,44 +76,48 @@ function App() {
 
 
   return (
-    <div className="App">
-      <main className="content-wrapper">
+    <AuthProvider>
 
-        <Switch>
-          <Route path={"/fit_log/login"}>
-            <Login />
-          </Route>
-          <Route path={"/fit_log/register"}>
-            <Register />
-          </Route>
-          <Route exact path={["/fit_log/", "/fit_log/workouts"]}>
-            <Navbar />
-            <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
-          </Route>
-          <Route exact path={"/fit_log/exercises"}>
-            <Navbar />
-            <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
-          </Route>
-          <Route exact path={`/fit_log/workout-detail`}>
-            <Navbar />
-            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
-          </Route>
-          <Route path={`/fit_log/exercise-detail`}>
-            <Navbar />
-            <ExerciseView exercise={currE} />
-          </Route>
-          <Route path={`/fit_log/workout-detail/start`}>
-            <Navbar />
-            <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
-          </Route>
-          <Route>
-            <Navbar />
-            {"Not found"}
-          </Route>
-        </Switch>
 
-      </main>
-    </div>
+      <div className="App">
+        <main className="content-wrapper">
+
+          <Switch>
+            <Route path={"/fit_log/login"}>
+              <Login />
+            </Route>
+            <Route path={"/fit_log/register"}>
+              <Register />
+            </Route>
+            <Route exact path={["/fit_log/", "/fit_log/workouts"]}>
+              <Navbar />
+              <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+            </Route>
+            <Route exact path={"/fit_log/exercises"}>
+              <Navbar />
+              <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
+            </Route>
+            <Route exact path={`/fit_log/workout-detail`}>
+              <Navbar />
+              <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
+            </Route>
+            <Route path={`/fit_log/exercise-detail`}>
+              <Navbar />
+              <ExerciseView exercise={currE} />
+            </Route>
+            <Route path={`/fit_log/workout-detail/start`}>
+              <Navbar />
+              <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+            </Route>
+            <Route>
+              <Navbar />
+              {"Not found"}
+            </Route>
+          </Switch>
+
+        </main>
+      </div>
+    </AuthProvider>
   );
 }
 
