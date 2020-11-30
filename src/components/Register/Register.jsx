@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './Register.scss';
 import barbellLogo from '../../img/barbell_logo.png';
 import { useAuth } from '../../contexts/AuthContext';
@@ -11,11 +11,28 @@ function Register() {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
     const { signup } = useAuth();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = e => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        signup(emailRef.current.value, passwordRef.current.value)
+        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            return setError("Passwords do not match");
+        }
+        if (passwordRef.current.value.length < 6) {
+            return setError("Password has to be 6 characters or longer");
+        }
+        try {
+            setError("");
+            setLoading(true);
+            await signup(emailRef.current.value, passwordRef.current.value);
+        } catch {
+            setError("Failed to create an account");
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -28,7 +45,8 @@ function Register() {
                         <div className="logo-subtitle">Track your lifts</div>
                     </div>
                 </div>
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleSubmit}>
+                    {error && <div>{error}</div>}
                     <input
                         type="email"
                         name="email"
@@ -53,7 +71,7 @@ function Register() {
                         ref={passwordConfirmRef}
                         required
                     />
-                    <button className="login-btn" type="submit">Register</button>
+                    <button className="login-btn" type="submit" disabled={loading}>Register</button>
 
                     <div className="no-account">
                         <p>Already have an account?  <Link to="/fit_log/login" className="sign-link">Log in</Link></p>
