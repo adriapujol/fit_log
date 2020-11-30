@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import './Register.scss';
 import barbellLogo from '../../img/barbell_logo.png';
 import { useAuth } from '../../contexts/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
 
 
 function Register() {
@@ -13,6 +14,7 @@ function Register() {
     const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
 
     const handleSubmit = async (e) => {
@@ -28,6 +30,7 @@ function Register() {
             setError("");
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value);
+            history.push("/fit_log/");
         } catch {
             setError("Failed to create an account");
         }
