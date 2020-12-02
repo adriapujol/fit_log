@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import './Dashboard.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 function Dashboard() {
 
     const [error, setError] = useState("");
-    const { currentUser } = useAuth();
+    const { currentUser, logout } = useAuth();
+    const history = useHistory();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         console.log("logging out");
+        setError("");
+        try {
+            await logout();
+            history.push('/fit_log/login');
+        } catch {
+            setError("Failed to log out");
+        }
     }
 
     return (
@@ -20,6 +28,7 @@ function Dashboard() {
                 <div>
                     <strong>Email: </strong>{currentUser.email}
                 </div>
+                <Link to="/fit_log/update_profile" className="btn">Update profile</Link>
             </div>
             <button className="btn" onClick={handleLogout}>Log out</button>
         </div>

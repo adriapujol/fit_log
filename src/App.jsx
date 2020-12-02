@@ -10,7 +10,8 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import { AuthProvider } from './contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
-import Dashboard from './components/Dashboard/Dashboard';
+import DashboardView from './PageViews/DashboardView';
+import PrivateRoute from './PrivateRoute';
 
 
 
@@ -90,10 +91,10 @@ function App() {
             <Route path={"/fit_log/register"}>
               <Register />
             </Route>
-            <Route exact path={["/fit_log/", "/fit_log/dashboard"]}>
-              <Navbar />
-              <Dashboard />
-            </Route>
+            <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]} component={DashboardView} />
+              {/* // <Navbar />
+              // <Dashboard />
+            // </PrivateRoute> */}
             <Route exact path={["/fit_log/", "/fit_log/workouts"]}>
               <Navbar />
               <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
