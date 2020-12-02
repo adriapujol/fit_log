@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import { AuthProvider } from './contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
+import Dashboard from './components/Dashboard/Dashboard';
 
 
 
@@ -88,6 +89,10 @@ function App() {
             </Route>
             <Route path={"/fit_log/register"}>
               <Register />
+            </Route>
+            <Route exact path={["/fit_log/", "/fit_log/dashboard"]}>
+              <Navbar />
+              <Dashboard />
             </Route>
             <Route exact path={["/fit_log/", "/fit_log/workouts"]}>
               <Navbar />

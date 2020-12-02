@@ -1,0 +1,17 @@
+.dashboard {
+    justify-content: center;
+    .profile-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3em;
+        border: 2px solid #db0000;
+        margin-bottom: 1em;
+
+        * {
+            margin-bottom: 10px;
+        }
+    }
+
+}
