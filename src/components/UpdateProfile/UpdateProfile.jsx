@@ -1,54 +1,54 @@
 import React, { useRef, useState } from 'react';
-import './Register.scss';
-import barbellLogo from '../../img/barbell_logo.png';
+import './UpdateProfile.scss';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
 
 
-function Register() {
+function UpdateProfile() {
 
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
+    const { currentUser, updateEmail, updatePassword } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
             return setError("Passwords do not match");
         }
-        if (passwordRef.current.value.length < 6) {
-            return setError("Password has to be 6 characters or longer");
+        // if (passwordRef.current.value.length < 6) {
+        //     return setError("Password has to be 6 characters or longer");
+        // }
+
+        const promises = [];
+        setLoading(true);
+        setError("");
+
+        if (emailRef.current.value !== currentUser.email) {
+            promises.push(updateEmail(emailRef.current.value))
         }
-        try {
-            setError("");
-            setLoading(true);
-            await signup(emailRef.current.value, passwordRef.current.value);
-            setLoading(false);
-            history.push("/fit_log/");
-        } catch {
-            setLoading(false);
-            setError("Failed to create an account");
+        if (passwordRef.current.value) {
+            promises.push(updatePassword(passwordRef.current.value))
         }
+
+        Promise.all(promises).then(() => {
+        history.push("/fit_log/")
+        }).catch(() => {
+            setError("Failed to update account")
+        }).finally(() => {
+            setLoading(false);
+        })
 
     }
 
     return (
-        <div className="landing-page">
-            <div className="landing-content color-overlay">
-                <div className="landing-logo">
-                    <img src={barbellLogo} alt="logo" />
-                    <div className="logo-text">
-                        <div className="logo-title">GYM LOG</div>
-                        <div className="logo-subtitle">Track your lifts</div>
-                    </div>
-                </div>
+        <div className="content">
                 <form className="login-form" onSubmit={handleSubmit}>
                     {error && <div className="alert">{error}</div>}
                     <input
@@ -58,32 +58,32 @@ function Register() {
                         className="login-input"
                         ref={emailRef}
                         required
+                        defaultValue={currentUser.email}
                     />
                     <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Leave blank to keep the same"
                         className="login-input"
                         ref={passwordRef}
-                        required
                     />
+                    <p>Password has to be 6 characters or longer</p>
                     <input
                         type="password"
                         name="password"
-                        placeholder="Confirm password"
+                        placeholder="Leave blank to keep the same"
                         className="login-input"
                         ref={passwordConfirmRef}
-                        required
                     />
-                    <button className="login-btn" type="submit" disabled={loading}>Register</button>
+                    <button className="login-btn" type="submit" disabled={loading}>Update</button>
 
                     <div className="no-account">
-                        <p>Already have an account?  <Link to="/fit_log/login" className="sign-link">Log in</Link></p>
+                        <Link to="/fit_log/" className="sign-link">Cancel</Link>
                     </div>
                 </form>
-            </div>
         </div>
     )
 }
 
-export default Register;
+export default UpdateProfile;
+

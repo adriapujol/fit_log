@@ -10,7 +10,6 @@ function Dashboard() {
     const history = useHistory();
 
     const handleLogout = async () => {
-        console.log("logging out");
         setError("");
         try {
             await logout();
@@ -28,7 +27,7 @@ function Dashboard() {
                 <div>
                     <strong>Email: </strong>{currentUser.email}
                 </div>
-                <Link to="/fit_log/update_profile" className="btn">Update profile</Link>
+                <Link to="/fit_log/update-profile" className="btn">Update profile</Link>
             </div>
             <button className="btn" onClick={handleLogout}>Log out</button>
         </div>

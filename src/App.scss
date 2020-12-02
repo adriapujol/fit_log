@@ -127,3 +127,9 @@ $links-height: calc(100vh - #{$navbar-height});
 ul {
     list-style-type: none;
 }
+
+a {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}

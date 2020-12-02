@@ -12,6 +12,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
 import DashboardView from './PageViews/DashboardView';
 import PrivateRoute from './PrivateRoute';
+import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
+import UpdateProfileView from './PageViews/UpdateProfileView';
 
 
 
@@ -92,6 +94,7 @@ function App() {
               <Register />
             </Route>
             <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]} component={DashboardView} />
+            <PrivateRoute path="/fit_log/update-profile" component={UpdateProfileView} />
               {/* // <Navbar />
               // <Dashboard />
             // </PrivateRoute> */}
@@ -114,6 +117,9 @@ function App() {
             <Route path={`/fit_log/workout-detail/start`}>
               <Navbar />
               <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+            </Route>
+            <Route path="/fit_log/forgot-password">
+              <ForgotPassowrd/>
             </Route>
             <Route>
               <Navbar />

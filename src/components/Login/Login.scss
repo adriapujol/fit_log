@@ -85,6 +85,18 @@
         cursor: pointer;
     }
 
+    .alert {
+        position: absolute;
+        margin-bottom: 0.5em;
+        top: 55%
+    }
+    .forgot-password {
+        margin-bottom: 0.5em;
+        a {
+            color: #ffffff;
+        }
+    }
+
     .no-account {
          color: #db3535;
         .sign-link {
