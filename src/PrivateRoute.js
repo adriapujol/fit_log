@@ -12,9 +12,8 @@ function PrivateRoute({ children, ...rest }) {
             render={ () => {
                 return currentUser ? children : <Redirect to="/fit_log/login" />;
             }}
-
-
-        ></Route>
+        >
+        </Route>
     )
 }
 
