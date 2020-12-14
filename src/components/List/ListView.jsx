@@ -4,7 +4,7 @@ import List from './List';
 import { Link } from "react-router-dom";
 import AddModal from './AddModal';
 
-function ListView({ type, list, setList, setSecondList, exerciseList, setCurrWorkoutName, setCurrExerciseName }) {
+function ListView({ type, list, setList, setSecondList, exerciseList, setCurrWorkoutName, setCurrExerciseName, saveDB }) {
 
     const [modalClicked, setModalClicked] = useState(false);
 
@@ -19,6 +19,7 @@ function ListView({ type, list, setList, setSecondList, exerciseList, setCurrWor
                     setList={setList}
                     setModalClicked={setModalClicked}
                     exerciseList={exerciseList}
+                    saveDB={saveDB}
                 />
             }
             <button className="btn btn-list-view" onClick={() => setModalClicked(true)}>+ add {type === "workout" ? "exercise" : type}</button>

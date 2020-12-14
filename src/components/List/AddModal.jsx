@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
+function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }) {
 
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);
@@ -47,10 +47,10 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList }) {
             setModalClicked(false);
         } else {
             setList([...list, newData]);
+            saveDB([...list, newData]);
             setNewName("");
             setModalClicked(false);
         }
-
     }
 
 

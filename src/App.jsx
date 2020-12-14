@@ -22,12 +22,12 @@ import { db } from './Firebase';
 function App() {
 
   // const exercises_data = [...ExercisesList];
-  const workouts_data = [...WorkoutsList];
+  // const workouts_data = [...WorkoutsList];
   const exercises_data = [];
   // const workouts_data = [];
 
   const [exercises, setExercises] = useState(exercises_data);
-  const [workouts, setWorkouts] = useState(workouts_data);
+  const [workouts, setWorkouts] = useState([]);
   const [currWorkoutName, setCurrWorkoutName] = useState("Push");
   const [currExerciseName, setCurrExerciseName] = useState();
 
@@ -36,23 +36,40 @@ function App() {
   const [dbTester, setDbTester] = useState([]);
 
   useEffect(() => {
-    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/workouts/').onSnapshot(snapshot => {
-      console.log("to set Workouts: ", snapshot.docs.map(doc => doc.data()))
-      let workoutsTest = snapshot.docs.map(doc => doc.data());
-      console.log("----------")
-      console.log(workoutsTest[0])
-      console.log("----------")
+    // let workoutList_data = 
+    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts')
+      .onSnapshot(doc => {
+        console.log("Current data: ", doc.data())
+        if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
+      });
 
-      let toArray = [];
-      for (let key in workoutsTest[0]) {
-        toArray.push(workoutsTest[0][key]);
-      }
-      console.log("-----TO ARRAY-----")
-      console.log(toArray)
-      console.log(workoutsTest[0][0])
-      console.log("----------")
-      setDbTester(toArray);
-    })
+    // workoutList_data.get().then(doc => {
+    //   if (doc.exists) {
+    //     console.log("Document data: ", doc.data());
+    //     if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
+    //   } else {
+    //     console.log("No such document");
+    //   }
+    // }).catch(error => {
+    //   console.log("Error getting document: ", error);
+    // })
+    // db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
+    // console.log("to set Workouts: ", snapshot.docs.map(doc => {if(doc.data().workouts) return doc.data()}))
+    // let workoutsTest = snapshot.docs('workouts').data();
+    // console.log("----------")
+    // console.log(workoutsTest)
+    // console.log("----------")
+
+    // let toArray = [];
+    // for (let key in workoutsTest[0]) {
+    //   toArray.push(workoutsTest[0][key]);
+    // }
+    // console.log("-----TO ARRAY-----")
+    // console.log(toArray)
+    // console.log(workoutsTest[0][0])
+    // console.log("----------")
+    // setDbTester(toArray);
+    // })
 
     db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').onSnapshot(snapshot => {
       console.log(snapshot.data())
@@ -60,20 +77,20 @@ function App() {
       // console.log("WORKOUTS TEST: ", workoutsTest)
       // setWorkouts(workoutsTest);
     })
-    
+
   }, [])
 
-const onTest = () => {
-  
-  db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').set({
-    workouts
-  });
-  db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
-    console.log("++++++++++++++++")
-    console.log(snapshot.docs.map(doc => doc.data()))
-    console.log("++++++++++++++++")
-  })
-}
+  const onTest = workouts => {
+
+    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').set({
+      workouts
+    });
+    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
+      console.log("++++++++++++++++")
+      console.log(snapshot.docs.map(doc => doc.data()))
+      console.log("++++++++++++++++")
+    })
+  }
 
   //----------------------------------------------------------------//
 
@@ -115,8 +132,12 @@ const onTest = () => {
       })
 
     })
-
+    onTest();
   }
+
+  // useEffect(() => {
+  //   onTest();
+  // }, [workouts])
 
   let currW = workouts.find(w => w.name === currWorkoutName);
 
@@ -170,7 +191,7 @@ const onTest = () => {
             </PrivateRoute>
             <PrivateRoute exact path={["/fit_log/", "/fit_log/workouts"]}>
               <Navbar />
-              <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+              <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} saveDB={onTest} />
             </PrivateRoute>
             <PrivateRoute path="/fit_log/exercises">
               <Navbar />
