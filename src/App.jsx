@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import ExercisesList from './exercises.json';
 import WorkoutsList from './workouts.json';
@@ -14,19 +14,69 @@ import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
+import { db } from './Firebase';
 
 
 
 
 function App() {
 
-  const exercises_data = [...ExercisesList];
+  // const exercises_data = [...ExercisesList];
   const workouts_data = [...WorkoutsList];
+  const exercises_data = [];
+  // const workouts_data = [];
 
   const [exercises, setExercises] = useState(exercises_data);
   const [workouts, setWorkouts] = useState(workouts_data);
   const [currWorkoutName, setCurrWorkoutName] = useState("Push");
   const [currExerciseName, setCurrExerciseName] = useState();
+
+  //-----------------------------DATABASE testing--------------------//
+
+  const [dbTester, setDbTester] = useState([]);
+
+  useEffect(() => {
+    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/workouts/').onSnapshot(snapshot => {
+      console.log("to set Workouts: ", snapshot.docs.map(doc => doc.data()))
+      let workoutsTest = snapshot.docs.map(doc => doc.data());
+      console.log("----------")
+      console.log(workoutsTest[0])
+      console.log("----------")
+
+      let toArray = [];
+      for (let key in workoutsTest[0]) {
+        toArray.push(workoutsTest[0][key]);
+      }
+      console.log("-----TO ARRAY-----")
+      console.log(toArray)
+      console.log(workoutsTest[0][0])
+      console.log("----------")
+      setDbTester(toArray);
+    })
+
+    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').onSnapshot(snapshot => {
+      console.log(snapshot.data())
+      // workoutsTest = snapshot.data().map(workout => workout);
+      // console.log("WORKOUTS TEST: ", workoutsTest)
+      // setWorkouts(workoutsTest);
+    })
+    
+  }, [])
+
+const onTest = () => {
+  
+  db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').set({
+    workouts
+  });
+  db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
+    console.log("++++++++++++++++")
+    console.log(snapshot.docs.map(doc => doc.data()))
+    console.log("++++++++++++++++")
+  })
+}
+
+  //----------------------------------------------------------------//
+
 
 
   const getCurrentDate = () => {
@@ -72,6 +122,22 @@ function App() {
 
   let currE = exercises.find(ex => ex.name === currExerciseName);
 
+  // const dbTesting = db.collection('test').doc('test2');
+  // console.log(dbTesting);
+
+  // const fakeUID = "3SbmdXJIWLop89HxQUoQ";
+  // db.collection('users').add({
+  //   first: "ada",
+  //   last: "lovelace"
+  // }).then(() => {
+  //   console.log("this worked")
+  // }).catch((error)=>{
+  //   console.error(error);
+  // });
+  // console.log(db.collection('users'));
+  // db.collection('users').doc(fakeUID).add({workout: 'shitty'});
+
+
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -96,6 +162,7 @@ function App() {
             <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
               <Navbar />
               <Dashboard />
+              <button onClick={onTest}>TEST</button>
             </PrivateRoute>
             <PrivateRoute path="/fit_log/update-profile">
               <Navbar />

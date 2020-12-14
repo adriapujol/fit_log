@@ -23,6 +23,9 @@ function Navbar() {
                 <li>
                     <Link to="/fit_log/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
                 </li>
+                <li>
+                    <Link to="/fit_log/" className="nav-links" onClick={handleLinks}>Dashboard</Link>
+                </li>
             </ul>
         </nav>
     )

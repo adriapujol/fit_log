@@ -38,11 +38,10 @@ function UpdateProfile() {
         }
 
         Promise.all(promises).then(() => {
+            setLoading(false);
         history.push("/fit_log/")
         }).catch(() => {
             setError("Failed to update account")
-        }).finally(() => {
-            setLoading(false);
         })
 
     }
