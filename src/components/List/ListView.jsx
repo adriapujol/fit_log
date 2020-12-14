@@ -11,7 +11,7 @@ function ListView({ type, list, setList, setSecondList, exerciseList, setCurrWor
     return (
         <div className="content">
             <div className="list-title">{type === "workout" ? list.name : type}</div>
-            <List type={type} list={list} setList={setList} setSecondList={setSecondList} setCurrWorkoutName={setCurrWorkoutName} setCurrExerciseName={setCurrExerciseName} />
+            <List type={type} list={list} setList={setList} setSecondList={setSecondList} setCurrWorkoutName={setCurrWorkoutName} setCurrExerciseName={setCurrExerciseName} saveDB={saveDB}/>
             {
                 !modalClicked || <AddModal
                     type={type}

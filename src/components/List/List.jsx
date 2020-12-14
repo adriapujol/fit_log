@@ -1,13 +1,17 @@
 import React from 'react';
 import ListItem from './ListItem.jsx';
 
-function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrExerciseName }) {
+function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrExerciseName, saveDB }) {
 
     const workingList = type === "workout" ? list.exercises : list;
 
     const handleDeleteList = (t, n, ln = "") => {
+        let prevState;
         if (t === "workouts") {
-            setList(prevList => prevList.filter(item => item.name !== n));
+            setList(prevList => {
+                prevState = prevList.filter(item => item.name !== n);
+                return prevState;
+            });
         } else if (t === "workout") {
             setList(prevList => {               
                 return prevList.map(workout => {
@@ -26,6 +30,7 @@ function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrE
                 })
             })
         }
+        saveDB(prevState);
     }
 
     return (
