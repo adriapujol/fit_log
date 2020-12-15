@@ -47,7 +47,6 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
             setModalClicked(false);
         } else {
             setList([...list, newData]);
-            saveDB([...list, newData]);
             setNewName("");
             setModalClicked(false);
         }

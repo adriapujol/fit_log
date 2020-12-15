@@ -22,102 +22,96 @@ import { useAuth } from './contexts/AuthContext';
 
 function App() {
 
-  const exercises_data = [...ExercisesList];
+  // const exercises_data = [...ExercisesList];
   // const workouts_data = [...WorkoutsList];
-  // const exercises_data = [];
-  // const workouts_data = [];
+  const exercises_data = [];
+  const workouts_data = [];
 
-  const [exercises, setExercises] = useState(exercises_data);
+  const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
-  const [currWorkoutName, setCurrWorkoutName] = useState("Push");
+  const [currWorkoutName, setCurrWorkoutName] = useState();
   const [currExerciseName, setCurrExerciseName] = useState();
 
   //-----------------------------DATABASE testing--------------------//
 
-  const [dbTester, setDbTester] = useState([]);
+  const [dbTester, setDbTester] = useState(false);
   const { currentUser } = useAuth();
-  console.log('+++++++++++++++++')
-  // console.log(auth.currentUser.uid);
-  // console.log(auth.currentUser);
 
   useEffect(() => {
-    // let workoutList_data = 
-    // console.log('+++++33333++++')
-    // console.log(auth.currentUser.uid);
-    // console.log('++33333+++++++')
+
     console.log("USE EFFECT FIRED ON MOUNT")
     if (currentUser) {
-      db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
+
+      // GET WORKOUT LIST
+      db.collection(`test/${currentUser.uid}/data/`).doc('workouts')
         .onSnapshot(doc => {
           console.log("Current data: ", doc.data())
-          if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
+          if (doc.data() !== undefined) {
+            if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts)
+          };
         });
-  
-      // workoutList_data.get().then(doc => {
-      //   if (doc.exists) {
-      //     console.log("Document data: ", doc.data());
-      //     if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
-      //   } else {
-      //     console.log("No such document");
-      //   }
-      // }).catch(error => {
-      //   console.log("Error getting document: ", error);
-      // })
-      // db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
-      // console.log("to set Workouts: ", snapshot.docs.map(doc => {if(doc.data().workouts) return doc.data()}))
-      // let workoutsTest = snapshot.docs('workouts').data();
-      // console.log("----------")
-      // console.log(workoutsTest)
-      // console.log("----------")
-  
-      // let toArray = [];
-      // for (let key in workoutsTest[0]) {
-      //   toArray.push(workoutsTest[0][key]);
-      // }
-      // console.log("-----TO ARRAY-----")
-      // console.log(toArray)
-      // console.log(workoutsTest[0][0])
-      // console.log("----------")
-      // setDbTester(toArray);
-      // })
-  
-      db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
+
+      db.collection(`test/${currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
         console.log(snapshot.data())
-        // workoutsTest = snapshot.data().map(workout => workout);
-        // console.log("WORKOUTS TEST: ", workoutsTest)
-        // setWorkouts(workoutsTest);
+
       })
+
+
+      // GET EXERCISE LIST
+      db.collection(`test/${currentUser.uid}/data/`).doc('exercises')
+        .onSnapshot(doc => {
+          console.log("Current data: ", doc.data())
+          if (doc.data() !== undefined) {
+            if (Object.keys(doc.data()).length > 0) setExercises(doc.data().exercises)
+          };
+        });
+
+      db.collection(`test/${currentUser.uid}/data/`).doc('exercises').onSnapshot(snapshot => {
+        console.log(snapshot.data())
+
+      })
+      setDbTester(true);
     }
 
   }, [currentUser])
 
-  // useEffect(() => {
-  //   console.log("USEFFECT FIRED ON CURRENTUSER CHANGE")
-  //   // if (currentUser) {
-  //   //   db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
-  //   //     .onSnapshot(doc => {
-  //   //       console.log("Current data: ", doc.data())
-  //   //       if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
-  //   //     });
-  //   //   db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
-  //   //     console.log(snapshot.data())
 
-  //   //   })
-  //   // }
-  // }, [currentUser])
-  
-
-  const onTest = workouts => {
-
-    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').set({
-      workouts
-    });
-    db.collection(`test/${auth.currentUser.uid}/data/`).onSnapshot(snapshot => {
-      console.log("++++++++++++++++")
-      console.log(snapshot.docs.map(doc => doc.data()))
-      console.log("++++++++++++++++")
-    })
+  const onTest = (type, data) => {
+    if (currentUser) {
+      if (type === "workouts") {
+        let workouts = data;
+        db.collection(`test/${currentUser.uid}/data/`).doc('workouts').set({
+          workouts
+        });
+        db.collection(`test/${currentUser.uid}/data/`).onSnapshot(snapshot => {
+          console.log("++++++++++++++++")
+          console.log(snapshot.docs.map(doc => doc.data()))
+          console.log("++++++++++++++++")
+        })
+      } else if (type === "exercises") {
+        let exercises = data;
+        db.collection(`test/${currentUser.uid}/data/`).doc('exercises').set({
+          exercises
+        });
+        db.collection(`test/${currentUser.uid}/data/`).onSnapshot(snapshot => {
+          console.log("++++++++++++++++")
+          console.log(snapshot.docs.map(doc => doc.data()))
+          console.log("++++++++++++++++")
+        })
+      }
+    }
   }
+
+  useEffect(() => {
+    if (dbTester) {
+      onTest("workouts", workouts)
+    }
+  }, [workouts])
+
+  useEffect(() => {
+    onTest("exercises", exercises)
+  }, [exercises])
+
 
   //----------------------------------------------------------------//
 
@@ -159,16 +153,20 @@ function App() {
       })
 
     })
-    onTest();
+    // onTest();
   }
 
-  // useEffect(() => {
-  //   onTest();
-  // }, [workouts])
 
-  let currW = workouts.find(w => w.name === currWorkoutName);
 
-  let currE = exercises.find(ex => ex.name === currExerciseName);
+
+  let currW, currE;
+  if (workouts !== undefined) currW = workouts.find(w => w.name === currWorkoutName);
+  if (exercises !== undefined) currE = exercises.find(ex => ex.name === currExerciseName);
+
+
+  // let currW = workouts.find(w => w.name === currWorkoutName);
+
+  // let currE = exercises.find(ex => ex.name === currExerciseName);
 
   // const dbTesting = db.collection('test').doc('test2');
   // console.log(dbTesting);
@@ -196,54 +194,54 @@ function App() {
 
   return (
 
-      <div className="App">
-        <main className="content-wrapper">
-          <Switch>
-            <Route path={"/fit_log/login"}>
-              <Login />
-            </Route>
-            <Route path={"/fit_log/register"}>
-              <Register />
-            </Route>
-            <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
-              <Navbar />
-              <Dashboard />
-              <button onClick={onTest}>TEST</button>
-            </PrivateRoute>
-            <PrivateRoute path="/fit_log/update-profile">
-              <Navbar />
-              <UpdateProfile />
-            </PrivateRoute>
-            <PrivateRoute exact path={["/fit_log/", "/fit_log/workouts"]}>
-              <Navbar />
-              <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} saveDB={onTest} />
-            </PrivateRoute>
-            <PrivateRoute path="/fit_log/exercises">
-              <Navbar />
-              <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
-            </PrivateRoute>
-            <PrivateRoute exact path={`/fit_log/workout-detail`}>
-              <Navbar />
-              <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
-            </PrivateRoute>
-            <PrivateRoute path={`/fit_log/exercise-detail`}>
-              <Navbar />
-              <ExerciseView exercise={currE} />
-            </PrivateRoute>
-            <PrivateRoute path={`/fit_log/workout-detail/start`}>
-              <Navbar />
-              <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
-            </PrivateRoute>
-            <Route path="/fit_log/forgot-password">
-              <ForgotPassowrd />
-            </Route>
-            <PrivateRoute>
-              <Navbar />
-              {"Not found"}
-            </PrivateRoute>
-          </Switch>
-        </main>
-      </div>
+    <div className="App">
+      <main className="content-wrapper">
+        <Switch>
+          <Route path={"/fit_log/login"}>
+            <Login />
+          </Route>
+          <Route path={"/fit_log/register"}>
+            <Register />
+          </Route>
+          <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
+            <Navbar />
+            <Dashboard />
+            <button onClick={onTest}>TEST</button>
+          </PrivateRoute>
+          <PrivateRoute path="/fit_log/update-profile">
+            <Navbar />
+            <UpdateProfile />
+          </PrivateRoute>
+          <PrivateRoute exact path={["/fit_log/", "/fit_log/workouts"]}>
+            <Navbar />
+            <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+          </PrivateRoute>
+          <PrivateRoute path="/fit_log/exercises">
+            <Navbar />
+            <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
+          </PrivateRoute>
+          <PrivateRoute exact path={`/fit_log/workout-detail`}>
+            <Navbar />
+            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
+          </PrivateRoute>
+          <PrivateRoute path={`/fit_log/exercise-detail`}>
+            <Navbar />
+            <ExerciseView exercise={currE} />
+          </PrivateRoute>
+          <PrivateRoute path={`/fit_log/workout-detail/start`}>
+            <Navbar />
+            <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+          </PrivateRoute>
+          <Route path="/fit_log/forgot-password">
+            <ForgotPassowrd />
+          </Route>
+          <PrivateRoute>
+            <Navbar />
+            {"Not found"}
+          </PrivateRoute>
+        </Switch>
+      </main>
+    </div>
 
   );
 }
