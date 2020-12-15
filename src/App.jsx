@@ -14,6 +14,8 @@ import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
 import { db, auth } from './Firebase';
+import { useAuth } from './contexts/AuthContext';
+
 
 
 
@@ -33,6 +35,7 @@ function App() {
   //-----------------------------DATABASE testing--------------------//
 
   const [dbTester, setDbTester] = useState([]);
+  const { currentUser } = useAuth();
   console.log('+++++++++++++++++')
   // console.log(auth.currentUser.uid);
   // console.log(auth.currentUser);
@@ -42,48 +45,67 @@ function App() {
     // console.log('+++++33333++++')
     // console.log(auth.currentUser.uid);
     // console.log('++33333+++++++')
-    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
-      .onSnapshot(doc => {
-        console.log("Current data: ", doc.data())
-        if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
-      });
+    console.log("USE EFFECT FIRED ON MOUNT")
+    if (currentUser) {
+      db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
+        .onSnapshot(doc => {
+          console.log("Current data: ", doc.data())
+          if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
+        });
+  
+      // workoutList_data.get().then(doc => {
+      //   if (doc.exists) {
+      //     console.log("Document data: ", doc.data());
+      //     if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
+      //   } else {
+      //     console.log("No such document");
+      //   }
+      // }).catch(error => {
+      //   console.log("Error getting document: ", error);
+      // })
+      // db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
+      // console.log("to set Workouts: ", snapshot.docs.map(doc => {if(doc.data().workouts) return doc.data()}))
+      // let workoutsTest = snapshot.docs('workouts').data();
+      // console.log("----------")
+      // console.log(workoutsTest)
+      // console.log("----------")
+  
+      // let toArray = [];
+      // for (let key in workoutsTest[0]) {
+      //   toArray.push(workoutsTest[0][key]);
+      // }
+      // console.log("-----TO ARRAY-----")
+      // console.log(toArray)
+      // console.log(workoutsTest[0][0])
+      // console.log("----------")
+      // setDbTester(toArray);
+      // })
+  
+      db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
+        console.log(snapshot.data())
+        // workoutsTest = snapshot.data().map(workout => workout);
+        // console.log("WORKOUTS TEST: ", workoutsTest)
+        // setWorkouts(workoutsTest);
+      })
+    }
 
-    // workoutList_data.get().then(doc => {
-    //   if (doc.exists) {
-    //     console.log("Document data: ", doc.data());
-    //     if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
-    //   } else {
-    //     console.log("No such document");
-    //   }
-    // }).catch(error => {
-    //   console.log("Error getting document: ", error);
-    // })
-    // db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
-    // console.log("to set Workouts: ", snapshot.docs.map(doc => {if(doc.data().workouts) return doc.data()}))
-    // let workoutsTest = snapshot.docs('workouts').data();
-    // console.log("----------")
-    // console.log(workoutsTest)
-    // console.log("----------")
+  }, [currentUser])
 
-    // let toArray = [];
-    // for (let key in workoutsTest[0]) {
-    //   toArray.push(workoutsTest[0][key]);
-    // }
-    // console.log("-----TO ARRAY-----")
-    // console.log(toArray)
-    // console.log(workoutsTest[0][0])
-    // console.log("----------")
-    // setDbTester(toArray);
-    // })
+  // useEffect(() => {
+  //   console.log("USEFFECT FIRED ON CURRENTUSER CHANGE")
+  //   // if (currentUser) {
+  //   //   db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
+  //   //     .onSnapshot(doc => {
+  //   //       console.log("Current data: ", doc.data())
+  //   //       if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
+  //   //     });
+  //   //   db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
+  //   //     console.log(snapshot.data())
 
-    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
-      console.log(snapshot.data())
-      // workoutsTest = snapshot.data().map(workout => workout);
-      // console.log("WORKOUTS TEST: ", workoutsTest)
-      // setWorkouts(workoutsTest);
-    })
-
-  }, [])
+  //   //   })
+  //   // }
+  // }, [currentUser])
+  
 
   const onTest = workouts => {
 
