@@ -8,22 +8,21 @@ import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import { AuthProvider } from './contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
-import { db } from './Firebase';
+import { db, auth } from './Firebase';
 
 
 
 
 function App() {
 
-  // const exercises_data = [...ExercisesList];
+  const exercises_data = [...ExercisesList];
   // const workouts_data = [...WorkoutsList];
-  const exercises_data = [];
+  // const exercises_data = [];
   // const workouts_data = [];
 
   const [exercises, setExercises] = useState(exercises_data);
@@ -34,13 +33,19 @@ function App() {
   //-----------------------------DATABASE testing--------------------//
 
   const [dbTester, setDbTester] = useState([]);
+  console.log('+++++++++++++++++')
+  // console.log(auth.currentUser.uid);
+  // console.log(auth.currentUser);
 
   useEffect(() => {
     // let workoutList_data = 
-    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts')
+    // console.log('+++++33333++++')
+    // console.log(auth.currentUser.uid);
+    // console.log('++33333+++++++')
+    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts')
       .onSnapshot(doc => {
         console.log("Current data: ", doc.data())
-        if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts);
+        if (doc.data() !== undefined) setWorkouts(doc.data().workouts);
       });
 
     // workoutList_data.get().then(doc => {
@@ -71,7 +76,7 @@ function App() {
     // setDbTester(toArray);
     // })
 
-    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').onSnapshot(snapshot => {
+    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
       console.log(snapshot.data())
       // workoutsTest = snapshot.data().map(workout => workout);
       // console.log("WORKOUTS TEST: ", workoutsTest)
@@ -82,10 +87,10 @@ function App() {
 
   const onTest = workouts => {
 
-    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').doc('workouts').set({
+    db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').set({
       workouts
     });
-    db.collection('test/BLx3w0Kb4PvAfNIgpdU8/data/').onSnapshot(snapshot => {
+    db.collection(`test/${auth.currentUser.uid}/data/`).onSnapshot(snapshot => {
       console.log("++++++++++++++++")
       console.log(snapshot.docs.map(doc => doc.data()))
       console.log("++++++++++++++++")
@@ -168,8 +173,6 @@ function App() {
 
 
   return (
-    <AuthProvider>
-
 
       <div className="App">
         <main className="content-wrapper">
@@ -217,10 +220,9 @@ function App() {
               {"Not found"}
             </PrivateRoute>
           </Switch>
-
         </main>
       </div>
-    </AuthProvider>
+
   );
 }
 
