@@ -24,8 +24,6 @@ function App() {
 
   // const exercises_data = [...ExercisesList];
   // const workouts_data = [...WorkoutsList];
-  const exercises_data = [];
-  const workouts_data = [];
 
   const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
@@ -34,7 +32,7 @@ function App() {
 
   //-----------------------------DATABASE testing--------------------//
 
-  const [dbTester, setDbTester] = useState(false);
+  const [dbLoaded, setDbLoaded] = useState(false);
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -70,7 +68,7 @@ function App() {
         console.log(snapshot.data())
 
       })
-      setDbTester(true);
+      setDbLoaded(true);
     }
 
   }, [currentUser])
@@ -103,13 +101,15 @@ function App() {
   }
 
   useEffect(() => {
-    if (dbTester) {
+    if (dbLoaded) {
       onTest("workouts", workouts)
     }
   }, [workouts])
 
   useEffect(() => {
-    onTest("exercises", exercises)
+    if (dbLoaded) {
+      onTest("exercises", exercises)
+    }
   }, [exercises])
 
 
@@ -222,15 +222,30 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path={`/fit_log/workout-detail`}>
             <Navbar />
-            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
+            {
+              currW !== undefined ?
+                <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
+                :
+                <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+            }
           </PrivateRoute>
           <PrivateRoute path={`/fit_log/exercise-detail`}>
             <Navbar />
-            <ExerciseView exercise={currE} />
+            {
+              currE !== undefined ?
+                <ExerciseView exercise={currE} />
+                :
+                <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />    
+            }
           </PrivateRoute>
           <PrivateRoute path={`/fit_log/workout-detail/start`}>
             <Navbar />
-            <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+            {
+              currW !== undefined ?
+                <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+                :
+                <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+            }
           </PrivateRoute>
           <Route path="/fit_log/forgot-password">
             <ForgotPassowrd />
