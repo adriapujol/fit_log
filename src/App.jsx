@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.scss';
 import ExercisesList from './exercises.json';
 import WorkoutsList from './workouts.json';
@@ -13,7 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
-import { db, auth } from './Firebase';
+import { db } from './Firebase';
 import { useAuth } from './contexts/AuthContext';
 
 
@@ -30,87 +30,92 @@ function App() {
   const [currWorkoutName, setCurrWorkoutName] = useState();
   const [currExerciseName, setCurrExerciseName] = useState();
 
-  //-----------------------------DATABASE testing--------------------//
+  //--------------Getting Data--------------------//
 
-  const [dbLoaded, setDbLoaded] = useState(false);
   const { currentUser } = useAuth();
 
+  // Prevent first two runs of updating database 
+  const isWorkoutsFirstRun = useRef(0);
+  const isExercisesFirstRun = useRef(0);
+  // const isWorkoutsSecondRun = useRef(true);
+  // const isExercisesSecondRun = useRef(true);
+
+
   useEffect(() => {
-
-    console.log("USE EFFECT FIRED ON MOUNT")
-    if (currentUser) {
-
-      // GET WORKOUT LIST
-      db.collection(`test/${currentUser.uid}/data/`).doc('workouts')
-        .onSnapshot(doc => {
-          console.log("Current data: ", doc.data())
-          if (doc.data() !== undefined) {
-            if (Object.keys(doc.data()).length > 0) setWorkouts(doc.data().workouts)
-          };
+    async function getUserData() {
+      let dbRef = db.collection(`test/${currentUser.uid}/data/`);
+      await dbRef
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.id === "workouts") {
+              setWorkouts(doc.data().workouts);
+            } else if (doc.id === "exercises") {
+              setExercises(doc.data().exercises);
+            }
+          })
+        })
+        .catch(err => {
+          console.log("Error getting data: ", err);
         });
-
-      db.collection(`test/${currentUser.uid}/data/`).doc('workouts').onSnapshot(snapshot => {
-        console.log(snapshot.data())
-
-      })
-
-
-      // GET EXERCISE LIST
-      db.collection(`test/${currentUser.uid}/data/`).doc('exercises')
-        .onSnapshot(doc => {
-          console.log("Current data: ", doc.data())
-          if (doc.data() !== undefined) {
-            if (Object.keys(doc.data()).length > 0) setExercises(doc.data().exercises)
-          };
-        });
-
-      db.collection(`test/${currentUser.uid}/data/`).doc('exercises').onSnapshot(snapshot => {
-        console.log(snapshot.data())
-
-      })
-      setDbLoaded(true);
     }
-
+    if (currentUser) {
+      getUserData();
+    }
+    return () => {
+      isWorkoutsFirstRun.current = 0;
+      isExercisesFirstRun.current = 0;
+    }
   }, [currentUser])
 
 
-  const onTest = (type, data) => {
-    if (currentUser) {
-      if (type === "workouts") {
-        let workouts = data;
-        db.collection(`test/${currentUser.uid}/data/`).doc('workouts').set({
-          workouts
-        });
-        db.collection(`test/${currentUser.uid}/data/`).onSnapshot(snapshot => {
-          console.log("++++++++++++++++")
-          console.log(snapshot.docs.map(doc => doc.data()))
-          console.log("++++++++++++++++")
-        })
-      } else if (type === "exercises") {
-        let exercises = data;
-        db.collection(`test/${currentUser.uid}/data/`).doc('exercises').set({
-          exercises
-        });
-        db.collection(`test/${currentUser.uid}/data/`).onSnapshot(snapshot => {
-          console.log("++++++++++++++++")
-          console.log(snapshot.docs.map(doc => doc.data()))
-          console.log("++++++++++++++++")
-        })
+  const updateDatabase = useCallback(
+    (type, data) => {
+      if (currentUser) {
+        if (type === "workouts") {
+          let workouts = data;
+          db.collection(`test/${currentUser.uid}/data/`).doc('workouts').set({
+            workouts
+          });
+        } else if (type === "exercises") {
+          let exercises = data;
+          db.collection(`test/${currentUser.uid}/data/`).doc('exercises').set({
+            exercises
+          });
+        }
       }
-    }
-  }
+    },
+    [currentUser],
+  );
 
   useEffect(() => {
-    if (dbLoaded) {
-      onTest("workouts", workouts)
+    if (isWorkoutsFirstRun.current < 2) {
+      console.log("This is run number: ", isWorkoutsFirstRun.current)
+      isWorkoutsFirstRun.current = isWorkoutsFirstRun.current + 1;
+      return
     }
-  }, [workouts])
+    console.log("this is working")
+    // if (isWorkoutsSecondRun.current) {
+    //   isWorkoutsSecondRun.current = false;
+    //   return
+    // }
+    updateDatabase("workouts", workouts)
+  }, [workouts, updateDatabase])
 
   useEffect(() => {
-    if (dbLoaded) {
-      onTest("exercises", exercises)
+    if (isExercisesFirstRun.current < 2) {
+      console.log("This is run number: ", isExercisesFirstRun.current)
+      isExercisesFirstRun.current = isExercisesFirstRun.current + 1;
+      return
     }
-  }, [exercises])
+    console.log("this is working")
+
+    // if (isExercisesSecondRun.current) {
+    //   isExercisesSecondRun.current = false;
+    //   return
+    // }
+    updateDatabase("exercises", exercises)
+  }, [exercises, updateDatabase])
 
 
   //----------------------------------------------------------------//
@@ -153,37 +158,12 @@ function App() {
       })
 
     })
-    // onTest();
   }
-
-
 
 
   let currW, currE;
   if (workouts !== undefined) currW = workouts.find(w => w.name === currWorkoutName);
   if (exercises !== undefined) currE = exercises.find(ex => ex.name === currExerciseName);
-
-
-  // let currW = workouts.find(w => w.name === currWorkoutName);
-
-  // let currE = exercises.find(ex => ex.name === currExerciseName);
-
-  // const dbTesting = db.collection('test').doc('test2');
-  // console.log(dbTesting);
-
-  // const fakeUID = "3SbmdXJIWLop89HxQUoQ";
-  // db.collection('users').add({
-  //   first: "ada",
-  //   last: "lovelace"
-  // }).then(() => {
-  //   console.log("this worked")
-  // }).catch((error)=>{
-  //   console.error(error);
-  // });
-  // console.log(db.collection('users'));
-  // db.collection('users').doc(fakeUID).add({workout: 'shitty'});
-
-
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -206,7 +186,6 @@ function App() {
           <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
             <Navbar />
             <Dashboard />
-            <button onClick={onTest}>TEST</button>
           </PrivateRoute>
           <PrivateRoute path="/fit_log/update-profile">
             <Navbar />
@@ -235,7 +214,7 @@ function App() {
               currE !== undefined ?
                 <ExerciseView exercise={currE} />
                 :
-                <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />    
+                <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
             }
           </PrivateRoute>
           <PrivateRoute path={`/fit_log/workout-detail/start`}>
