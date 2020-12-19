@@ -36,8 +36,8 @@ export function AuthProvider({ children }) {
     }
 
     function deleteUser() {
-        const userToDelete = auth.currentUser;
-        return userToDelete.delete();
+        // const userToDelete = auth.currentUser;
+        return currentUser.delete();
     }
 
     useEffect(() => {

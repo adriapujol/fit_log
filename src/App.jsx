@@ -35,15 +35,14 @@ function App() {
   const { currentUser } = useAuth();
 
   // Prevent first two runs of updating database 
-  const isWorkoutsFirstRun = useRef(0);
-  const isExercisesFirstRun = useRef(0);
-  // const isWorkoutsSecondRun = useRef(true);
-  // const isExercisesSecondRun = useRef(true);
+  const workoutsRunsCount = useRef(0);
+  const exercisesRunsCount = useRef(0);
 
 
   useEffect(() => {
-    async function getUserData() {
-      let dbRef = db.collection(`test/${currentUser.uid}/data/`);
+    // console.log(currentUser.uid);
+
+    async function getUserData(dbRef) {
       await dbRef
         .get()
         .then(querySnapshot => {
@@ -52,6 +51,9 @@ function App() {
               setWorkouts(doc.data().workouts);
             } else if (doc.id === "exercises") {
               setExercises(doc.data().exercises);
+            } else {
+              setWorkouts([]);
+              setExercises([]);
             }
           })
         })
@@ -60,17 +62,20 @@ function App() {
         });
     }
     if (currentUser) {
-      getUserData();
+      console.log(currentUser.uid);
+      let dbRef = db.collection(`test/${currentUser.uid}/data/`);
+      getUserData(dbRef);
     }
     return () => {
-      isWorkoutsFirstRun.current = 0;
-      isExercisesFirstRun.current = 0;
+      workoutsRunsCount.current = 0;
+      exercisesRunsCount.current = 0;
     }
   }, [currentUser])
 
 
   const updateDatabase = useCallback(
     (type, data) => {
+      console.log(currentUser.uid)
       if (currentUser) {
         if (type === "workouts") {
           let workouts = data;
@@ -89,31 +94,22 @@ function App() {
   );
 
   useEffect(() => {
-    if (isWorkoutsFirstRun.current < 2) {
-      console.log("This is run number: ", isWorkoutsFirstRun.current)
-      isWorkoutsFirstRun.current = isWorkoutsFirstRun.current + 1;
+    if (workoutsRunsCount.current < 2) {
+      console.log("This is run number: ", workoutsRunsCount.current)
+      workoutsRunsCount.current = workoutsRunsCount.current + 1;
       return
     }
     console.log("this is working")
-    // if (isWorkoutsSecondRun.current) {
-    //   isWorkoutsSecondRun.current = false;
-    //   return
-    // }
     updateDatabase("workouts", workouts)
   }, [workouts, updateDatabase])
 
   useEffect(() => {
-    if (isExercisesFirstRun.current < 2) {
-      console.log("This is run number: ", isExercisesFirstRun.current)
-      isExercisesFirstRun.current = isExercisesFirstRun.current + 1;
+    if (exercisesRunsCount.current < 2) {
+      console.log("This is run number: ", exercisesRunsCount.current)
+      exercisesRunsCount.current = exercisesRunsCount.current + 1;
       return
     }
     console.log("this is working")
-
-    // if (isExercisesSecondRun.current) {
-    //   isExercisesSecondRun.current = false;
-    //   return
-    // }
     updateDatabase("exercises", exercises)
   }, [exercises, updateDatabase])
 
