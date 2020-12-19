@@ -22,9 +22,6 @@ import { useAuth } from './contexts/AuthContext';
 
 function App() {
 
-  // const exercises_data = [...ExercisesList];
-  // const workouts_data = [...WorkoutsList];
-
   const [exercises, setExercises] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [currWorkoutName, setCurrWorkoutName] = useState();
@@ -40,20 +37,18 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(currentUser.uid);
 
     async function getUserData(dbRef) {
       await dbRef
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            if (doc.id === "workouts") {
-              setWorkouts(doc.data().workouts);
-            } else if (doc.id === "exercises") {
-              setExercises(doc.data().exercises);
-            } else {
-              setWorkouts([]);
-              setExercises([]);
+            if (doc.exists) {
+              if (doc.id === "workouts") {
+                setWorkouts(doc.data().workouts);
+              } else if (doc.id === "exercises") {
+                setExercises(doc.data().exercises);
+              }
             }
           })
         })
@@ -62,7 +57,6 @@ function App() {
         });
     }
     if (currentUser) {
-      console.log(currentUser.uid);
       let dbRef = db.collection(`test/${currentUser.uid}/data/`);
       getUserData(dbRef);
     }
@@ -75,7 +69,6 @@ function App() {
 
   const updateDatabase = useCallback(
     (type, data) => {
-      console.log(currentUser.uid)
       if (currentUser) {
         if (type === "workouts") {
           let workouts = data;
@@ -95,21 +88,17 @@ function App() {
 
   useEffect(() => {
     if (workoutsRunsCount.current < 2) {
-      console.log("This is run number: ", workoutsRunsCount.current)
       workoutsRunsCount.current = workoutsRunsCount.current + 1;
       return
     }
-    console.log("this is working")
     updateDatabase("workouts", workouts)
   }, [workouts, updateDatabase])
 
   useEffect(() => {
     if (exercisesRunsCount.current < 2) {
-      console.log("This is run number: ", exercisesRunsCount.current)
       exercisesRunsCount.current = exercisesRunsCount.current + 1;
       return
     }
-    console.log("this is working")
     updateDatabase("exercises", exercises)
   }, [exercises, updateDatabase])
 

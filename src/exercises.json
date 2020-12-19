@@ -1,48 +1,7 @@
 [
     {
         "name": "Push ups",
-        "history": [
-            {
-                "date": "30/10/2020",
-                "sets": [
-                    {
-                        "set": 1,
-                        "reps": 5,
-                        "weight": 50
-                    },
-                    {
-                        "set": 2,
-                        "reps": 5,
-                        "weight": 50
-                    },
-                    {
-                        "set": 3,
-                        "reps": 3,
-                        "weight": 50
-                    }
-                ]
-            },
-            {
-                "date": "03/11/2020",
-                "sets": [
-                    {
-                        "set": 1,
-                        "reps": 5,
-                        "weight": 60
-                    },
-                    {
-                        "set": 2,
-                        "reps": 5,
-                        "weight": 60
-                    },
-                    {
-                        "set": 3,
-                        "reps": 5,
-                        "weight": 60
-                    }
-                ]
-            }
-        ]
+        "history": []
     },
     {
         "name": "Flat bench press",
@@ -54,28 +13,7 @@
     },
     {
         "name": "Military press",
-        "history": [
-            {
-                "date": "11/04/1920",
-                "sets": [
-                    {
-                        "set": 1,
-                        "reps": 5,
-                        "weight": 20
-                    },
-                    {
-                        "set": 2,
-                        "reps": 5,
-                        "weight": 24
-                    },
-                    {
-                        "set": 3,
-                        "reps": 3,
-                        "weight": 25
-                    }
-                ]
-            }
-        ]
+        "history": []
     },
     {
         "name": "Incline dumbbell press",

@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../Firebase';
+import { auth, db } from '../Firebase';
+import ExercisesList from '../exercises.json';
+
 
 const AuthContext = React.createContext();
 
@@ -12,7 +14,16 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
+        return auth.createUserWithEmailAndPassword(email, password).then(() => {
+            let workouts = [];
+            db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').set({
+                workouts
+            });
+            let exercises = [...ExercisesList];
+            db.collection(`test/${auth.currentUser.uid}/data/`).doc('exercises').set({
+                exercises
+            });
+        });
     }
 
     function login(email, password) {
@@ -46,7 +57,7 @@ export function AuthProvider({ children }) {
             setLoading(false);
         })
 
-        return () => {unsubscribe()};
+        return () => { unsubscribe() };
 
     }, [])
 
