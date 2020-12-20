@@ -90,12 +90,14 @@
         }
     }
 
-
     .alert {
-        position: absolute;
-        margin-bottom: 0.5em;
-        top: 55%
+        height: 25px;
     }
+
+    .hide-message {
+        visibility: hidden;
+    }
+
     .forgot-password {
         margin-bottom: 0.5em;
         a {

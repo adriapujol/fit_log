@@ -13,6 +13,7 @@ function Login() {
     const passwordRef = useRef();
     const { login } = useAuth();
     const [error, setError] = useState("");
+    const [showError, setShowError] = useState(false);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
@@ -22,6 +23,7 @@ function Login() {
 
         try {
             setError("");
+            setShowError(false);
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
             setLoading(false);
@@ -29,6 +31,7 @@ function Login() {
         } catch {
             setLoading(false);
             setError("Failed to log in");
+            setShowError(true);
         }
 
     }
@@ -44,7 +47,7 @@ function Login() {
                     </div>
                 </div>
                 <form className="login-form" onSubmit={handleSubmit}>
-                    {error && <div className="alert">{error}</div>}
+                    <div className={showError ? "alert" : "alert hide-message"}>{error}</div>
                     <input
                         type="email"
                         name="email"

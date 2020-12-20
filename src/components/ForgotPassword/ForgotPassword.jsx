@@ -10,12 +10,10 @@ function ForgotPassword() {
 
 
     const emailRef = useRef();
-    // const passwordRef = useRef();
     const { resetPassword } = useAuth();
-    const [error, setError] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    // const history = useHistory();
 
 
     const handleSubmit = async (e) => {
@@ -23,15 +21,15 @@ function ForgotPassword() {
 
         try {
             setMessage("");
-            setError("");
             setLoading(true);
             await resetPassword(emailRef.current.value);
             setLoading(false);
             setMessage("Check your inbox for further instructions");
-            // history.push("/fit_log/");
+            setShowMessage(true)
         } catch {
             setLoading(false);
-            setError("Failed to reset password");
+            setMessage("Failed to reset password");
+            setShowMessage(true);
         }
 
     }
@@ -47,8 +45,7 @@ function ForgotPassword() {
                     </div>
                 </div>
                 <form className="login-form" onSubmit={handleSubmit}>
-                    {error && <div className="alert">{error}</div>}
-                    {message && <div className="alert">{message}</div>}
+                    <div className={showMessage ? "alert" : "alert hide-message"}>{message}</div>
                     <input
                         type="email"
                         name="email"
