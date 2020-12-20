@@ -27,22 +27,11 @@ function Dashboard() {
 
     const handleDeleteUser = async () => {
         setError("");
-        console.log("test")
-        // let dbRef = db.collection('test').doc(currentUser.uid);
-        // console.log(dbRef);
-        // console.log(currentUser.uid)
-        // dbRef.delete().then(()=>console.log("delete success")).catch(err => console.log(err))
-        // db.collection(`test/${currentUser.uid}/data/`).doc('workouts').delete();
-        // db.collection(`test`).doc('test').delete();
-
-        // db.collection("test").doc(currentUser.uid).delete()
         try {
-            console.log("user to delete: ", currentUser.uid)
             let userUID = currentUser.uid;
             db.collection(`test/${userUID}/data/`).doc('workouts').delete();
             db.collection(`test/${userUID}/data/`).doc('exercises').delete();
             db.collection(`test`).doc(userUID).delete();
-            // currentUser.delete();
             await deleteUser();
         } catch {
             setError("Couldn't delete user.")
@@ -59,17 +48,19 @@ function Dashboard() {
             {showConfirmModal && <ConfirmModal message="There is no going back" onConfirm={handleDeleteUser} onCancel={() => setShowConfirmModal(false)} />}
             <div className="profile-card">
                 <h3>Profile</h3>
-                {error && <div>{error}</div>}
-                <div>
+                <div className="user-email">
                     <strong>Email: </strong>{currentUser.email}
                 </div>
-                <Link to="/fit_log/update-profile" className="btn">Update profile</Link>
+                <Link to="/fit_log/workouts" className="my-links">Workouts</Link>
+                <Link to="/fit_log/exercises" className="my-links">Exercises</Link>
+                <Link to="/fit_log/update-profile" className="update-link">Update profile</Link>
             </div>
-            <button className="btn" onClick={handleLogout}>Log out</button>
+            <button className="btn profile-btn" onClick={handleLogout}>Log out</button>
             <div className="delete-user-box">
                 <div className="delete-user" onClick={showDeleteAccount? handleDeleteUser : handleConfirmDelete}>{deleteMessage}</div>
                 <div className={showDeleteAccount ? "delete-user-warning" : "delete-user-warning hide" }>There is no going back</div>
             </div>
+            {error && <div>{error}</div>}
         </div>
     )
 };

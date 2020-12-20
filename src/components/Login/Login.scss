@@ -86,7 +86,11 @@
 
         &:focus {
             outline: none;
-            background-color: #900000;
+            background-color: #be0000;
+        }
+
+        &:hover {
+            background-color: #be0000;
         }
     }
 

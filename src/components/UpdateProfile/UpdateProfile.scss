@@ -2,12 +2,9 @@ $navbar-height: 7vh;
 $links-height: calc(100vh - #{$navbar-height});
 
 .center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
     justify-content: center;
 
-    min-height: $links-height;
 
     .login-form {
         display: flex;
