@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import './Register.scss';
+import '../Login/Login.scss';
 import barbellLogo from '../../img/barbell_logo.png';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -11,7 +11,7 @@ function Register() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { signup, currentUser } = useAuth();
+    const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();

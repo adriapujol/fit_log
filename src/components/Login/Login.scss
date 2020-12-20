@@ -67,14 +67,14 @@
         border-radius: 20px;
         margin-bottom: 0.5em;
         border-style: none;
-
+    }
+    
+    .login-input {
         &:focus {
-            // border-style: none;
             outline: none;
             background-color: #fff495;
         }
     }
-
 
 
     .login-btn {
@@ -83,7 +83,13 @@
         color: #ffffff;
         margin: 1em;
         cursor: pointer;
+
+        &:focus {
+            outline: none;
+            background-color: #900000;
+        }
     }
+
 
     .alert {
         position: absolute;
@@ -101,9 +107,7 @@
          color: #db3535;
         .sign-link {
             color: #ffffff;
-            // text-decoration: none;
         }
     }
-
 
 }

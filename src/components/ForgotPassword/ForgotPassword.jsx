@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import './ForgotPassword.scss';
+import '../Login/Login.scss';
 import barbellLogo from '../../img/barbell_logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
