@@ -34,7 +34,7 @@ function Dashboard() {
             db.collection(`test`).doc(userUID).delete();
             await deleteUser();
         } catch {
-            setError("Couldn't delete user.")
+            setError("Couldn't delete user")
         }
     }
 
