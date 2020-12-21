@@ -46,7 +46,12 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
             setNewSets(0);
             setModalClicked(false);
         } else {
-            setList([...list, newData]);
+            let itemFound = list.find(item => item.name === newData.name)
+            if (itemFound !== undefined) {
+                alert("This name is already taken");
+            } else {
+                setList([...list, newData]);
+            }
             setNewName("");
             setModalClicked(false);
         }
