@@ -6,7 +6,7 @@ import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, HashRouter } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -159,7 +159,7 @@ function App() {
 
     <div className="App">
       <main className="content-wrapper">
-        <Switch>
+        <HashRouter>
           <Route path={"/fit_log/login"}>
             <Login />
           </Route>
@@ -220,7 +220,7 @@ function App() {
               </div>
             </div>
           </PrivateRoute>
-        </Switch>
+        </HashRouter>
       </main>
     </div>
 
