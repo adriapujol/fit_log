@@ -15,7 +15,7 @@
 
 .header-exercise {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 0.5em;
@@ -24,10 +24,11 @@
 
     i {
         font-size: 1.75em;
+
     }
 
     .exercise-title {
-        margin: 0 1em;
+        // margin: 0 1em;
         font-size: 1.5em;
     }
 
@@ -103,8 +104,17 @@ table {
     }
 }
 
-.btn-workout-add-set {
-    margin-bottom: 0.5em;
+.save-add-btn-box {
+    width: 100%;
+    padding: 0.5em 1em 0 1em;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+    cursor: pointer;
+
+    .btn-workout-add-set {
+        margin-bottom: 0.5em;
+    }
 }
 
 .btn-low-box {
@@ -112,6 +122,7 @@ table {
     display: flex;
     justify-content: space-between;
     padding: 0em 1em;
+
 }
 
 .empty-sets-alert {
@@ -121,4 +132,8 @@ table {
     font-size: 1em;
     color: #db0000;
     height: 40px;
+}
+
+i {
+    cursor: pointer;
 }

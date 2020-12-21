@@ -13,6 +13,9 @@ $links-height: calc(100vh - #{$navbar-height});
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
 
     min-height: $links-height;
 
@@ -27,6 +30,8 @@ $links-height: calc(100vh - #{$navbar-height});
 
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -41,6 +46,7 @@ $links-height: calc(100vh - #{$navbar-height});
         justify-content: center;
         align-items: center;
         width: 80%;
+        max-width:300px ;
         padding: 2.5em 2em;
         background-color: white;
 
@@ -58,6 +64,10 @@ $links-height: calc(100vh - #{$navbar-height});
             margin-bottom: 1em;
         }
 
+        .input-field {
+            width: 100%;
+        }
+
         .sets-reps-inputs {
             width: 100%;
             display: flex;
@@ -69,7 +79,7 @@ $links-height: calc(100vh - #{$navbar-height});
                 flex-direction: column;
 
                 input {
-                    width: 110px;
+                    width: 100%;
                 }
             }
 
@@ -94,14 +104,16 @@ $links-height: calc(100vh - #{$navbar-height});
             justify-content: space-around;
             width: 100%;
 
-            button {
-                
-            }
-
-            .cancel-btn {
-
-            }
         }
+
+        .alert-message {
+            height: 30px;
+            color: #db0000;
+        }
+        .hide-alert {
+            visibility: hidden;
+        }
+
     }
 }
 
@@ -113,9 +125,10 @@ $links-height: calc(100vh - #{$navbar-height});
     font-size: 1.1em;
     border: none;
     cursor: pointer;
+    border-radius: 25px;
 
     &:hover {
-        background-color: #900000;
+        background-color: #be0000;
     }
 }
 
@@ -126,4 +139,24 @@ $links-height: calc(100vh - #{$navbar-height});
 
 ul {
     list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}
+
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight: 700;
+    color: #6b6b6b;
+    .not-found-box {
+        padding: 2em;
+        background-color: #e5e5e5;
+        border-radius: 25px;
+    }
 }

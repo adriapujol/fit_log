@@ -1,24 +1,108 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.scss';
-import ExercisesList from './exercises.json';
-import WorkoutsList from './workouts.json';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import { Route, Switch } from "react-router-dom";
+import PrivateRoute from './PrivateRoute';
+import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
+import Dashboard from './components/Dashboard/Dashboard';
+import UpdateProfile from './components/UpdateProfile/UpdateProfile';
+import { db } from './Firebase';
+import { useAuth } from './contexts/AuthContext';
+
+
 
 
 
 function App() {
 
-  const exercises_data = [...ExercisesList];
-  const workouts_data = [...WorkoutsList];
-
-  const [exercises, setExercises] = useState(exercises_data);
-  const [workouts, setWorkouts] = useState(workouts_data);
-  const [currWorkoutName, setCurrWorkoutName] = useState("Push");
+  const [exercises, setExercises] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
+  const [currWorkoutName, setCurrWorkoutName] = useState();
   const [currExerciseName, setCurrExerciseName] = useState();
+
+  //--------------Getting Data--------------------//
+
+  const { currentUser } = useAuth();
+
+  // Prevent first two runs of updating database 
+  const workoutsRunsCount = useRef(0);
+  const exercisesRunsCount = useRef(0);
+
+
+  useEffect(() => {
+
+    async function getUserData(dbRef) {
+      await dbRef
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            if (doc.exists) {
+              if (doc.id === "workouts") {
+                setWorkouts(doc.data().workouts);
+              } else if (doc.id === "exercises") {
+                setExercises(doc.data().exercises);
+              }
+            }
+          })
+        })
+        .catch(err => {
+          console.log("Error getting data: ", err);
+        });
+    }
+    if (currentUser) {
+      let dbRef = db.collection(`users/${currentUser.uid}/data/`);
+      getUserData(dbRef);
+    }
+    return () => {
+      workoutsRunsCount.current = 0;
+      exercisesRunsCount.current = 0;
+    }
+  }, [currentUser])
+
+
+  const updateDatabase = useCallback(
+    (type, data) => {
+      if (currentUser) {
+        if (type === "workouts") {
+          let workouts = data;
+          db.collection(`users/${currentUser.uid}/data/`).doc('workouts').set({
+            workouts
+          });
+        } else if (type === "exercises") {
+          let exercises = data;
+          db.collection(`users/${currentUser.uid}/data/`).doc('exercises').set({
+            exercises
+          });
+        }
+      }
+    },
+    [currentUser],
+  );
+
+  useEffect(() => {
+    if (workoutsRunsCount.current < 2) {
+      workoutsRunsCount.current = workoutsRunsCount.current + 1;
+      return
+    }
+    updateDatabase("workouts", workouts)
+  }, [workouts, updateDatabase])
+
+  useEffect(() => {
+    if (exercisesRunsCount.current < 2) {
+      exercisesRunsCount.current = exercisesRunsCount.current + 1;
+      return
+    }
+    updateDatabase("exercises", exercises)
+  }, [exercises, updateDatabase])
+
+
+  //----------------------------------------------------------------//
+
 
 
   const getCurrentDate = () => {
@@ -57,13 +141,12 @@ function App() {
       })
 
     })
-
   }
 
-  let currW = workouts.find(w => w.name === currWorkoutName);
 
-  let currE = exercises.find(ex => ex.name === currExerciseName);
-
+  let currW, currE;
+  if (workouts !== undefined) currW = workouts.find(w => w.name === currWorkoutName);
+  if (exercises !== undefined) currE = exercises.find(ex => ex.name === currExerciseName);
 
   /*TYPES OF DATA
     workout list has type = workouts
@@ -73,33 +156,74 @@ function App() {
 
 
   return (
+
     <div className="App">
-      <Navbar />
       <main className="content-wrapper">
-
         <Switch>
-          <Route exact path={["/fit_log", "/fit_log/workouts"]}>
+          <Route path={"/fit_log/login"}>
+            <Login />
+          </Route>
+          <Route path={"/fit_log/register"}>
+            <Register />
+          </Route>
+          <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
+            <Navbar />
+            <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute path="/fit_log/update-profile">
+            <Navbar />
+            <UpdateProfile />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/fit_log/workouts"}>
+            <Navbar />
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
-          </Route>
-          <Route exact path={"/fit_log/exercises"}>
+          </PrivateRoute>
+          <PrivateRoute path="/fit_log/exercises">
+            <Navbar />
             <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
+          </PrivateRoute>
+          <PrivateRoute exact path={`/fit_log/workout-detail`}>
+            <Navbar />
+            {
+              currW !== undefined ?
+                <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
+                :
+                <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+            }
+          </PrivateRoute>
+          <PrivateRoute path={`/fit_log/exercise-detail`}>
+            <Navbar />
+            {
+              currE !== undefined ?
+                <ExerciseView exercise={currE} />
+                :
+                <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
+            }
+          </PrivateRoute>
+          <PrivateRoute path={`/fit_log/workout-detail/start`}>
+            <Navbar />
+            {
+              currW !== undefined ?
+                <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
+                :
+                <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
+            }
+          </PrivateRoute>
+          <Route path="/fit_log/forgot-password">
+            <ForgotPassowrd />
           </Route>
-          <Route exact path={`/fit_log/workout-detail`}>
-            <ListView type="workout" list={currW} setList={setWorkouts} exerciseList={exercises} setCurrExerciseName={setCurrExerciseName} />
-          </Route>
-          <Route path={`/fit_log/exercise-detail`}>
-            <ExerciseView exercise={currE} />
-          </Route>
-          <Route path={`/fit_log/workout-detail/start`}>
-            <Workout workout={currW} setWorkingWorkout={handleSaveWorkout} exerciseList={exercises} />
-          </Route>
-          <Route>
-            {"Not found"}
-          </Route>
+          <PrivateRoute>
+            <Navbar />
+            <div className="content not-found">
+              <div className="not-found-box">
+                Page not found
+              </div>
+            </div>
+          </PrivateRoute>
         </Switch>
-
       </main>
     </div>
+
   );
 }
 
