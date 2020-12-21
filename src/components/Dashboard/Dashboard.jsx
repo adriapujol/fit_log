@@ -29,9 +29,9 @@ function Dashboard() {
         setError("");
         try {
             let userUID = currentUser.uid;
-            db.collection(`test/${userUID}/data/`).doc('workouts').delete();
-            db.collection(`test/${userUID}/data/`).doc('exercises').delete();
-            db.collection(`test`).doc(userUID).delete();
+            db.collection(`users/${userUID}/data/`).doc('workouts').delete();
+            db.collection(`users/${userUID}/data/`).doc('exercises').delete();
+            db.collection(`users`).doc(userUID).delete();
             await deleteUser();
         } catch {
             setError("Couldn't delete user")

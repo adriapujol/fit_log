@@ -20,16 +20,19 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setShowError(false);
 
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            setShowError(true);
             return setError("Passwords do not match");
         }
         if (passwordRef.current.value.length < 6) {
+            setShowError(true);
             return setError("Password has to be 6 characters or longer");
         }
         try {
             setError("");
-            setShowError(false);
+            
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value);
             setLoading(false);
