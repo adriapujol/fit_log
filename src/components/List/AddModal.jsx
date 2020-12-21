@@ -88,6 +88,7 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
                             name='sets'
                             value={newSets}
                             min="0"
+                            max="999"
                             className="input-field number-input"
                             onClick={handleEnterSets}
                             onChange={handleSetsInput}
@@ -100,6 +101,7 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
                             name='reps'
                             value={newReps}
                             min="0"
+                            max="999"
                             className="input-field number-input"
                             onClick={handleEnterReps}
                             onChange={handleRepsInput}

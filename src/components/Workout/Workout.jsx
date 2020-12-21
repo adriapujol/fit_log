@@ -206,9 +206,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                             setCurrentExercise={setCurrentExercise}
                             exerciseNumber={exerciseNumber}
                         />
+                        <div className="save-add-btn-box">
+                            <div className="btn-workout-add-set" onClick={handleSavedModal}>Save exercise</div>
+                            <div className="btn-workout-add-set" onClick={handleAddSet}>Add set</div>
+                        </div>
                         <div className="empty-sets-alert">{emptySets && "You don't have any working sets"}</div>
-                        <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
-                        <button className="btn btn-workout-add-set" onClick={handleSavedModal}>Save</button>
                     </>)
             }
 

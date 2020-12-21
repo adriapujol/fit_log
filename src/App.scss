@@ -8,10 +8,6 @@
 $navbar-height: 7vh;
 $links-height: calc(100vh - #{$navbar-height});
 
-.content-wrapper {
-    text-align: center;
-}
-
 
 .content {
     display: flex;
@@ -48,6 +44,7 @@ $links-height: calc(100vh - #{$navbar-height});
         justify-content: center;
         align-items: center;
         width: 80%;
+        max-width:300px ;
         padding: 2.5em 2em;
         background-color: white;
 
@@ -65,6 +62,10 @@ $links-height: calc(100vh - #{$navbar-height});
             margin-bottom: 1em;
         }
 
+        .input-field {
+            width: 100%;
+        }
+
         .sets-reps-inputs {
             width: 100%;
             display: flex;
@@ -76,7 +77,7 @@ $links-height: calc(100vh - #{$navbar-height});
                 flex-direction: column;
 
                 input {
-                    width: 110px;
+                    width: 100%;
                 }
             }
 
@@ -120,6 +121,7 @@ $links-height: calc(100vh - #{$navbar-height});
     font-size: 1.1em;
     border: none;
     cursor: pointer;
+    border-radius: 25px;
 
     &:hover {
         background-color: #be0000;

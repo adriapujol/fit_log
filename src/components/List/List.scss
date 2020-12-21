@@ -25,10 +25,12 @@
         .sets-delete-wrapper {
             display: flex;
             justify-content: space-between;
-            width: 130px;
+            align-items: center;
+            width: 140px;
+            
             .list-extra-info {
                 left: 0;
-                width: 110px;
+                width: 130px;
             }
     
             .delete-item {
@@ -36,6 +38,22 @@
                 
             }
         }
+
+        @media only screen and (max-width: 350px) {
+            a {
+                font-size: 0.75em;
+            }
+
+            .sets-delete-wrapper {
+                width: 120px;
+                margin-left: 5px;
+
+                .list-extra-info {
+                    font-size: 0.70em;
+                }
+            }
+
+        }        
 
     }
 }
