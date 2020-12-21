@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.scss';
-import ExercisesList from './exercises.json';
-import WorkoutsList from './workouts.json';
 import Navbar from './components/Navbar/Navbar.jsx';
 import ListView from './components/List/ListView';
 import Workout from './components/Workout/Workout';
