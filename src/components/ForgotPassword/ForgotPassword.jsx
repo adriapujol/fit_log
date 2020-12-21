@@ -1,37 +1,35 @@
 import React, { useRef, useState } from 'react';
-import './Login.scss';
+import '../Login/Login.scss';
 import barbellLogo from '../../img/barbell_logo.png';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 
 
-function Login() {
+function ForgotPassword() {
 
 
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const { login } = useAuth();
-    const [error, setError] = useState("");
-    const [showError, setShowError] = useState(false);
+    const { resetPassword } = useAuth();
+    const [showMessage, setShowMessage] = useState(false);
+    const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            setError("");
-            setShowError(false);
+            setMessage("");
             setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value);
+            await resetPassword(emailRef.current.value);
             setLoading(false);
-            history.push("/fit_log/");
+            setMessage("Check your inbox for further instructions");
+            setShowMessage(true)
         } catch {
             setLoading(false);
-            setError("Failed to log in");
-            setShowError(true);
+            setMessage("Failed to reset password");
+            setShowMessage(true);
         }
 
     }
@@ -47,7 +45,7 @@ function Login() {
                     </div>
                 </div>
                 <form className="login-form" onSubmit={handleSubmit}>
-                    <div className={showError ? "alert" : "alert hide-message"}>{error}</div>
+                    <div className={showMessage ? "alert" : "alert hide-message"}>{message}</div>
                     <input
                         type="email"
                         name="email"
@@ -56,18 +54,9 @@ function Login() {
                         ref={emailRef}
                         required
                     />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        className="login-input"
-                        ref={passwordRef}
-                        required
-                    />
-
-                    <button className="login-btn" type="submit" disabled={loading}>Log in</button>
+                    <button className="login-btn" type="submit" disabled={loading}>Password Reset</button>
                     <div className="forgot-password">
-                        <Link to="/fit_log/forgot-password">Forgot Password?</Link>
+                        <Link to="/fit_log/login">Log in</Link>
                     </div>
                     <div className="no-account">
                         <p>Don't have an account? <Link to="/fit_log/register" className="sign-link">Try it for free</Link></p>
@@ -78,4 +67,5 @@ function Login() {
     )
 }
 
-export default Login;
+export default ForgotPassword;
+

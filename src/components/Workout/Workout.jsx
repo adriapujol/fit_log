@@ -20,10 +20,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const [isDone, setIsDone] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
-    const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
-        return { set: (index + 1), reps: 0, weight: 0 }
-    })
-    );
+    const [currentExercise, setCurrentExercise] = useState([]);
 
     const filterByName = (arr, arrFilter) => {
         return arr.filter(item => {
@@ -155,7 +152,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }, [currWorkout, exerciseNumber, exercises])
 
     useEffect(() => {
-        const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+        const arr = Array.from({length: exercises[exerciseNumber].sets}).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
@@ -176,11 +173,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                     {name}
                 </div>
                 <div className="header-exercise">
-                    <i className="fas fa-angle-left" onClick={handlePrevExercise} />
+                    <i className="fas fa-angle-left left-arrow" onClick={handlePrevExercise} />
                     <div className="workout-title-list exercise-title">
                         {exercises[exerciseNumber].name}
                     </div>
-                    <i className="fas fa-angle-right" onClick={handleNextExercise} />
+                    <i className="fas fa-angle-right right-arrow" onClick={handleNextExercise} />
                 </div>
             </div>
             <div className="control-box">
@@ -206,9 +203,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                             setCurrentExercise={setCurrentExercise}
                             exerciseNumber={exerciseNumber}
                         />
+                        <div className="save-add-btn-box">
+                            <div className="btn-workout-add-set" onClick={handleSavedModal}>Save exercise</div>
+                            <div className="btn-workout-add-set" onClick={handleAddSet}>Add set</div>
+                        </div>
                         <div className="empty-sets-alert">{emptySets && "You don't have any working sets"}</div>
-                        <button className="btn btn-workout-add-set" onClick={handleAddSet}>+ add set</button>
-                        <button className="btn btn-workout-add-set" onClick={handleSavedModal}>Save</button>
                     </>)
             }
 

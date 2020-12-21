@@ -4,7 +4,7 @@
     color: #ffffff;
 
 
-    background-image: url('../../img/bg_img_dumbbell.jpg');
+    background-image: url('../../img/bg_img_web.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -58,6 +58,10 @@
     height: 50%;
     width: 20%;
     min-width: 300px;
+
+    @media only screen and (max-width: 330px) {
+        min-width: 230px;
+    }
     
 
     .login-input, .login-btn {
@@ -67,14 +71,14 @@
         border-radius: 20px;
         margin-bottom: 0.5em;
         border-style: none;
-
+    }
+    
+    .login-input {
         &:focus {
-            // border-style: none;
             outline: none;
             background-color: #fff495;
         }
     }
-
 
 
     .login-btn {
@@ -83,15 +87,37 @@
         color: #ffffff;
         margin: 1em;
         cursor: pointer;
+
+        &:focus {
+            outline: none;
+            background-color: #be0000;
+        }
+
+        &:hover {
+            background-color: #be0000;
+        }
+    }
+
+    .alert {
+        height: 25px;
+    }
+
+    .hide-message {
+        visibility: hidden;
+    }
+
+    .forgot-password {
+        margin-bottom: 0.5em;
+        a {
+            color: #ffffff;
+        }
     }
 
     .no-account {
          color: #db3535;
         .sign-link {
             color: #ffffff;
-            // text-decoration: none;
         }
     }
-
 
 }

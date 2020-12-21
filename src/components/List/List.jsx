@@ -7,7 +7,9 @@ function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrE
 
     const handleDeleteList = (t, n, ln = "") => {
         if (t === "workouts") {
-            setList(prevList => prevList.filter(item => item.name !== n));
+            setList(prevList => {
+                return prevList.filter(item => item.name !== n);
+            });
         } else if (t === "workout") {
             setList(prevList => {               
                 return prevList.map(workout => {
@@ -18,7 +20,9 @@ function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrE
                 });
             })
         } else if (t === "exercises") {
-            setList(prevList => prevList.filter(item => item.name !== n));
+            setList(prevList => {
+                return prevList.filter(item => item.name !== n);
+            });
             setSecondList(prevSecondList => {
                 return prevSecondList.map(workout => {
                     const newExercises = workout.exercises.filter(exercise => exercise.name !== n);
@@ -26,6 +30,7 @@ function List({ type, list, setList, setSecondList, setCurrWorkoutName, setCurrE
                 })
             })
         }
+        
     }
 
     return (
