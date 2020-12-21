@@ -8,11 +8,18 @@
 $navbar-height: 7vh;
 $links-height: calc(100vh - #{$navbar-height});
 
+.content-wrapper {
+    text-align: center;
+}
+
 
 .content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
 
     min-height: $links-height;
 

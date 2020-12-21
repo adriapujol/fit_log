@@ -176,11 +176,11 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
                     {name}
                 </div>
                 <div className="header-exercise">
-                    <i className="fas fa-angle-left" onClick={handlePrevExercise} />
+                    <i className="fas fa-angle-left left-arrow" onClick={handlePrevExercise} />
                     <div className="workout-title-list exercise-title">
                         {exercises[exerciseNumber].name}
                     </div>
-                    <i className="fas fa-angle-right" onClick={handleNextExercise} />
+                    <i className="fas fa-angle-right right-arrow" onClick={handleNextExercise} />
                 </div>
             </div>
             <div className="control-box">
