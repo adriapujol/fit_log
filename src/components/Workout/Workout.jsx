@@ -20,10 +20,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     const [isDone, setIsDone] = useState(false);
     const [currWorkout, setCurrWorkout] = useState([]);
     const [exerciseNumber, setExerciseNumber] = useState(0);
-    const [currentExercise, setCurrentExercise] = useState(new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
-        return { set: (index + 1), reps: 0, weight: 0 }
-    })
-    );
+    const [currentExercise, setCurrentExercise] = useState([]);
 
     const filterByName = (arr, arrFilter) => {
         return arr.filter(item => {
@@ -155,7 +152,7 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
     }, [currWorkout, exerciseNumber, exercises])
 
     useEffect(() => {
-        const arr = new Array(exercises[exerciseNumber].sets).fill(0).map((item, index) => {
+        const arr = Array.from({length: exercises[exerciseNumber].sets}).fill(0).map((item, index) => {
             return { set: (index + 1), reps: 0, weight: 0 }
         });
         setCurrentExercise([...arr]);
