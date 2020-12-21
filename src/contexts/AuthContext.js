@@ -16,11 +16,11 @@ export function AuthProvider({ children }) {
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password).then(() => {
             let workouts = [];
-            db.collection(`test/${auth.currentUser.uid}/data/`).doc('workouts').set({
+            db.collection(`users/${auth.currentUser.uid}/data/`).doc('workouts').set({
                 workouts
             });
             let exercises = [...ExercisesList];
-            db.collection(`test/${auth.currentUser.uid}/data/`).doc('exercises').set({
+            db.collection(`users/${auth.currentUser.uid}/data/`).doc('exercises').set({
                 exercises
             });
         });

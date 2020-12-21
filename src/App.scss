@@ -30,6 +30,8 @@ $links-height: calc(100vh - #{$navbar-height});
 
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -102,14 +104,16 @@ $links-height: calc(100vh - #{$navbar-height});
             justify-content: space-around;
             width: 100%;
 
-            button {
-                
-            }
-
-            .cancel-btn {
-
-            }
         }
+
+        .alert-message {
+            height: 30px;
+            color: #db0000;
+        }
+        .hide-alert {
+            visibility: hidden;
+        }
+
     }
 }
 

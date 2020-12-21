@@ -5,7 +5,8 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
     const [newName, setNewName] = useState('');
     const [newSets, setNewSets] = useState(0);
     const [newReps, setNewReps] = useState(0);
-
+    const [showMessage, setShowMessage] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
     const handleNameInput = e => setNewName(e.target.value);
     const handleSetsInput = e => setNewSets(e.target.value);
     const handleRepsInput = e => setNewReps(e.target.value);
@@ -26,8 +27,10 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
 
     const handleSubmit = e => {
         e.preventDefault();
+        setShowMessage(false);
         if (newName === "") {
-            alert("Chose a name");
+            setShowMessage(true);
+            setAlertMessage("Chose a name");
             return;
         }
         if (type === "workout") {
@@ -35,7 +38,6 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
                 return prevWorkout.map(workout => {
                     if (workout.name === list.name) {
                         let newExercises = workout.exercises.filter(exercise => exercise.name !== newData.name);
-
                         return { ...workout, exercises: [...newExercises, newData] }
                     }
                     return workout;
@@ -48,7 +50,9 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
         } else {
             let itemFound = list.find(item => item.name === newData.name)
             if (itemFound !== undefined) {
-                alert("This name is already taken");
+                setShowMessage(true);
+                setAlertMessage("This name is already taken");
+                return
             } else {
                 setList([...list, newData]);
             }
@@ -124,6 +128,7 @@ function AddModal({ type, list, setList, setModalClicked, exerciseList, saveDB }
                     <i className="fas fa-times"></i>
                 </div>
                 {modal_content}
+                <div className={showMessage ? "alert-message" : "alert-message hide-alert"}>{alertMessage}</div>
                 <button className="btn">Save</button>
             </form>
         </div>

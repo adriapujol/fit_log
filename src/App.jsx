@@ -57,7 +57,7 @@ function App() {
         });
     }
     if (currentUser) {
-      let dbRef = db.collection(`test/${currentUser.uid}/data/`);
+      let dbRef = db.collection(`users/${currentUser.uid}/data/`);
       getUserData(dbRef);
     }
     return () => {
@@ -72,12 +72,12 @@ function App() {
       if (currentUser) {
         if (type === "workouts") {
           let workouts = data;
-          db.collection(`test/${currentUser.uid}/data/`).doc('workouts').set({
+          db.collection(`users/${currentUser.uid}/data/`).doc('workouts').set({
             workouts
           });
         } else if (type === "exercises") {
           let exercises = data;
-          db.collection(`test/${currentUser.uid}/data/`).doc('exercises').set({
+          db.collection(`users/${currentUser.uid}/data/`).doc('exercises').set({
             exercises
           });
         }

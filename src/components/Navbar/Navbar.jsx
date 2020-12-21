@@ -24,9 +24,10 @@ function Navbar() {
                     <Link to="/fit_log/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
                 </li>
                 <li>
-                    <Link to="/fit_log/" className="nav-links" onClick={handleLinks}>Dashboard</Link>
+                    <Link to="/fit_log/exercises" className="nav-links" onClick={handleLinks}>About</Link>
                 </li>
             </ul>
+            <Link to="/fit_log/" className="nav-links user-icon" onClick={handleLinks}><i className="fas fa-user-circle" /></Link>
         </nav>
     )
 }
