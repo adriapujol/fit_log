@@ -13,6 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
+import About from './components/About/About';
 import { db } from './Firebase';
 import { useAuth } from './contexts/AuthContext';
 
@@ -176,7 +177,7 @@ function App() {
             <Navbar />
             <UpdateProfile />
           </PrivateRoute>
-          <PrivateRoute exact path={["/fit_log/", "/fit_log/workouts"]}>
+          <PrivateRoute exact path={"/fit_log/workouts"}>
             <Navbar />
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
           </PrivateRoute>
@@ -216,7 +217,11 @@ function App() {
           </Route>
           <PrivateRoute>
             <Navbar />
-            {"Not found"}
+            <div className="content not-found">
+              <div className="not-found-box">
+                Page not found
+              </div>
+            </div>
           </PrivateRoute>
         </Switch>
       </main>

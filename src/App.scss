@@ -146,3 +146,17 @@ a {
     color: #000000;
     cursor: pointer;
 }
+
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight: 700;
+    color: #6b6b6b;
+    .not-found-box {
+        padding: 2em;
+        background-color: #e5e5e5;
+        border-radius: 25px;
+    }
+}

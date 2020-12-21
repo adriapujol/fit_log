@@ -15,7 +15,7 @@ $links-height: calc(100vh - #{$navbar-height});
     }
 
     .user-icon {
-        margin-right: 2em;
+        margin-right: 1em;
         margin-left: auto;
     }
 
@@ -63,6 +63,9 @@ $links-height: calc(100vh - #{$navbar-height});
                 margin-top: 3em;
             }
 
+        }
+        .user-icon {
+            margin-right: 2em;
         }
         
     }
