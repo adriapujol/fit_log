@@ -11,7 +11,6 @@ import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
-import About from './components/About/About';
 import { db } from './Firebase';
 import { useAuth } from './contexts/AuthContext';
 
