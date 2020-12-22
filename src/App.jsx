@@ -212,14 +212,14 @@ function App() {
           <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
-          <PrivateRoute>
+          {/* <PrivateRoute>
             <Navbar />
             <div className="content not-found">
               <div className="not-found-box">
                 Page not found
               </div>
             </div>
-          </PrivateRoute>
+          </PrivateRoute> */}
         </HashRouter>
       </main>
     </div>
