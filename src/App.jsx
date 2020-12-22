@@ -159,11 +159,11 @@ function App() {
 
     <div className="App">
       <main className="content-wrapper">
-        <Switch>
-          <Route path={"/fit_log/login"}>
+        <HashRouter>
+          <Route path={"/login"}>
             <Login />
           </Route>
-          <Route path={"/fit_log/register"}>
+          <Route path={"/register"}>
             <Register />
           </Route>
           <PrivateRoute exact path={["/", "/dashboard"]}>
@@ -212,15 +212,15 @@ function App() {
           <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
-          <PrivateRoute>
+          {/* <PrivateRoute>
             <Navbar />
             <div className="content not-found">
               <div className="not-found-box">
                 Page not found
               </div>
             </div>
-          </PrivateRoute>
-        </Switch>
+          </PrivateRoute> */}
+        </HashRouter>
       </main>
     </div>
 
