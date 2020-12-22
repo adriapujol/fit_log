@@ -159,7 +159,7 @@ function App() {
 
     <div className="App">
       <main className="content-wrapper">
-        <HashRouter>
+        <Switch>
           <Route path={"/login"}>
             <Login />
           </Route>
@@ -212,7 +212,7 @@ function App() {
           <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
-          <PrivateRoute path="*">
+          <PrivateRoute>
             <Navbar />
             <div className="content not-found">
               <div className="not-found-box">
@@ -220,7 +220,7 @@ function App() {
               </div>
             </div>
           </PrivateRoute>
-        </HashRouter>
+        </Switch>
       </main>
     </div>
 
