@@ -220,7 +220,7 @@ function App() {
               </div>
             </div>
           </PrivateRoute>
-          <Redirect from='*' to path='/page-not-found'></Redirect>
+          <Redirect from='/*' to path='/page-not-found'></Redirect>
         </HashRouter>
       </main>
     </div>
