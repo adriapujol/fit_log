@@ -160,29 +160,29 @@ function App() {
     <div className="App">
       <main className="content-wrapper">
         <HashRouter>
-          <Route path={"/fit_log/login"}>
+          <Route path={"/login"}>
             <Login />
           </Route>
-          <Route path={"/fit_log/register"}>
+          <Route path={"/fregister"}>
             <Register />
           </Route>
-          <PrivateRoute exact path={["/fit_log/", "/fit_log/dashboard"]}>
+          <PrivateRoute exact path={["/", "/dashboard"]}>
             <Navbar />
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute path="/fit_log/update-profile">
+          <PrivateRoute path="/update-profile">
             <Navbar />
             <UpdateProfile />
           </PrivateRoute>
-          <PrivateRoute exact path={"/fit_log/workouts"}>
+          <PrivateRoute exact path={"/workouts"}>
             <Navbar />
             <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
           </PrivateRoute>
-          <PrivateRoute path="/fit_log/exercises">
+          <PrivateRoute path="/exercises">
             <Navbar />
             <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
           </PrivateRoute>
-          <PrivateRoute exact path={`/fit_log/workout-detail`}>
+          <PrivateRoute exact path={`/workout-detail`}>
             <Navbar />
             {
               currW !== undefined ?
@@ -191,7 +191,7 @@ function App() {
                 <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
             }
           </PrivateRoute>
-          <PrivateRoute path={`/fit_log/exercise-detail`}>
+          <PrivateRoute path={`/exercise-detail`}>
             <Navbar />
             {
               currE !== undefined ?
@@ -200,7 +200,7 @@ function App() {
                 <ListView type="exercises" list={exercises} setList={setExercises} setSecondList={setWorkouts} setCurrExerciseName={setCurrExerciseName} />
             }
           </PrivateRoute>
-          <PrivateRoute path={`/fit_log/workout-detail/start`}>
+          <PrivateRoute path={`/workout-detail/start`}>
             <Navbar />
             {
               currW !== undefined ?
@@ -209,7 +209,7 @@ function App() {
                 <ListView type="workouts" list={workouts} setList={setWorkouts} setCurrWorkoutName={setCurrWorkoutName} />
             }
           </PrivateRoute>
-          <Route path="/fit_log/forgot-password">
+          <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
           <PrivateRoute>
