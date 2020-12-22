@@ -6,7 +6,7 @@ import Workout from './components/Workout/Workout';
 import ExerciseView from './components/Exercise/ExerciseView';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import { Route, Switch, HashRouter } from "react-router-dom";
+import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import ForgotPassowrd from './components/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -212,14 +212,14 @@ function App() {
           <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
-          {/* <PrivateRoute>
-            <Navbar />
+          <PrivateRoute>
+            {/* <Navbar />
             <div className="content not-found">
               <div className="not-found-box">
                 Page not found
               </div>
-            </div>
-          </PrivateRoute> */}
+            </div> */}
+          </PrivateRoute>
         </HashRouter>
       </main>
     </div>
