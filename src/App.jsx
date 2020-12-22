@@ -160,10 +160,10 @@ function App() {
     <div className="App">
       <main className="content-wrapper">
         <Switch>
-          <Route path={"/login"}>
+          <Route path={"/fit_log/login"}>
             <Login />
           </Route>
-          <Route path={"/register"}>
+          <Route path={"/fit_log/register"}>
             <Register />
           </Route>
           <PrivateRoute exact path={["/", "/dashboard"]}>
