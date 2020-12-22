@@ -212,7 +212,7 @@ function App() {
           <Route path="/forgot-password">
             <ForgotPassowrd />
           </Route>
-          <PrivateRoute path='/page-not-found'>
+          <PrivateRoute>
             <Navbar />
             <div className="content not-found">
               <div className="not-found-box">
@@ -220,7 +220,6 @@ function App() {
               </div>
             </div>
           </PrivateRoute>
-          <Redirect from='/*' to path='/page-not-found'></Redirect>
         </HashRouter>
       </main>
     </div>

@@ -19,7 +19,7 @@ function Dashboard() {
         setError("");
         try {
             await logout();
-            history.push('/fit_log/login');
+            history.push('/login');
         } catch {
             setError("Failed to log out");
         }
