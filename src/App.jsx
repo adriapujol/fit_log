@@ -163,7 +163,7 @@ function App() {
           <Route path={"/login"}>
             <Login />
           </Route>
-          <Route path={"/fregister"}>
+          <Route path={"/register"}>
             <Register />
           </Route>
           <PrivateRoute exact path={["/", "/dashboard"]}>
