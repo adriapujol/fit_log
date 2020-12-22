@@ -10,7 +10,7 @@ function PrivateRoute({ children, ...rest }) {
         <Route
             {...rest}
             render={ () => {
-                return currentUser ? children : <Redirect to="/fit_log/login" />;
+                return currentUser ? children : <Redirect to="/login" />;
             }}
         >
         </Route>

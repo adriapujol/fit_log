@@ -36,7 +36,7 @@ function Register() {
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value);
             setLoading(false);
-            history.push("/fit_log/");
+            history.push("/");
         } catch {
             setLoading(false);
             setError("Failed to create an account");
@@ -84,7 +84,7 @@ function Register() {
                     <button className="login-btn" type="submit" disabled={loading}>Register</button>
 
                     <div className="no-account">
-                        <p>Already have an account?  <Link to="/fit_log/login" className="sign-link">Log in</Link></p>
+                        <p>Already have an account?  <Link to="/login" className="sign-link">Log in</Link></p>
                     </div>
                 </form>
             </div>

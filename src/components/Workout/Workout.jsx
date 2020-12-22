@@ -213,8 +213,8 @@ function Workout({ workout, setWorkingWorkout, exerciseList }) {
 
 
             <div className="btn-list-view btn-low-box">
-                <Link to={"/fit_log/workouts"} className="btn">Cancel</Link>
-                <Link to={"/fit_log/workouts"} className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</Link>
+                <Link to={"/workouts"} className="btn">Cancel</Link>
+                <Link to={"/workouts"} className="btn" onClick={() => handleFinishWorkout(currWorkout)}>Finish Workout</Link>
             </div>
 
 

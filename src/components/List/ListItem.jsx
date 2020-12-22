@@ -36,10 +36,10 @@ function ListItem({ type, listItem, workoutName, handleDeleteListItem, setCurrWo
                 <div className="item-title-list">
                     {
                         type === "workouts" ?
-                            <Link to={`/fit_log/workout-detail`} className="item-list-link" onClick={selectWorkout}>
+                            <Link to={`/workout-detail`} className="item-list-link" onClick={selectWorkout}>
                                 {listItem.name}
                             </Link> :
-                            <Link to={`/fit_log/exercise-detail`} className="item-list-link" onClick={selectWorkout}>
+                            <Link to={`/exercise-detail`} className="item-list-link" onClick={selectWorkout}>
                                 {listItem.name}
                             </Link>
                     }

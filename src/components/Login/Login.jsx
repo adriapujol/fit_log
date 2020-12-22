@@ -27,7 +27,7 @@ function Login() {
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
             setLoading(false);
-            history.push("/fit_log/");
+            history.push("/");
         } catch {
             setLoading(false);
             setError("Failed to log in");
@@ -67,10 +67,10 @@ function Login() {
 
                     <button className="login-btn" type="submit" disabled={loading}>Log in</button>
                     <div className="forgot-password">
-                        <Link to="/fit_log/forgot-password">Forgot Password?</Link>
+                        <Link to="/forgot-password">Forgot Password?</Link>
                     </div>
                     <div className="no-account">
-                        <p>Don't have an account? <Link to="/fit_log/register" className="sign-link">Try it for free</Link></p>
+                        <p>Don't have an account? <Link to="/register" className="sign-link">Try it for free</Link></p>
                     </div>
                 </form>
             </div>

@@ -56,10 +56,10 @@ function ForgotPassword() {
                     />
                     <button className="login-btn" type="submit" disabled={loading}>Password Reset</button>
                     <div className="forgot-password">
-                        <Link to="/fit_log/login">Log in</Link>
+                        <Link to="/login">Log in</Link>
                     </div>
                     <div className="no-account">
-                        <p>Don't have an account? <Link to="/fit_log/register" className="sign-link">Try it for free</Link></p>
+                        <p>Don't have an account? <Link to="/register" className="sign-link">Try it for free</Link></p>
                     </div>
                 </form>
             </div>

@@ -40,7 +40,7 @@ function UpdateProfile() {
 
         Promise.all(promises).then(() => {
             setLoading(false);
-            history.push("/fit_log/")
+            history.push("/")
         }).catch(() => {
             setError("Failed to update account")
             setShowError(true);
@@ -85,7 +85,7 @@ function UpdateProfile() {
                 <button className="login-btn" type="submit" disabled={loading}>Update</button>
 
                 <div className="no-account">
-                    <Link to="/fit_log/" className="sign-link">Cancel</Link>
+                    <Link to="/" className="sign-link">Cancel</Link>
                 </div>
             </form>
         </div>

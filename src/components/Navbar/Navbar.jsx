@@ -18,13 +18,13 @@ function Navbar() {
             </div>
             <ul className={isClicked ? "nav-menu active" : "nav-menu"}>
                 <li >
-                    <Link to={"/fit_log/workouts"} className="nav-links" onClick={handleLinks}>Workouts</Link>
+                    <Link to={"/workouts"} className="nav-links" onClick={handleLinks}>Workouts</Link>
                 </li>
                 <li>
-                    <Link to="/fit_log/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
+                    <Link to="/exercises" className="nav-links" onClick={handleLinks}>Exercises</Link>
                 </li>
             </ul>
-            <Link to="/fit_log/" className="nav-links user-icon" onClick={handleLinks}><i className="fas fa-user-circle" /></Link>
+            <Link to="/" className="nav-links user-icon" onClick={handleLinks}><i className="fas fa-user-circle" /></Link>
         </nav>
     )
 }

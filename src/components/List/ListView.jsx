@@ -22,7 +22,7 @@ function ListView({ type, list, setList, setSecondList, exerciseList, setCurrWor
                 />
             }
             <button className="btn btn-list-view" onClick={() => setModalClicked(true)}>Add {type === "workout" ? "exercise" : type}</button>
-            {type !== "workout" || <Link to={`/fit_log/workout-detail/start`} className="btn btn-list-view">Start workout</Link>}
+            {type !== "workout" || <Link to={`/workout-detail/start`} className="btn btn-list-view">Start workout</Link>}
         </div>
     )
 }

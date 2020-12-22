@@ -51,9 +51,9 @@ function Dashboard() {
                 <div className="user-email">
                     <strong>Email: </strong>{currentUser.email}
                 </div>
-                <Link to="/fit_log/workouts" className="my-links">Workouts</Link>
-                <Link to="/fit_log/exercises" className="my-links">Exercises</Link>
-                <Link to="/fit_log/update-profile" className="update-link">Update profile</Link>
+                <Link to="/workouts" className="my-links">Workouts</Link>
+                <Link to="/exercises" className="my-links">Exercises</Link>
+                <Link to="/update-profile" className="update-link">Update profile</Link>
             </div>
             <button className="btn profile-btn" onClick={handleLogout}>Log out</button>
             <div className="delete-user-box">
